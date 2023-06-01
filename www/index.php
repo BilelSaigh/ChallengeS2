@@ -42,7 +42,7 @@ if(!file_exists("routes.yml")) {
     die("Le fichier de routing n'existe pas");
 }
 
-$routes = yaml_parse_file("routes.yml");
+$routes = \yaml_parse_file("routes.yml");
 
 //Page 404
 if(empty($routes[$uri])) {
