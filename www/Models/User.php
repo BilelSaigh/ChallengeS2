@@ -125,6 +125,9 @@ class User extends Sql {
         return $this->date_updated;
     }
 
-
+    public function verifMail($email)
+    {
+       var_dump( parent::search(["id"=>3,"email"=>"p@gmail.com"]) ) ;
+    }
 
 }

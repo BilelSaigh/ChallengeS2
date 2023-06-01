@@ -41,4 +41,15 @@ abstract class Sql{
 
         $queryPrepared->execute($columns);
     }
+    public function search(array $element)
+    {
+        foreach($element as $key => $value){
+            $toSelect [] = $key."=:". $key; 
+        }
+        $sql = "SELECT * FROM ".$this->table." WHERE ". implode(' AND ',$toSelect);
+        $queryPrepared=$this->pdo->prepare($sql);
+        print_r($element);
+        $queryPrepared->execute([$element]);
+        print_r($queryPrepared->execute([$element]));
+    }
 }

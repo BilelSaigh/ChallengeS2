@@ -20,6 +20,8 @@ class Security{
 
 
         if($form->isSubmit()){
+            $user = new User;
+            $user->verifMail($_POST["email"]);
             $errors = Verificator::form($form->getConfig(), $_POST);
             if(empty($errors)){
                 echo "Insertion en BDD";

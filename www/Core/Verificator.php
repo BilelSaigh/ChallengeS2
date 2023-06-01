@@ -12,14 +12,19 @@ class Verificator{
 
         foreach ($config["inputs"] as $name=>$input){
 
-            if(empty($data[$name])){
-                die("Tentative de Hack");
+            if(!empty($input["required"]) || empty($data[$name]) ){
+                $listOfErrors[]=$name ." ne peut pas être vide";
             }
-
             if($input["type"]=="email" && !self::checkEmail($data[$name])){
                 $listOfErrors[]=$input["error"];
             }
-            // if(strlen()){}
+            if($input["type"]=="password" && $data[$name] != $data["pwdConfirm"] && !self::checkPwd($data[$name]) && empty($input["confirm"])) {
+                $listOfErrors[]=$input["error"];
+            }
+
+            if( !empty($input["confirm"]) && $data[$name]!=$data[$input["confirm"]]  ){
+                $listOfErrors[]=$input["error"];
+            }
 
         }
 
@@ -30,5 +35,12 @@ class Verificator{
     {
         return filter_var($email, FILTER_VALIDATE_EMAIL);
     }
+    public static function checkPwd($pwd): bool
+    {
+        return strlen($pwd)>=8
+            && preg_match("/[0-9]/",$pwd, $result )
+            && preg_match("/[A-Z]/",$pwd, $result );
+    }
+
 
 }
