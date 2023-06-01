@@ -7,7 +7,6 @@ class User extends Sql {
     protected Int $id = 0;
     protected String $firstname;
     protected String $lastname;
-    protected String $country;
     protected String $email;
     protected String $password;
     protected Int $status = 0;
@@ -60,22 +59,6 @@ class User extends Sql {
     public function setLastname(string $lastname): void
     {
         $this->lastname = strtoupper(trim($lastname));
-    }
-
-    /**
-     * @return String
-     */
-    public function getCountry(): string
-    {
-        return $this->country;
-    }
-
-    /**
-     * @param String $country
-     */
-    public function setCountry(string $country): void
-    {
-        $this->country = strtoupper(trim($country));
     }
 
     /**

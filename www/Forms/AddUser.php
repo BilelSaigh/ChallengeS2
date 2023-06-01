@@ -47,11 +47,6 @@ class AddUser extends AForm {
                     "placeholder"=>"Confirmation",
                     "confirm"=>"pwd",
                     "error"=>"Mot de passe de confirmation incorrect"
-                ],
-                "country"=>[
-                    "type"=>"select",
-                    "options"=>["","FR", "PL"],
-                    "error"=>"Pays incorrect"
                 ]
             ]
         ];

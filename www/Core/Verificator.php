@@ -19,7 +19,7 @@ class Verificator{
             if($input["type"]=="email" && !self::checkEmail($data[$name])){
                 $listOfErrors[]=$input["error"];
             }
-            if(strlen()){}
+            // if(strlen()){}
 
         }
 
