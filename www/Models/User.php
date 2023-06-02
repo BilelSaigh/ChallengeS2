@@ -9,6 +9,7 @@ class User extends Sql {
     protected String $lastname;
     protected String $email;
     protected String $password;
+    protected String $token;
     protected Int $status = 0;
     protected $date_inserted;
     protected $date_updated;
@@ -116,6 +117,23 @@ class User extends Sql {
     {
         return $this->date_inserted;
     }
+    /**
+     * @return null
+     */
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param null
+     * Token char 32
+     */
+    public function generateToken(): void
+    {
+        $this->token = str_shuffle(md5(uniqid()));
+    }
+
 
     /**
      * @return mixed
@@ -124,6 +142,17 @@ class User extends Sql {
     {
         return $this->date_updated;
     }
+
+    public function verifypassword($pwdverif)
+    {
+        if (password_verify($pwdverif, $this->password)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
 
     public function verifMail($email)
     {

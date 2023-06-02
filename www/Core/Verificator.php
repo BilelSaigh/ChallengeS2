@@ -18,7 +18,7 @@ class Verificator{
             if($input["type"]=="email" && !self::checkEmail($data[$name])){
                 $listOfErrors[]=$input["error"];
             }
-            if($input["type"]=="password" && $data[$name] != $data["pwdConfirm"] && !self::checkPwd($data[$name]) && empty($input["confirm"])) {
+            if($input["type"]=="password" && !self::checkPwd($data[$name]) && empty($input["confirm"])) {
                 $listOfErrors[]=$input["error"];
             }
 
