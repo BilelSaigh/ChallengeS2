@@ -41,23 +41,24 @@ class Security{
         $form = new AddUser();
         $view = new View("Auth/register", "front");
         $view->assign('form', $form->getConfig());
-
+        
         if($form->isSubmit()){
-            $user = new User;
             $errors = Verificator::form($form->getConfig(), $_POST);
-            $user->verifMail($_POST["email"]);
-            if(empty($errors)){
-                echo "Insertion en BDD";
+            $user = new User;
+            $alreadyRegistered = $user->verifMail(["email"=>$_POST["email"]]);
+            
+            if(empty($errors) && empty($alreadyRegistered)){
+                
+                $user->setEmail($_POST["email"]);
+                $user->setFirstname($_POST["firstname"]);
+                $user->setLastname($_POST["lastname"]);
+                $user->setPwd($_POST["pwd"]);
+                $user->save();
             }else{
-                $view->assign('errors', $errors);
+                ($alreadyRegistered) ? $view->assign('errors', "Inscription incorrect") :  $view->assign('errors', $errors);
+               
             }
         }
-        /*
-        $user = new User();
-        $user->setId(2);
-        $user->setEmail("test@gmail.com");
-        $user->save();
-        */
     }
 
     public function logout(): void
