@@ -28,13 +28,13 @@ services:
     ports:
       - 8080:8080
 
-composer:
-    restart: 'no'
-    container_name: composer
-    image: "composer"
-    command: install --no-suggest
-    volumes:
-      - ./www/admin/php:/app
+# composer:
+#     restart: 'no'
+#     container_name: composer
+#     image: "composer"
+#     command: install --no-suggest
+#     volumes:
+#       - ./www/admin/php:/app
 
 volumes:
   pgdata:
