@@ -8,8 +8,9 @@ class User extends Sql {
     protected String $firstname;
     protected String $lastname;
     protected String $email;
-    protected String $password;
-    protected String $token;
+    protected String $pwd;
+    protected  $token = null;
+    protected int $role = 0;
     protected Int $status = 0;
     protected $date_inserted;
     protected $date_updated;
@@ -81,17 +82,17 @@ class User extends Sql {
     /**
      * @return String
      */
-    public function getPassword(): string
+    public function getPwd(): string
     {
-        return $this->password;
+        return $this->pwd;
     }
 
     /**
-     * @param String $password
+     * @param String $pwd
      */
-    public function setPassword(string $password): void
+    public function setPwd(string $pwd): void
     {
-        $this->password = password_hash($password, PASSWORD_DEFAULT);
+        $this->pwd = password_hash($pwd, PASSWORD_DEFAULT);
     }
 
     /**
@@ -109,6 +110,21 @@ class User extends Sql {
     {
         $this->status = $status;
     }
+    /**
+     * @param int $role
+     */
+    public function setRole($role): void
+    {
+        $this->role = $role;
+    }
+    /**
+     * @return int $role
+     */
+    public function getRole($role): int
+    {
+        return $this->role;
+    }
+
 
     /**
      * @return mixed
@@ -145,13 +161,19 @@ class User extends Sql {
 
     public function verifypassword($pwdverif)
     {
-        return password_verify($pwdverif, $this->password);
+        if (password_verify($pwdverif, $this->pwd)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    public function verifMail($email)
+
+
+    public function verifMail(array $toSearch)
     {
-        $result = parent::search(["email" => $email]);
-        return !empty($result);
+       var_dump( parent::search($toSearch) ) ;
+       return parent::search($toSearch);
     }
 
 }
