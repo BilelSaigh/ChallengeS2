@@ -41,7 +41,9 @@ abstract class Sql{
 
         $queryPrepared->execute($columns);
     }
-    public function search(array $element):self
+
+
+    public function search(array $element)
     {
         foreach($element as $key => $value){
             $toSelect [] = $key."=:". $key; 
