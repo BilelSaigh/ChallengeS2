@@ -3,8 +3,10 @@ namespace App\Controllers;
 use App\Core\View;
 use App\Forms\AddUser;
 use App\Forms\ConnectUser;
+use App\Models\Mail;
 use App\Models\User;
 use App\Core\Verificator;
+
 
 class Security{
 
@@ -50,7 +52,15 @@ class Security{
             $alreadyRegistered = $user->verifMail(["email"=>$_POST["email"]]);
             
             if(empty($errors) && empty($alreadyRegistered)){
-                
+                $confMail = new Mail();
+                $confMail->setName($_POST["firstname"]);
+                $confMail->setSubject("Mail de confirmation");
+                $confMail->setAddress($_POST["email"]);
+                $confMail->setMessage('<div>Mon message en <code>HTML</code></div>');
+                $confMail->mail($confMail->initMail());
+
+                die();
+
                 $user->setEmail($_POST["email"]);
                 $user->setFirstname($_POST["firstname"]);
                 $user->setLastname($_POST["lastname"]);
