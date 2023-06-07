@@ -5,7 +5,7 @@ use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 //Load Composer's autoloader
-require 'vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 class Mail {
     protected String $message;
     protected String $address;
@@ -14,57 +14,69 @@ class Mail {
 
 
     
-    public function setMessage($message) {
+    public function setMessage($message): void
+    {
         $this->message = $message;
     }
     /**
      *
      * @return $message
      */
-    public function getMessage() {
+    public function getMessage(): string
+    {
         return $this->message;
     }
-    public function setName($name)  {
-        $this->name = $name;
-    }
-
-    public function getName()  {
+    public function getName(): string
+    {
        return $this->name;
     }
-        /**
+
+    public function setName($name): void
+    {
+        $this->name = $name;
+    }
+    public function setAddress($address): void
+    {
+        $this->address = $address;
+    }
+    /**
      * @return $address
      *
      * @return void
      */
-    public function getAddress() {
+    public function getAddress(): string
+    {
         return $this->address;
     }
 
-    public function setSubject($subject){
+    public function setSubject($subject): void
+    {
         $this->subject =$subject;
     }
 
-    public function getSubject() {
+    public function getSubject(): string
+    {
         return $this->subject;
     }
 
 
-    public function initMail() {
-        
+    public function initMail(): PHPMailer
+    {
             $mail = new PHPMailer();
-
             //Server settings
             $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
             $mail->isSMTP();                                            //Send using SMTP
-            $mail->Host       = 'smtp.example.com';                     //Set the SMTP server to send through
+            $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
             $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-            $mail->Username   = 'user@example.com';                     //SMTP username
-            $mail->Password   = 'secret';                               //SMTP password
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-            $mail->Port       = 465; 
-
+            $mail->Username   = 'estelle272001@gmail.com';                     //SMTP username
+            $mail->Password   = 'Modeattitude';                               //SMTP password
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;            //Enable implicit TLS encryption
+            $mail->Port       = 587;
+            return $mail;
     }
-    public function mail($mail) {
+
+    public function mail($mail): void
+    {
         //Recipients
     $mail->setFrom('from@example.com', 'Adebc');
     $mail->addAddress($this->address , $this->name);     //Add a recipient

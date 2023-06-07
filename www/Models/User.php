@@ -159,7 +159,7 @@ class User extends Sql {
         return $this->date_updated;
     }
 
-    public function verifypassword($pwdverif)
+    public function verifypassword($pwdverif): bool
     {
         if (password_verify($pwdverif, $this->pwd)) {
             return true;
@@ -172,7 +172,6 @@ class User extends Sql {
 
     public function verifMail(array $toSearch)
     {
-       var_dump( parent::search($toSearch) ) ;
        return parent::search($toSearch);
     }
 
