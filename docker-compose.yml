@@ -14,7 +14,7 @@ services:
     image: postgres
     restart: always
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
       POSTGRES_DB: esgi_s2_bdd
       POSTGRES_USER: nimda
@@ -27,17 +27,5 @@ services:
     restart: always
     ports:
       - 8080:8080
-
-# composer:
-#     restart: 'no'
-#     container_name: composer
-#     image: "composer"
-#     command: install --no-suggest
-#     volumes:
-#       - ./www/admin/php:/app
-
-volumes:
-  pgdata:
-
 
 

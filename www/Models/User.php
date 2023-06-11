@@ -4,7 +4,7 @@ use App\Core\Sql;
 
 class User extends Sql {
 
-    protected Int $id = 0;
+    protected Int $id =0;
     protected String $firstname;
     protected String $lastname;
     protected String $email;
@@ -147,7 +147,8 @@ class User extends Sql {
      */
     public function generateToken(): void
     {
-        $this->token = str_shuffle(md5(uniqid()));
+        $bytes = random_bytes(128);
+        $this->token = substr(str_shuffle(bin2hex($bytes)), 0, 10);
     }
 
 
@@ -170,7 +171,7 @@ class User extends Sql {
 
 
 
-    public function verifMail(array $toSearch)
+    public function verifMail(array $toSearch):self|bool
     {
        return parent::search($toSearch);
     }
