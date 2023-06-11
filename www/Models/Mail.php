@@ -68,15 +68,16 @@ class Mail {
             $mail->isSMTP();                                            //Send using SMTP
             $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
             $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-            $mail->Username   = 'estelle272001@gmail.com';                     //SMTP username
-            $mail->Password   = 'Modeattitude';                               //SMTP password
+            $mail->Username   = 'nkumba.estelle@gmail.com';                     //SMTP username
+            $mail->Password   = 'xtydkvmubntmuwyf';                               //SMTP password
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;            //Enable implicit TLS encryption
             $mail->Port       = 587;
             return $mail;
     }
 
-    public function mail($mail): void
+    public function mail($mail)
     {
+        try{
         //Recipients
     $mail->setFrom('from@example.com', 'Adebc');
     $mail->addAddress($this->address , $this->name);     //Add a recipient
@@ -91,7 +92,12 @@ class Mail {
     $mail->Body    = $this->message;
     $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
-    $mail->send();    
+    $mail->send();   
+        }catch(Exception $e) {
+            return '<div class="alert-error" style="text-align: center; padding: 1em ;">
+                        <span>'.$e->getMessage().'</span>
+                    </div>';
+        }
 
     }
 
