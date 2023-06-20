@@ -9,32 +9,34 @@ use App\Core\Verificator;
 class Security{
 
     public function login(): void
-    {
-        echo "Login";
-        $connect = new ConnectUser();
-        $user = new User;
-        $view = new View("Auth/login", "front");
-        $view->assign('form', $connect->getConfig());
+{
+    echo "Login";
+    $connect = new ConnectUser();
+    $user = new User();
+    $view = new View("Auth/login", "front");
+    $view->assign('form', $connect->getConfig());
 
-        if($connect->isSubmit()){
-            $errors = Verificator::form($connect->getConfig(), $_POST);
-            if (!empty($user->verifMail($_POST["email"]))){
-                if ($user->verifypassword($_POST["pwd"])){
-                    $user->generateToken();
-//                    $user->save();
-                $home = new View("Dashboard","back");
-                $home->assign('user',$user);
-                }
-            };
-            if(empty($errors)){
-                print_r($user);
-                echo "Verification en BDD";
-            }else{
+    if ($connect->isSubmit()) {
+        $errors = Verificator::form($connect->getConfig(), $_POST);
+        if (empty($errors)) {
+            $email = $_POST["email"];
+            $password = $_POST["pwd"];
+
+            if ($user->verifMail($email) && $user->verifypassword($password)) {
+                $user->generateToken();
+                echo "ça marche";
+                exit();
+            } else {
+                $errors[] = "Email ou mot de passe invalide.";
                 $view->assign('errors', $errors);
             }
+        } else {
+            $view->assign('errors', $errors);
         }
-
     }
+}
+
+
 
     public function register(): void
     {

@@ -48,8 +48,9 @@ abstract class Sql{
         }
         $sql = "SELECT * FROM ".$this->table." WHERE ". implode(' AND ',$toSelect);
         $queryPrepared=$this->pdo->prepare($sql);
-        print_r($element);
-        $queryPrepared->execute([$element]);
-        print_r($queryPrepared->execute([$element]));
+        // print_r($element);
+        // $queryPrepared->execute([$element]);
+        $queryPrepared->execute(array_values($element));
+        // print_r($queryPrepared->execute([$element]));
     }
 }

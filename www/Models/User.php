@@ -145,18 +145,13 @@ class User extends Sql {
 
     public function verifypassword($pwdverif)
     {
-        if (password_verify($pwdverif, $this->password)) {
-            return true;
-        } else {
-            return false;
-        }
+        return password_verify($pwdverif, $this->password);
     }
-
-
 
     public function verifMail($email)
     {
-       var_dump( parent::search(["id"=>3,"email"=>"p@gmail.com"]) ) ;
+        $result = parent::search(["email" => $email]);
+        return !empty($result);
     }
 
 }
