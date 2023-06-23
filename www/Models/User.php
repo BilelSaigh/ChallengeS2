@@ -4,12 +4,13 @@ use App\Core\Sql;
 
 class User extends Sql {
 
-    protected Int $id = 0;
+    protected Int $id =0;
     protected String $firstname;
     protected String $lastname;
     protected String $email;
-    protected String $password;
-    protected String $token;
+    protected String $pwd;
+    protected  $token = null;
+    protected int $role = 0;
     protected Int $status = 0;
     protected $date_inserted;
     protected $date_updated;
@@ -81,17 +82,17 @@ class User extends Sql {
     /**
      * @return String
      */
-    public function getPassword(): string
+    public function getPwd(): string
     {
-        return $this->password;
+        return $this->pwd;
     }
 
     /**
-     * @param String $password
+     * @param String $pwd
      */
-    public function setPassword(string $password): void
+    public function setPwd(string $pwd): void
     {
-        $this->password = password_hash($password, PASSWORD_DEFAULT);
+        $this->pwd = password_hash($pwd, PASSWORD_DEFAULT);
     }
 
     /**
@@ -109,6 +110,21 @@ class User extends Sql {
     {
         $this->status = $status;
     }
+    /**
+     * @param int $role
+     */
+    public function setRole($role): void
+    {
+        $this->role = $role;
+    }
+    /**
+     * @return int $role
+     */
+    public function getRole($role): int
+    {
+        return $this->role;
+    }
+
 
     /**
      * @return mixed
@@ -131,7 +147,8 @@ class User extends Sql {
      */
     public function generateToken(): void
     {
-        $this->token = str_shuffle(md5(uniqid()));
+        $bytes = random_bytes(128);
+        $this->token = substr(str_shuffle(bin2hex($bytes)), 0, 10);
     }
 
 
@@ -143,9 +160,9 @@ class User extends Sql {
         return $this->date_updated;
     }
 
-    public function verifypassword($pwdverif)
+    public function verifypassword($pwdverif): bool
     {
-        if (password_verify($pwdverif, $this->password)) {
+        if (password_verify($pwdverif, $this->pwd)) {
             return true;
         } else {
             return false;
@@ -154,9 +171,9 @@ class User extends Sql {
 
 
 
-    public function verifMail($email)
+    public function verifMail(array $toSearch):self|bool
     {
-       var_dump( parent::search(["id"=>3,"email"=>"p@gmail.com"]) ) ;
+       return parent::search($toSearch);
     }
 
 }
