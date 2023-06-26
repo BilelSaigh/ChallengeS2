@@ -21,3 +21,27 @@
 /register:
   controller: Security
   action: register
+
+/:
+  controller: Comment
+  action: index
+
+/comment/create:
+  controller: Comment
+  action: create
+
+/comment:
+  controller: Comment
+  action: store
+
+/comment/{id}/edit:
+  controller: Comment
+  action: edit
+
+/comment/{id}:
+  controller: Comment
+  action: update
+
+/comment/{id}/delete:
+  controller: Comment
+  action: delete
