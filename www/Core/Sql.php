@@ -42,7 +42,6 @@ abstract class Sql{
         $queryPrepared->execute($columns);
     }
 
-
     public function search(array $element)
     {
         foreach($element as $key => $value){
@@ -52,6 +51,19 @@ abstract class Sql{
         $queryPrepared=$this->pdo->prepare($sql);
         $queryPrepared->execute($element);
         return $queryPrepared->fetchObject(get_called_class());
+
+    }
+
+    public function recupAll(): array
+    {
+        $sql = "SELECT * FROM ".$this->table;
+        $queryPrepared = $this->pdo->query($sql);
+        return $queryPrepared->fetchAll();
+    }
+
+    public function delete()
+    {
+        $sql = "DELETE FROM ".$this->table." WHERE id:='".$id."'";
 
     }
 }

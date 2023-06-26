@@ -25,3 +25,15 @@
 /confirmation:
   controller: Security
   action: confirmation
+
+/users:
+  controller : User
+  action : showUsers
+
+/deleteuser:
+  controller: User
+  action: deleteUsers
+
+/pagebuilder:
+  controller: Page
+  action: newpage

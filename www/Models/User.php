@@ -2,9 +2,10 @@
 namespace App\Models;
 use App\Core\Sql;
 
-class User extends Sql {
+class User extends Sql 
+{
 
-    protected Int $id =0;
+    protected Int $id = 0;
     protected String $firstname;
     protected String $lastname;
     protected String $email;
@@ -125,7 +126,6 @@ class User extends Sql {
         return $this->role;
     }
 
-
     /**
      * @return mixed
      */
@@ -133,6 +133,7 @@ class User extends Sql {
     {
         return $this->date_inserted;
     }
+
     /**
      * @return null
      */
@@ -174,6 +175,16 @@ class User extends Sql {
     public function verifMail(array $toSearch):self|bool
     {
        return parent::search($toSearch);
+    }
+
+    public function showAllUsers():array
+    {
+        return parent::recupAll();
+    }
+
+    public function deleteUser():void
+    {
+        parent::delete();
     }
 
 }
