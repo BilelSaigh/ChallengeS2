@@ -24,24 +24,26 @@ class User{
 
     public function showUsers(): void
     {
-            $form = new AddAdmin();
-            $users = new ModelUser();
-            $view = new View("Dash/users", "back");
-            $users = $users->showAllUsers();
-            $view->assign("users",$users);
-            $view->assign('form', $form->getConfig());
-            if($form->isSubmit()){
-                $user = new ModelUser;
-                $errors = Verificator::form($form->getConfig(), $_POST);
-                $user->verifMail($_POST["email"]);
-                if(empty($errors)){
-                    if ($this->addUser($user)){
-                        echo "ok";
-                    }
-                }else{
-                    $view->assign('errors', $errors);
+
+        $form = new AddAdmin();
+        $users = new ModelUser();
+        $view = new View("Dash/users", "back");
+        $users = $users->showAllUsers();
+        $view->assign("users",$users);
+        $view->assign('form', $form->getConfig());
+        if($form->isSubmit()){
+            $user = new ModelUser;
+            $errors = Verificator::form($form->getConfig(), $_POST);
+            $user->verifMail($_POST["email"]);
+            var_dump($user);
+            if(empty($errors)){
+                if ($this->addUser($user)){
+                    echo "ok";
                 }
+            }else{
+                $view->assign('errors', $errors);
             }
+        }
     }
     public function updateUsers(): void
     {

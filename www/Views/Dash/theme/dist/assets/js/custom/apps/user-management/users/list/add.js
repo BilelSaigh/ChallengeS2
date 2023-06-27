@@ -3,7 +3,7 @@
 // Class definition
 var KTUsersAddUser = function () {
     // Shared variables
-    const element = document.getElementById('kt_modal_add_user');
+    const element= document.getElementById('kt_modal_add_user');
     const form = element.querySelector('#kt_modal_add_user_form');
     const modal = new bootstrap.Modal(element);
 
@@ -44,67 +44,70 @@ var KTUsersAddUser = function () {
 
         // Submit button handler
         const submitButton = element.querySelector('[data-kt-users-modal-action="submit"]');
-         submitButton.addEventListener('click', function(e)  {
+         submitButton.addEventListener('click', function(e) {
              e.preventDefault();
              var form = $('#kt_modal_add_user_form');
              var status = document.querySelector('input[type=radio]:checked').value;
              var url = form.attr('action');
              var formData = form.serialize();
-             formData += '&status='+ encodeURIComponent(status);
-             formData += '&submit='+ encodeURIComponent("S'inscrire");
-             $.ajax({
-                 type: "post",
-                 url: url,
-                 data : formData,
-                 success: function (response) {
-                     console.log(response);
-                     // Show loading indication
-                     submitButton.setAttribute('data-kt-indicator', 'on');
-                     // Disable button to avoid multiple click
-                     submitButton.disabled = true;
+             formData += '&status=' + encodeURIComponent(status);
+             formData += '&submit=' + encodeURIComponent("S'inscrire");
+             if (validator) {
+                 validator.validate().then(function (status) {
+                     $.ajax({
+                         type: "post",
+                         url: url,
+                         data: formData,
+                         success: function (response) {
+                             // Show loading indication
+                             submitButton.setAttribute('data-kt-indicator', 'on');
+                             // Disable button to avoid multiple click
+                             submitButton.disabled = true;
 
-                     // Simulate form submission. For more info check the plugin's official documentation: https://sweetalert2.github.io/
-                     setTimeout(function () {
-                         // Remove loading indication
-                         submitButton.removeAttribute('data-kt-indicator');
+                             // Simulate form submission. For more info check the plugin's official documentation: https://sweetalert2.github.io/
+                             setTimeout(function () {
+                                 // Remove loading indication
+                                 submitButton.removeAttribute('data-kt-indicator');
 
-                         // Enable button
-                         submitButton.disabled = false;
+                                 // Enable button
+                                 submitButton.disabled = false;
 
-                         // Show popup confirmation
-                         Swal.fire({
-                             text: "Form has been successfully submitted!",
-                             icon: "success",
-                             buttonsStyling: false,
-                             confirmButtonText: "Ok, got it!",
-                             customClass: {
-                                 confirmButton: "btn btn-primary"
-                             }
-                         }).then(function (result) {
-                             if (result.isConfirmed) {
-                                 modal.hide();
-                             }
-                         });
+                                 // Show popup confirmation
+                                 Swal.fire({
+                                     text: "Form has been successfully submitted!",
+                                     icon: "success",
+                                     buttonsStyling: false,
+                                     confirmButtonText: "Ok, got it!",
+                                     customClass: {
+                                         confirmButton: "btn btn-primary"
+                                     }
+                                 }).then(function (result) {
+                                     if (result.isConfirmed) {
+                                         modal.hide();
+                                     }
+                                 });
 
-                         //form.submit(); // Submit form
-                     }, 2000);
+                                 form.submit(); // Submit form
+                             }, 2000);
 
-                 },
-                 error: function (xhr,status,error){
-                     console.error(error);
-                     // Show popup warning. For more info check the plugin's official documentation: https://sweetalert2.github.io/
-                     Swal.fire({
-                         text: "Sorry, looks like there are some errors detected, please try again.",
-                         icon: "error",
-                         buttonsStyling: false,
-                         confirmButtonText: "Ok, got it!",
-                         customClass: {
-                             confirmButton: "btn btn-primary"
+                         },
+                         error: function (xhr, status, error) {
+                             console.error(error);
+                             // Show popup warning. For more info check the plugin's official documentation: https://sweetalert2.github.io/
+                             Swal.fire({
+                                 text: "Sorry, looks like there are some errors detected, please try again.",
+                                 icon: "error",
+                                 buttonsStyling: false,
+                                 confirmButtonText: "Ok, got it!",
+                                 customClass: {
+                                     confirmButton: "btn btn-primary"
+                                 }
+                             });
                          }
-                     });
-                 }
-             })
-         });
+                     })
+                 });
+             }
+         })
 
         // Validate form before submit
             // if (validator) {

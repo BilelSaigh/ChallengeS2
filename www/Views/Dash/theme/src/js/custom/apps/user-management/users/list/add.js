@@ -46,8 +46,7 @@ var KTUsersAddUser = function () {
         const submitButton = element.querySelector('[data-kt-users-modal-action="submit"]');
         submitButton.addEventListener('click', e => {
             e.preventDefault();
-
-            // Validate form before submit
+                // Validate form before submit
             if (validator) {
                 validator.validate().then(function (status) {
                     console.log('validated!');
