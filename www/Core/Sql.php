@@ -43,16 +43,22 @@ abstract class Sql{
     }
 
     public function search(array $element)
-    {
-        foreach($element as $key => $value){
-            $toSelect [] = $key."=:". $key; 
-        }
-        $sql = "SELECT * FROM ".$this->table." WHERE ". implode(' AND ',$toSelect);
-        $queryPrepared=$this->pdo->prepare($sql);
-        $queryPrepared->execute($element);
-        return $queryPrepared->fetchObject(get_called_class());
+{
+    $toSelect = [];
+    $params = [];
 
+    foreach ($element as $key => $value) {
+        $toSelect[] = $key . "=:" . $key;
+        $params[':' . $key] = $value;
     }
+
+    $sql = "SELECT * FROM " . $this->table . " WHERE " . implode(' AND ', $toSelect);
+    $queryPrepared = $this->pdo->prepare($sql);
+    $queryPrepared->execute($params);
+
+    return $queryPrepared->fetchObject(get_called_class());
+}
+
 
     public function recupAll(): array
     {

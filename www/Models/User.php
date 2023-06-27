@@ -9,12 +9,13 @@ class User extends Sql
     protected String $firstname;
     protected String $lastname;
     protected String $email;
-    protected String $pwd;
+    protected String $pwd="";
     protected  $token = null;
     protected int $role = 0;
     protected Int $status = 0;
     protected $date_inserted;
     protected $date_updated;
+    // private ?string $pwd = null;
 
     /**
      * @return int
@@ -65,6 +66,13 @@ class User extends Sql
     }
 
     /**
+     * @param String $email
+     */
+    public function setEmail(string $email): void
+    {
+        $this->email = strtolower(trim($email));
+    }
+    /**
      * @return String
      */
     public function getEmail(): string
@@ -72,13 +80,6 @@ class User extends Sql
         return $this->email;
     }
 
-    /**
-     * @param String $email
-     */
-    public function setEmail(string $email): void
-    {
-        $this->email = strtolower(trim($email));
-    }
 
     /**
      * @return String
@@ -95,6 +96,11 @@ class User extends Sql
     {
         $this->pwd = password_hash($pwd, PASSWORD_DEFAULT);
     }
+    
+    
+    // public function setPassword(string $password): void {
+    //     $this->pwd = $password;
+    // }
 
     /**
      * @return int
@@ -163,13 +169,17 @@ class User extends Sql
 
     public function verifypassword($pwdverif): bool
     {
-        if (password_verify($pwdverif, $this->pwd)) {
+        if (password_verify($pwdverif, $this->getPwd())) {
             return true;
         } else {
             return false;
         }
     }
 
+    
+    // public function verifypassword2($password): bool {
+    //     return $this->pwd !== null && password_verify($password, $this->pwd);
+    // }
 
 
     public function verifMail(array $toSearch):self|bool
