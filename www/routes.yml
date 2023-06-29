@@ -1,6 +1,8 @@
 /:
   controller: Main
   action: index
+  #format: html
+  format: application/json
 
 /dashboard:
   controller: Main
