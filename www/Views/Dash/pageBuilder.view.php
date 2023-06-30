@@ -59,5 +59,14 @@
 
     </div>
 </div>
+<div class="row">
+    <div class="col">
+        <select id="versionDropdown" class="form-select">
+            <!-- Options pour les versions seront ajoutées dynamiquement -->
+        </select>
+        <button id="restoreButton" class="btn btn-primary my-2">Restaurer</button>
+    </div>
+</div>
+
 
     
