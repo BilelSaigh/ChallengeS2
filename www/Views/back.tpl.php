@@ -2413,17 +2413,7 @@
                             <!--end::Toolbar-->
                             <!--begin::Content-->
                             <div id="kt_app_content" class="app-content pb-0">
-                                <!--begin::Card-->
-                                <div class="card">
-                                    <div class="card-header border-0 pt-6">
-
-                                        <!--begin::Card body-->
-                                             <?php include $this->view; ?>
-                                        <!--end::Card body-->
-                                    </div>
-
-                                </div>
-                                <!--end::Card-->
+                                <?php include $this->view; ?>
                             </div>
                             <!--end::Content-->
                         </div>

@@ -37,3 +37,7 @@
 /pagebuilder:
   controller: Page
   action: newpage
+
+/profil:
+  controller: User
+  action: home

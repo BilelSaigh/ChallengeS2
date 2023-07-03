@@ -59,35 +59,10 @@ abstract class Sql{
     return $queryPrepared->fetchObject(get_called_class());
 }
 
-
-    public function recupAll(): array
-    {
-        foreach($element as $key => $value){
-            $toSelect [] = $key."=:". $key; 
-        }
-        $sql = "SELECT * FROM ".$this->table." WHERE ". implode(' AND ',$toSelect);
-        $queryPrepared=$this->pdo->prepare($sql);
-        $queryPrepared->execute($element);
-        return $queryPrepared->fetchObject(get_called_class());
-
-    }
-
-    public function recupAll(): array
-    {
-        $sql = "SELECT * FROM ".$this->table;
-        $queryPrepared = $this->pdo->query($sql);
-        return $queryPrepared->fetchAll();
-    }
-
     public function delete()
     {
         $sql = "DELETE FROM ".$this->table." WHERE id:='".$id."'";
 
     }
 
-    public function delete()
-    {
-        $sql = "DELETE FROM ".$this->table." WHERE id:='".$id."'";
-
-    }
 }

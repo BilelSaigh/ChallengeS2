@@ -1,5 +1,6 @@
 <?php $listTitle  = "Users List" ; ?>
-
+<div class="card">
+    <div class="card-header border-0 pt-6">
 <!--begin::Card header-->
 <!--    <div class="card-header border-0 pt-6">-->
         <!--begin::Card title-->
@@ -222,4 +223,7 @@
         </table>
         <!--end::Table-->
     <!--end::Card body-->
+    </div>
+
+</div>
 
