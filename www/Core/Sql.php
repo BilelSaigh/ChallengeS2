@@ -43,6 +43,24 @@ abstract class Sql{
     }
 
     public function search(array $element)
+{
+    $toSelect = [];
+    $params = [];
+
+    foreach ($element as $key => $value) {
+        $toSelect[] = $key . "=:" . $key;
+        $params[':' . $key] = $value;
+    }
+
+    $sql = "SELECT * FROM " . $this->table . " WHERE " . implode(' AND ', $toSelect);
+    $queryPrepared = $this->pdo->prepare($sql);
+    $queryPrepared->execute($params);
+
+    return $queryPrepared->fetchObject(get_called_class());
+}
+
+
+    public function recupAll(): array
     {
         foreach($element as $key => $value){
             $toSelect [] = $key."=:". $key; 
@@ -59,6 +77,12 @@ abstract class Sql{
         $sql = "SELECT * FROM ".$this->table;
         $queryPrepared = $this->pdo->query($sql);
         return $queryPrepared->fetchAll();
+    }
+
+    public function delete()
+    {
+        $sql = "DELETE FROM ".$this->table." WHERE id:='".$id."'";
+
     }
 
     public function delete()

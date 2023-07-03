@@ -21,13 +21,24 @@ class Security{
     if ($connect->isSubmit()) {
         $errors = Verificator::form($connect->getConfig(), $_POST);
         if (empty($errors)) {
-            $email = $_POST["email"];
-            $password = $_POST["pwd"];
+            $user->setEmail($_POST["email"]);
+            $userPwd = $_POST["pwd"];
 
-            if ($user->verifMail($email) && $user->verifypassword($password)) {
-                $user->generateToken();
-                echo "ça marche";
-                exit();
+            // Passer l'e-mail dans un tableau avec la clé "email"
+            $toSearch = ["email" => $user->getEmail()];
+            $userVerified = new User();
+            $userVerified  = $user->verifMail($toSearch);
+            if ($userVerified ) {
+                
+               if($userVerified->verifypassword( $userPwd)){
+                $userVerified->generateToken();
+                // echo $userVerified->getToken();
+                $userVerified->save();
+                   echo "Vous êtes connectés";
+                   exit();
+
+               }
+              
             } else {
                 $errors[] = "Email ou mot de passe invalide.";
                 $view->assign('errors', $errors);
@@ -37,6 +48,8 @@ class Security{
         }
     }
 }
+
+
 
 
 

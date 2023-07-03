@@ -15,6 +15,7 @@ class User extends Sql
     protected Int $status = 0;
     protected $date_inserted;
     protected $date_updated;
+    // private ?string $pwd = null;
 
     /**
      * @return int
@@ -65,6 +66,13 @@ class User extends Sql
     }
 
     /**
+     * @param String $email
+     */
+    public function setEmail(string $email): void
+    {
+        $this->email = strtolower(trim($email));
+    }
+    /**
      * @return String
      */
     public function getEmail(): string
@@ -72,13 +80,6 @@ class User extends Sql
         return $this->email;
     }
 
-    /**
-     * @param String $email
-     */
-    public function setEmail(string $email): void
-    {
-        $this->email = strtolower(trim($email));
-    }
 
     /**
      * @return String
@@ -95,6 +96,11 @@ class User extends Sql
     {
         $this->pwd = password_hash($pwd, PASSWORD_DEFAULT);
     }
+    
+    
+    // public function setPassword(string $password): void {
+    //     $this->pwd = $password;
+    // }
 
     /**
      * @return int
@@ -163,16 +169,10 @@ class User extends Sql
 
     public function verifypassword($pwdverif): bool
     {
-        if (password_verify($pwdverif, $this->pwd)) {
-            return true;
-        } else {
-            return false;
-        }
+        return password_verify($pwdverif, $this->password);
     }
 
-
-
-    public function verifMail(array $toSearch):self|bool
+    public function verifMail($email)
     {
        return parent::search($toSearch);
     }
