@@ -41,7 +41,11 @@ class Verificator{
         && preg_match("/[0-9]/", $password, $match)
         && preg_match("/[a-z]/", $password, $match)
         && preg_match("/[A-Z]/", $password, $match);
-        
+    }
+
+    public static function isConnected($token):bool
+    {
+        return $token != "";
     }
 
 

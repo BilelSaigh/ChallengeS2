@@ -11,32 +11,35 @@ use App\Core\Verificator;
 class Security{
 
     public function login(): void
-    {
-        echo "Login";
-        $connect = new ConnectUser();
-        $user = new User;
-        $view = new View("Auth/login", "front");
-        $view->assign('form', $connect->getConfig());
+{
+    echo "Login";
+    $connect = new ConnectUser();
+    $user = new User();
+    $view = new View("Auth/login", "front");
+    $view->assign('form', $connect->getConfig());
 
-        if($connect->isSubmit()){
-            $errors = Verificator::form($connect->getConfig(), $_POST);
-            if (!empty($user->verifMail($_POST["email"]))){
-                if ($user->verifypassword($_POST["pwd"])){
-                    $user->generateToken();
-//                    $user->save();
-                $home = new View("Dashboard","back");
-                $home->assign('user',$user);
-                }
-            };
-            if(empty($errors)){
-                print_r($user);
-                echo "Verification en BDD";
-            }else{
+    if ($connect->isSubmit()) {
+        $errors = Verificator::form($connect->getConfig(), $_POST);
+        if (empty($errors)) {
+            $email = $_POST["email"];
+            $password = $_POST["pwd"];
+
+            if ($user->verifMail($email) && $user->verifypassword($password)) {
+                $user->generateToken();
+                $_SESSION['user'] = $user;
+                $view = new View("Dash/profil", "back");
+                $view->assign('form', $connect->getConfig());
+            } else {
+                $errors[] = "Email ou mot de passe invalide.";
                 $view->assign('errors', $errors);
             }
+        } else {
+            $view->assign('errors', $errors);
         }
-
     }
+}
+
+
 
     public function register(): void
     {
@@ -77,16 +80,16 @@ class Security{
     {
         if (isset($_GET['key']) && !empty(($_GET['key']))){
             $user = new User;
-            echo "Oui validation";
             $newUser = $user->verifMail(["token" =>$_GET['key']]);
             if (!empty($newUser)){
                 $newUser->setStatus(1);
                 $newUser->save();
-                $view = new View("Dash/home", "back");
+                $_SESSION["user"] = $newUser;
+                $view = new View("Auth/login", "front");
                 $view->assign('user', $user);
             }else{
                 echo '<div class="alert-error" style="text-align: center; padding: 1em ;">
-                        <span> Compte innexistant, veuiller verifier que la durée du mail n est pas expirée </span>
+                        <span> Compte innexistant, veuillez verifier que la durée du mail n est pas expirée </span>
                     </div>';
             }
         }

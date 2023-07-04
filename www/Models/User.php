@@ -10,7 +10,7 @@ class User extends Sql
     protected String $lastname;
     protected String $email;
     protected String $pwd;
-    protected $token = null;
+    protected  $token = null;
     protected int $role = 0;
     protected Int $status = 0;
     protected $date_inserted;

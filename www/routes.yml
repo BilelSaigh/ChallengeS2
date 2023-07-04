@@ -37,3 +37,11 @@
 /pagebuilder:
   controller: Page
   action: newpage
+
+/profil:
+  controller: User
+  action: home
+
+/error404:
+  controller: Error
+  action: error404
