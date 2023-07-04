@@ -74,11 +74,9 @@ class Security{
             }
         }
     }
-
     /**
      * @return void
      */
-    
     public function confirmation():void
     {
         if (isset($_GET['key']) && !empty(($_GET['key']))){

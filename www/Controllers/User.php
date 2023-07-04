@@ -18,6 +18,10 @@ class User{
            $error->errorRedirection(404);
        }
     }
+    public function setting()
+    {
+        $view = new View("Dash/editUser");
+    }
 
     public function contact(): void
     {
@@ -31,7 +35,6 @@ class User{
 
     public function showUsers(): void
     {
-
         $form = new AddAdmin();
         $users = new ModelUser();
         $view = new View("Dash/users", "back");

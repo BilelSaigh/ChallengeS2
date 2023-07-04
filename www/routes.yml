@@ -34,6 +34,10 @@
   controller: User
   action: deleteUsers
 
+/edituser:
+  controller: User
+  action: setting
+
 /pagebuilder:
   controller: Page
   action: newpage
