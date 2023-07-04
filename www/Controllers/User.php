@@ -18,6 +18,12 @@ class User{
             $error->errorRedirection(404);
         }
     }
+    public function home(){
+        $user = new ModelUser;
+        $user = $_SESSION["user"];
+        $view = new View("Dash/profil", "back");
+        $view->assign("user", $user);
+    }
 
     public function contact(){
         $view = new View("Main/contact", "front");

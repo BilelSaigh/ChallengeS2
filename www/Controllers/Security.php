@@ -21,8 +21,8 @@ class Security{
     if ($connect->isSubmit()) {
         $errors = Verificator::form($connect->getConfig(), $_POST);
         if (empty($errors)) {
-            $email = $_POST["email"];
-            $password = $_POST["pwd"];
+            $user->setEmail($_POST["email"]);
+            $userPwd = $_POST["pwd"];
 
             if ($user->verifMail($email) && $user->verifypassword($password)) {
                 $user->generateToken();
@@ -38,6 +38,8 @@ class Security{
         }
     }
 }
+
+
 
 
 
