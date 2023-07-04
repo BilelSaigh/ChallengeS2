@@ -11,8 +11,8 @@ class User extends Sql
     protected String $email;
     protected String $pwd;
     protected  $token = null;
-    protected int $role = 0;
-    protected Int $status = 0;
+    protected int $role ;
+    protected Int $status ;
     protected $date_inserted;
     protected $date_updated;
     // private ?string $pwd = null;
@@ -169,10 +169,10 @@ class User extends Sql
 
     public function verifypassword($pwdverif): bool
     {
-        return password_verify($pwdverif, $this->password);
+        return password_verify($pwdverif, $this->pwd);
     }
 
-    public function verifMail($email)
+    public function verifMail($toSearch)
     {
        return parent::search($toSearch);
     }

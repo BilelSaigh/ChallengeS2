@@ -1,4 +1,3 @@
-
                 <!--begin::Main-->
                 <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
                     <!--begin::Content wrapper-->
@@ -84,7 +83,7 @@
                                                 <div class="d-flex flex-column">
                                                     <!--begin::Name-->
                                                     <div class="d-flex align-items-center mb-2">
-                                                        <a href="#" class="text-gray-900 text-hover-primary fs-2 fw-bold me-1"><?= $user->firstname." ". $user->lastname?></a>
+                                                        <a href="#" class="text-gray-900 text-hover-primary fs-2 fw-bold me-1"><?= $user["firstname"]." ". $user["lastname"] ?></a>
                                                         <a href="#">
                                                             <i class="ki-duotone ki-verify fs-1 text-primary">
                                                                 <span class="path1"></span>
@@ -100,12 +99,12 @@
                                                                 <span class="path1"></span>
                                                                 <span class="path2"></span>
                                                                 <span class="path3"></span>
-                                                            </i><?= $user->role ?></a>
+                                                            </i><?= "cc"  ?></a>
                                                         <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary mb-2">
                                                             <i class="ki-duotone ki-sms fs-4 me-1">
                                                                 <span class="path1"></span>
                                                                 <span class="path2"></span>
-                                                            </i><?= $user->email ?></a>
+                                                            </i><?= $user["email"] ?></a>
                                                     </div>
                                                     <!--end::Info-->
                                                 </div>
@@ -166,7 +165,7 @@
                                         <!--end::Label-->
                                         <!--begin::Col-->
                                         <div class="col-lg-8">
-                                            <span class="fw-bold fs-6 text-gray-800"><?= $user->firstname." ". $user->lastname?></span>
+                                            <span class="fw-bold fs-6 text-gray-800"><?= $user["firstname"] ." ". $user["lastname"] ?></span>
                                         </div>
                                         <!--end::Col-->
                                     </div>
@@ -197,44 +196,17 @@
                                         <!--end::Label-->
                                         <!--begin::Col-->
                                         <div class="col-lg-8 d-flex align-items-center">
-                                            <span class="fw-bold fs-6 text-gray-800 me-2"><?= $user->email?></span>
-                                            <?php if ($user->status): ?>
+                                            <span class="fw-bold fs-6 text-gray-800 me-2"><?= $user["email"] ?></span>
+                                            <?php if ($user["status"]): ?>
                                                 <span class="badge badge-success">Verified</span>
                                             <?php else: ?>
                                                 <span class="badge badge-danger">Unverified</span>
                                             <?php endif; ?>
-
-
-
                                         </div>
                                         <!--end::Col-->
                                     </div>
                                     <!--end::Input group-->
-                                    <!--begin::Input group-->
-                                    <div class="row mb-7">
-                                        <!--begin::Label-->
-                                        <label class="col-lg-4 fw-semibold text-muted">Communication</label>
-                                        <!--end::Label-->
-                                        <!--begin::Col-->
-                                        <div class="col-lg-8">
-                                            <span class="fw-bold fs-6 text-gray-800">Email, Phone</span>
-                                        </div>
-                                        <!--end::Col-->
-                                    </div>
-                                    <!--end::Input group-->
-                                    <!--begin::Input group-->
-                                    <div class="row mb-10">
-                                        <!--begin::Label-->
-                                        <label class="col-lg-4 fw-semibold text-muted">Allow Changes</label>
-                                        <!--begin::Label-->
-                                        <!--begin::Label-->
-                                        <div class="col-lg-8">
-                                            <span class="fw-semibold fs-6 text-gray-800">Yes</span>
-                                        </div>
-                                        <!--begin::Label-->
-                                    </div>
-                                    <!--end::Input group-->
-                                    <?php if (!$user->status): ?>
+                                    <?php if (!$user["status"] ): ?>
                                     <!--begin::Notice-->
                                     <div class="notice d-flex bg-light-warning rounded border-warning border border-dashed p-6">
                                         <!--begin::Icon-->

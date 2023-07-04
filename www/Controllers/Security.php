@@ -11,37 +11,38 @@ use App\Core\Verificator;
 class Security{
 
     public function login(): void
-{
-    echo "Login";
-    $connect = new ConnectUser();
-    $user = new User();
-    $view = new View("Auth/login", "front");
-    $view->assign('form', $connect->getConfig());
-
-    if ($connect->isSubmit()) {
-        $errors = Verificator::form($connect->getConfig(), $_POST);
-        if (empty($errors)) {
-            $user->setEmail($_POST["email"]);
-            $userPwd = $_POST["pwd"];
-
-            if ($user->verifMail($email) && $user->verifypassword($password)) {
-                $user->generateToken();
-                $_SESSION['user'] = $user;
-                $view = new View("Dash/profil", "back");
-                $view->assign('form', $connect->getConfig());
+    {
+        $connect = new ConnectUser();
+        $user = new User();
+        $view = new View("Auth/login", "front");
+        $view->assign('form', $connect->getConfig());
+        if ($connect->isSubmit()) {
+            $errors = Verificator::form($connect->getConfig(), $_POST);
+            if (empty($errors)) {
+                $user->setEmail($_POST["email"]);
+                $userPwd = $_POST["pwd"];
+                $verifiedUser = $user->verifMail(["email"=>$user->getEmail()]);
+                if ($verifiedUser && $verifiedUser->verifypassword($userPwd)) {
+                    $verifiedUser->generateToken();
+                    $userData = [
+                        'id' => $verifiedUser->getId(),
+                        'firstname' => $verifiedUser->getFirstname(),
+                        'lastname' => $verifiedUser->getLastname(),
+                        'email' => $verifiedUser->getEmail(),
+                        'token' => $verifiedUser->getToken(),
+                        'status' => $verifiedUser->getStatus(),
+                    ];
+                    $_SESSION["user"] = $userData;
+                    header('Location: /profil');
+                } else {
+                    $errors[] = "Email ou mot de passe invalide.";
+                    $view->assign('errors', $errors);
+                }
             } else {
-                $errors[] = "Email ou mot de passe invalide.";
                 $view->assign('errors', $errors);
             }
-        } else {
-            $view->assign('errors', $errors);
         }
     }
-}
-
-
-
-
 
     public function register(): void
     {
@@ -66,7 +67,7 @@ class Security{
                 $user->setLastname($_POST["lastname"]);
                 $user->setPwd($_POST["pwd"]);
                 $user->save();
-                $confMail->setMessage('<button><a href="http://localhost/confirmation?key='.$token.'"> Cliquez ici pour confirmer votre mail. </a></button>');
+                $confMail->setMessage('<button><a href="http://localhost:81/confirmation?key='.$token.'"> Cliquez ici pour confirmer votre mail. </a></button>');
                 $mail = $confMail->mail($confMail->initMail());
             }else{
                 ($alreadyRegistered) ? $view->assign('errors', "Inscription incorrect") :  $view->assign('errors', $errors);
@@ -82,12 +83,14 @@ class Security{
     {
         if (isset($_GET['key']) && !empty(($_GET['key']))){
             $user = new User;
+            $connect = new ConnectUser();
             $newUser = $user->verifMail(["token" =>$_GET['key']]);
             if (!empty($newUser)){
                 $newUser->setStatus(1);
                 $newUser->save();
                 $_SESSION["user"] = $newUser;
                 $view = new View("Auth/login", "front");
+                $view->assign('form', $connect->getConfig());
                 $view->assign('user', $user);
             }else{
                 echo '<div class="alert-error" style="text-align: center; padding: 1em ;">

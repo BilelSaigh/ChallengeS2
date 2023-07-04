@@ -10,26 +10,22 @@ class User{
     public function home(): void
     {
         $connection = new Verificator();
-        if($connection->isConnected($_SESSION['user']->token)) {
+        if($connection->isConnected($_SESSION['user']["token"])) {
             $view = new View("Dash/profil", "back");
             $view->assign('user', $_SESSION['user']);
         }else{
             $error = new Error();
-            $error->errorRedirection(404);
-        }
-    }
-    public function home(){
-        $user = new ModelUser;
-        $user = $_SESSION["user"];
-        $view = new View("Dash/profil", "back");
-        $view->assign("user", $user);
+           $error->errorRedirection(404);
+       }
     }
 
-    public function contact(){
+    public function contact(): void
+    {
         $view = new View("Main/contact", "front");
     }
 
-    public function dashboard(){
+    public function dashboard(): void
+    {
         $view = new View("Dash/pageBuilder","back");
     }
 
