@@ -6,7 +6,8 @@ use App\Forms\AddAdmin;
 use App\Forms\AddUser;
 use App\Models\User as ModelUser;
 
-class User{
+class User
+{
     public function home(): void
     {
         $connection = new Verificator();
@@ -18,9 +19,18 @@ class User{
            $error->errorRedirection(404);
        }
     }
-    public function setting()
+    public function setting(): void
     {
-        $view = new View("Dash/editUser");
+        $connection = new Verificator();
+        if($connection->isConnected($_SESSION['user']["token"])) {
+            $view = new View("Dash/editUser");
+            $view->assign('user', $_SESSION['user']);
+
+        }else{
+            $error = new Error();
+            $error->errorRedirection(404);
+
+        }
     }
 
     public function contact(): void
@@ -45,7 +55,6 @@ class User{
             $user = new ModelUser;
             $errors = Verificator::form($form->getConfig(), $_POST);
             $user->verifMail($_POST["email"]);
-            var_dump($user);
             if(empty($errors)){
                 if ($this->addUser($user)){
                     echo "ok";

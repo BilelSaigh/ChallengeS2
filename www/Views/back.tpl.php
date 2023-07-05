@@ -3836,7 +3836,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <!--begin::Global Javascript Bundle(mandatory for all pages)-->
-    <script src="Views/Dash/theme/dist/assets/js/scripts.bundle.js"></script>
+
+    <script src="Views/Dash/theme/dist/assets/js/widgets.bundle.js"></script>
     <script src="Views/Dash/theme/dist/assets/plugins/global/plugins.bundle.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
     <!--end::Global Javascript Bundle-->
@@ -3848,6 +3849,36 @@
     <script src="Views/Dash/theme/dist/assets/js/custom/apps/user-management/users/list/export-users.js"></script>
     <script src="Views/Dash/theme/dist/assets/js/custom/apps/user-management/users/list/add.js"></script>
     <script src="Views/Dash/theme/dist/assets/js/widgets.bundle.js"></script>
+    <script src="Views/Dash/theme/dist/assets/js/custom/utilities/modals/users-search.js"></script>
+
+
+
+
+    <script src="Views/Dash/theme/dist/assets/plugins/global/plugins.bundle.js"></script>
+    <script src="Views/Dash/theme/dist/assets/js/scripts.bundle.js"></script>
+    <!--end::Global Javascript Bundle-->
+    <!--begin::Custom Javascript(used for this page only)-->
+    <script src="Views/Dash/theme/dist/assets/js/custom/account/settings/signin-methods.js"></script>
+    <script src="Views/Dash/theme/dist/assets/js/custom/account/settings/profile-details.js"></script>
+    <script src="Views/Dash/theme/dist/assets/js/custom/account/settings/deactivate-account.js"></script>
+    <script src="Views/Dash/theme/dist/assets/js/custom/pages/user-profile/general.js"></script>
+    <script src="Views/Dash/theme/dist/assets/js/widgets.bundle.js"></script>
+    <script src="Views/Dash/theme/dist/assets/js/custom/apps/chat/chat.js"></script>
+    <script src="Views/Dash/theme/dist/assets/js/custom/utilities/modals/upgrade-plan.js"></script>
+    <script src="Views/Dash/theme/dist/assets/js/custom/utilities/modals/create-project/type.js"></script>
+    <script src="Views/Dash/theme/dist/assets/js/custom/utilities/modals/create-project/budget.js"></script>
+    <script src="Views/Dash/theme/dist/assets/js/custom/utilities/modals/create-project/settings.js"></script>
+    <script src="Views/Dash/theme/dist/assets/js/custom/utilities/modals/create-project/team.js"></script>
+    <script src="Views/Dash/theme/dist/assets/js/custom/utilities/modals/create-project/targets.js"></script>
+    <script src="Views/Dash/theme/dist/assets/js/custom/utilities/modals/create-project/files.js"></script>
+    <script src="Views/Dash/theme/dist/assets/js/custom/utilities/modals/create-project/complete.js"></script>
+    <script src="Views/Dash/theme/dist/assets/js/custom/utilities/modals/create-project/main.js"></script>
+    <script src="Views/Dash/theme/dist/assets/js/custom/utilities/modals/offer-a-deal/type.js"></script>
+    <script src="Views/Dash/theme/dist/assets/js/custom/utilities/modals/offer-a-deal/details.js"></script>
+    <script src="Views/Dash/theme/dist/assets/js/custom/utilities/modals/offer-a-deal/finance.js"></script>
+    <script src="Views/Dash/theme/dist/assets/js/custom/utilities/modals/offer-a-deal/complete.js"></script>
+    <script src="Views/Dash/theme/dist/assets/js/custom/utilities/modals/offer-a-deal/main.js"></script>
+    <script src="Views/Dash/theme/dist/assets/js/custom/utilities/modals/two-factor-authentication.js"></script>
     <script src="Views/Dash/theme/dist/assets/js/custom/utilities/modals/users-search.js"></script>
 </body>
 </html>
