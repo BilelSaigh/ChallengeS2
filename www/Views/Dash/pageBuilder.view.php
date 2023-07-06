@@ -2,6 +2,8 @@
 <div class='container-fluid bg-light'>
     <div class='row'>
         <div id='palette' class='col-sm-3 border p-4'>
+        <label>Title</label>
+        <input class="input-group" value="<?= $page["name"]?? ""?>">
             <div class='row'>
                 <div class='col'>
                     <div class="card card-shadow" data-value='image'>
