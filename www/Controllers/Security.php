@@ -27,10 +27,11 @@ class Security{
                     $userData = [
                         'id' => $verifiedUser->getId(),
                         'firstname' => $verifiedUser->getFirstname(),
-                        'lastname' => $verifiedUser->getLastname(),
-                        'email' => $verifiedUser->getEmail(),
-                        'token' => $verifiedUser->getToken(),
-                        'status' => $verifiedUser->getStatus(),
+                        'lastname'  => $verifiedUser->getLastname(),
+                        'pwd'       => $verifiedUser->getPwd(),
+                        'email'     => $verifiedUser->getEmail(),
+                        'token'     => $verifiedUser->getToken(),
+                        'status'    => $verifiedUser->getStatus(),
                     ];
                     $_SESSION["user"] = $userData;
                     header('Location: /profil');
@@ -98,7 +99,14 @@ class Security{
 
     public function logout(): void
     {
-        echo "Logout";
-    }
+        $connection = new Verificator();
+        $user = new User();
+        if($connection->isConnected($_SESSION['user']["token"])) {
+            $user->setId($_SESSION["user"]["id"]);
+            $user->setToken();
+            $user->save();
+            session_destroy();
+        }
+        }
 
 }

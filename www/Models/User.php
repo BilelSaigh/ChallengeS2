@@ -98,9 +98,9 @@ class User extends Sql
     }
     
     
-    // public function setPassword(string $password): void {
-    //     $this->pwd = $password;
-    // }
+     public function setPassword(string $pwd): void {
+         $this->pwd = $pwd;
+     }
 
     /**
      * @return int
@@ -157,7 +157,10 @@ class User extends Sql
         $bytes = random_bytes(128);
         $this->token = substr(str_shuffle(bin2hex($bytes)), 0, 10);
     }
-
+    public function setToken()
+    {
+        $this->token = " ";
+    }
 
     /**
      * @return mixed

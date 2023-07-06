@@ -90,74 +90,101 @@ var KTAccountSettingsSigninMethods = function () {
 
         signInForm.querySelector('#kt_signin_submit').addEventListener('click', function (e) {
             e.preventDefault();
-            console.log('click');
-
+            var form = $('#kt_signin_change_email');
+            var url = form.attr('action');
+            var formData = form.serialize();
             validation.validate().then(function (status) {
-                if (status == 'Valid') {
-                    swal.fire({
-                        text: "Sent password reset. Please check your email",
-                        icon: "success",
-                        buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
-                        customClass: {
-                            confirmButton: "btn font-weight-bold btn-light-primary"
-                        }
-                    }).then(function(){
-                        signInForm.reset();
-                        validation.resetForm(); // Reset formvalidation --- more info: https://formvalidation.io/guide/api/reset-form/
-                        toggleChangeEmail();
-                    });
-                } else {
-                    swal.fire({
-                        text: "Sorry, looks like there are some errors detected, please try again.",
-                        icon: "error",
-                        buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
-                        customClass: {
-                            confirmButton: "btn font-weight-bold btn-light-primary"
-                        }
-                    });
-                }
+                $.ajax({
+                    type: "post",
+                    url: url,
+                    data: formData,
+                    success:function (response) {
+                        setTimeout(function () {
+                        swal.fire({
+                            text: "Sent password reset. Please check your email",
+                            icon: "success",
+                            buttonsStyling: false,
+                            confirmButtonText: "Ok, got it!",
+                            customClass: {
+                                confirmButton: "btn font-weight-bold btn-light-primary"
+                            }
+                        }).then(function(){
+                            signInForm.reset();
+                            validation.resetForm(); // Reset formvalidation --- more info: https://formvalidation.io/guide/api/reset-form/
+                            toggleChangeEmail();
+
+                        });
+                            form.submit(); // Submit form
+                        }, 200);
+                    },
+                    error:function (error){
+                        swal.fire({
+                            text: "Sorry, looks like there are some errors detected, please try again.",
+                            icon: "error",
+                            buttonsStyling: false,
+                            confirmButtonText: "Ok, got it!",
+                            customClass: {
+                                confirmButton: "btn font-weight-bold btn-light-primary"
+                            }
+                        });
+                    },
+                })
             });
         });
     }
 
     var handleChangePassword = function (e) {
         var validation;
-
         // form elements
         var passwordForm = document.getElementById('kt_signin_change_password');
-
         if (!passwordForm) {
             return;
         }
-
         validation = FormValidation.formValidation(
             passwordForm,
             {
                 fields: {
                     currentpassword: {
                         validators: {
+                            stringLength : {
+                                min: 8,
+                                message: 'Password must be at least 8 character and contain number\n'
+                            },
                             notEmpty: {
                                 message: 'Current Password is required'
-                            }
+                            },
+
                         }
                     },
 
                     newpassword: {
                         validators: {
+                            stringLength : {
+                                min: 8,
+                                message: 'Password must be at least 8 character and contain number\n'
+                            },
                             notEmpty: {
                                 message: 'New Password is required'
+                            },
+                            identical: {
+                                compare: function() {
+                                    return passwordForm.querySelector('[name="currentpassword"]').value;
+                                },
+                                message: 'The current password and the new one are the same'
                             }
                         }
                     },
 
                     confirmpassword: {
                         validators: {
+                            stringLength : {
+                                min: 8,
+                                message: 'Password must be at least 8 character and contain number\n'
+                            },
                             notEmpty: {
                                 message: 'Confirm Password is required'
                             },
-                            identical: {
+                            different: {
                                 compare: function() {
                                     return passwordForm.querySelector('[name="newpassword"]').value;
                                 },
@@ -166,8 +193,8 @@ var KTAccountSettingsSigninMethods = function () {
                         }
                     },
                 },
-
-                plugins: { //Learn more: https://formvalidation.io/guide/plugins
+                // $2y$10$Ooi/gK2m1e3UiBSxP/jIg.psrmS4iZ3QM/BecKexUpZ19xFuit3hq
+        plugins: { //Learn more: https://formvalidation.io/guide/plugins
                     trigger: new FormValidation.plugins.Trigger(),
                     bootstrap: new FormValidation.plugins.Bootstrap5({
                         rowSelector: '.fv-row'
@@ -178,37 +205,49 @@ var KTAccountSettingsSigninMethods = function () {
 
         passwordForm.querySelector('#kt_password_submit').addEventListener('click', function (e) {
             e.preventDefault();
-            console.log('click');
-
+            var form = $('#kt_signin_change_password');
+            var url = form.attr('action');
+            var formData = form.serialize();
             validation.validate().then(function (status) {
-                if (status == 'Valid') {
-                    swal.fire({
-                        text: "Sent password reset. Please check your email",
-                        icon: "success",
-                        buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
-                        customClass: {
-                            confirmButton: "btn font-weight-bold btn-light-primary"
-                        }
-                    }).then(function(){
-                        passwordForm.reset();
-                        validation.resetForm(); // Reset formvalidation --- more info: https://formvalidation.io/guide/api/reset-form/
-                        toggleChangePassword();
-                    });
-                } else {
-                    swal.fire({
-                        text: "Sorry, looks like there are some errors detected, please try again.",
-                        icon: "error",
-                        buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
-                        customClass: {
-                            confirmButton: "btn font-weight-bold btn-light-primary"
-                        }
-                    });
-                }
-            });
-        });
+                $.ajax({
+                    type: "post",
+                    url: url,
+                    data: formData,
+                    success: function (response) {
+                        setTimeout(function () {
+                            swal.fire({
+                            text: "Sent password reset. Please check your email",
+                            icon: "success",
+                            buttonsStyling: false,
+                            confirmButtonText: "Ok, got it!",
+                            customClass: {
+                                confirmButton: "btn font-weight-bold btn-light-primary"
+                            }
+                        }).then(function () {
+                            passwordForm.reset();
+                            validation.resetForm(); // Reset formvalidation --- more info: https://formvalidation.io/guide/api/reset-form/
+                            toggleChangePassword();
+                        });
+                        form.submit(); // Submit form
+                    }, 200);
+                    },
+                    error: function (error) {
+                        swal.fire({
+                            text: "Sorry, looks like there are some errors detected, please try again.",
+                            icon: "error",
+                            buttonsStyling: false,
+                            confirmButtonText: "Ok, got it!",
+                            customClass: {
+                                confirmButton: "btn font-weight-bold btn-light-primary"
+                            }
+                        });
+
+                    }
+                })
+            })
+            })
     }
+
 
     // Public methods
     return {

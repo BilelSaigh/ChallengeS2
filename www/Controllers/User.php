@@ -4,6 +4,8 @@ use App\Core\Verificator;
 use App\Core\View;
 use App\Forms\AddAdmin;
 use App\Forms\AddUser;
+use App\Forms\newEmail;
+use App\Forms\newPwd;
 use App\Models\User as ModelUser;
 
 class User
@@ -21,16 +23,75 @@ class User
     }
     public function setting(): void
     {
+        $newPwd = new newPwd();
+        $newEmail = new newEmail();
         $connection = new Verificator();
+        $user = new ModelUser();
+        $user->setId($_SESSION["user"]["id"]);
+        $user->setFirstname($_SESSION["user"]["firstname"]);
+        $user->setLastname($_SESSION["user"]["lastname"]);
+        $user->setEmail($_SESSION["user"]["email"]);
+        $user->setStatus($_SESSION["user"]["status"]);
+        $user->setPassword($_SESSION["user"]["pwd"]);
         if($connection->isConnected($_SESSION['user']["token"])) {
             $view = new View("Dash/editUser");
             $view->assign('user', $_SESSION['user']);
+            if(!empty($_POST["newpassword"]) && $_POST["newpassword"] === $_POST["confirmpassword"]){
+                $pwdErrors = Verificator::checkPwd($_POST["newpassword"]);
+                if (!empty($pwdErrors)){
+                    $userPwd = $_POST["newpassword"];
+                    $user->setPwd($userPwd);
+                    $user->generateToken();
+                    $user->save();
+            $userData = [
+                'id' => $user->getId(),
+                'pwd' => $user->getPwd(),
+                'firstname' => $user->getFirstname(),
+                'lastname' => $user->getLastname(),
+                'email' => $user->getEmail(),
+                'token' => $user->getToken(),
+                'status' => $user->getStatus(),
+            ];
+            $_SESSION["user"] = $userData;
+            $view->assign("user",$userData);
+                }else{
+                    $errors[] = "Mot de passe invalide.";
+                    $view->assign('errors', $errors);
+                }
+            } elseif (!empty($_POST["newEmail"]) && !empty($_POST["confirmemailpassword"])){
+                if ($user->verifypassword($_POST["confirmemailpassword"])){
+                    $user->setEmail($_POST["newEmail"]);
+                    $verifiedUser = $user->verifMail(["email"=>$user->getEmail()]);
+                    if (!$verifiedUser) {
+                        $user->setEmail($_POST["newEmail"]);
+                    $user->generateToken();
+                        $user->save();
+                        $userData = [
+                            'id' => $user->getId(),
+                            'pwd' => $user->getPwd(),
+                            'firstname' => $user->getFirstname(),
+                            'lastname' => $user->getLastname(),
+                            'email' => $user->getEmail(),
+                            'token' => $user->getToken(),
+                            'status' => $user->getStatus(),
+                        ];
+                        $_SESSION["user"] = $userData;
+                        $view->assign("user",$userData);
 
+                    }else{
+                        $errors[] = "Email ou mot de passe invalide.";
+                        $view->assign('errors', $errors);
+                    }
+                }else {
+                    $errors[] = "Email ou mot de passe invalide.";
+                    $view->assign('errors', $errors);
+                }
+            }
         }else{
             $error = new Error();
             $error->errorRedirection(404);
-
         }
+
     }
 
     public function contact(): void
@@ -85,10 +146,10 @@ class User
     }
     public function deleteUsers(): void
     {
-        var_dump($_POST);
         $user = new ModelUser();
-        $view = new View("Dash/users", "back");
         $users = $user->deleteUser();
+
+        header('Location:login');
         $view->assign("users",$user);
     }
 

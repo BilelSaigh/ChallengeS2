@@ -9,6 +9,7 @@
                     name="<?= $name;?>"
                     type="<?= $input["type"]?>"
                     placeholder=" <?= $input["placeholder"]?>"
+
             >
 
     <?php endforeach; ?>
@@ -16,5 +17,5 @@
 
 
     <input type="submit" name="submit" value="<?= $config["config"]["submit"] ?>">
-    <input type="reset" value="<?= $config["config"]["cancel"] ?>">
+    <input type="reset"  value="<?= $config["config"]["cancel"] ?>">
 </form>

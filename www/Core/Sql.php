@@ -55,13 +55,13 @@ abstract class Sql{
     $sql = "SELECT * FROM " . $this->table . " WHERE " . implode(' AND ', $toSelect);
     $queryPrepared = $this->pdo->prepare($sql);
     $queryPrepared->execute($params);
-
     return $queryPrepared->fetchObject(get_called_class());
 }
 
-    public function delete()
+    public function delete(): void
     {
-        $sql = "DELETE FROM ".$this->table." WHERE id:='".$id."'";
+        $sql = "DELETE FROM ".$this->table." WHERE id:='".$this->getId()."'";
+        $query = $this->pdo->execute($sql);
 
     }
 
