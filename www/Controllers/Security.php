@@ -6,9 +6,12 @@ use App\Forms\ConnectUser;
 use App\Models\Mail;
 use App\Models\User;
 use App\Core\Verificator;
+use App\Controllers\Error;
 
 
-class Security{
+
+class Security
+{
 
     public function login(): void
     {
@@ -61,13 +64,21 @@ class Security{
                 $confMail->setAddress($_POST["email"]);
                 $user->generateToken();
                 $token = $user->getToken();
+                $user->setRole("1");
                 $user->setEmail($_POST["email"]);
                 $user->setFirstname($_POST["firstname"]);
                 $user->setLastname($_POST["lastname"]);
                 $user->setPwd($_POST["pwd"]);
                 $user->save();
-                $confMail->setMessage('<button><a href="http://localhost:81/confirmation?key='.$token.'"> Cliquez ici pour confirmer votre mail. </a></button>');
+                $confMail->setMessage('
+                                          <div class="card-body">
+                                            <h5 class="card-title"> Adebc vous souhaite la bienvenue ! </h5>
+                                            <p class="card-text">Une fois votre compte validé vous pourrez commenter autant que vous le souhaitez !.</p>
+                                            <p class="card-text">Oublie pas le respect est OBLIGATOIRE chez nous ;)  .</p>
+                                                <button><a class="btn btn-primary" href="http://localhost:81/confirmation?key='.$token.'"> Confirmer votre mail. </a></button>)
+                                           </div>');
                 $mail = $confMail->mail($confMail->initMail());
+                header('Location: login');
             }else{
                 ($alreadyRegistered) ? $view->assign('errors', "Inscription incorrect") :  $view->assign('errors', $errors);
             }
@@ -106,7 +117,11 @@ class Security{
             $user->setToken();
             $user->save();
             session_destroy();
+            var_dump($_SESSION['user']["token"]);
+            header("Location: /login");
         }
-        }
+        $error = new Error();
+        $error->errorRedirection(404);
+    }
 
 }

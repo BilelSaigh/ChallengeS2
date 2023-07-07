@@ -14,7 +14,9 @@ class User
     {
         $connection = new Verificator();
         if($connection->isConnected($_SESSION['user']["token"])) {
+            $title = "Profil";
             $view = new View("Dash/profil", "back");
+            $view->assign('title', $title);
             $view->assign('user', $_SESSION['user']);
         }else{
             $error = new Error();
@@ -34,7 +36,9 @@ class User
         $user->setStatus($_SESSION["user"]["status"]);
         $user->setPassword($_SESSION["user"]["pwd"]);
         if($connection->isConnected($_SESSION['user']["token"])) {
+            $title = "Profil";
             $view = new View("Dash/editUser");
+            $view->assign('title', $title);
             $view->assign('user', $_SESSION['user']);
             if(!empty($_POST["newpassword"]) && $_POST["newpassword"] === $_POST["confirmpassword"]){
                 $pwdErrors = Verificator::checkPwd($_POST["newpassword"]);
@@ -43,17 +47,17 @@ class User
                     $user->setPwd($userPwd);
                     $user->generateToken();
                     $user->save();
-            $userData = [
-                'id' => $user->getId(),
-                'pwd' => $user->getPwd(),
-                'firstname' => $user->getFirstname(),
-                'lastname' => $user->getLastname(),
-                'email' => $user->getEmail(),
-                'token' => $user->getToken(),
-                'status' => $user->getStatus(),
-            ];
-            $_SESSION["user"] = $userData;
-            $view->assign("user",$userData);
+                    $userData = [
+                        'id' => $user->getId(),
+                        'pwd' => $user->getPwd(),
+                        'firstname' => $user->getFirstname(),
+                        'lastname' => $user->getLastname(),
+                        'email' => $user->getEmail(),
+                        'token' => $user->getToken(),
+                        'status' => $user->getStatus(),
+                    ];
+                    $_SESSION["user"] = $userData;
+                    $view->assign("user",$userData);
                 }else{
                     $errors[] = "Mot de passe invalide.";
                     $view->assign('errors', $errors);
@@ -64,7 +68,7 @@ class User
                     $verifiedUser = $user->verifMail(["email"=>$user->getEmail()]);
                     if (!$verifiedUser) {
                         $user->setEmail($_POST["newEmail"]);
-                    $user->generateToken();
+                        $user->generateToken();
                         $user->save();
                         $userData = [
                             'id' => $user->getId(),
@@ -147,10 +151,10 @@ class User
     public function deleteUsers(): void
     {
         $user = new ModelUser();
-        $users = $user->deleteUser();
-
+        $user->setId($_SESSION["user"]["id"]);
+        $user->deleteUser();
+        var_dump($user);
         header('Location:login');
-        $view->assign("users",$user);
     }
 
  /*   public function showUsers(): void

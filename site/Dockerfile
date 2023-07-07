@@ -3,6 +3,7 @@ FROM php:8.2-apache
 #CREER UN COMPOSER
 COPY --from=composer:latest /usr/bin/composer usr/local/bin/composer
 
+
 RUN apt-get update
 
 # Install Postgre PDO
@@ -12,7 +13,11 @@ RUN apt-get install -y libpq-dev \
 
 
 RUN apt-get install postgresql-client -y
+RUN apt-get install install
 RUN apt-get update -y && apt-get install -y libpng-dev libfreetype6-dev libyaml-dev
+
+RUN composer install
+
 
 RUN  docker-php-ext-configure gd --with-freetype
 RUN  docker-php-ext-install gd

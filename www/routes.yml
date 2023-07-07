@@ -46,6 +46,10 @@
   controller: User
   action: home
 
+/signout:
+  controller: Security
+  action: logout
+
 /error404:
   controller: Error
   action: error404

@@ -1,3 +1,4 @@
+
                 <!--begin::Main-->
                 <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
                     <!--begin::Content wrapper-->
@@ -11,7 +12,7 @@
                                     <!--begin::Page title-->
                                     <div class="page-title d-flex flex-column gap-3 me-3">
                                         <!--begin::Title-->
-                                        <h1 class="page-heading d-flex flex-column justify-content-center text-dark fw-bolder fs-2x my-0">Account Overview</h1>
+                                        <h1 class="page-heading d-flex flex-column justify-content-center text-dark fw-bolder fs-2x my-0"><?= $title ?></h1>
                                         <!--end::Title-->
                                         <!--begin::Breadcrumb-->
                                         <ul class="breadcrumb breadcrumb-separatorless fw-semibold">
@@ -42,18 +43,6 @@
                                         <!--end::Breadcrumb-->
                                     </div>
                                     <!--end::Page title-->
-                                    <!--begin::Actions-->
-                                    <div class="d-flex align-items-center gap-3 gap-lg-5">
-                                        <!--begin::Secondary button-->
-                                        <div class="m-0">
-                                            <a href="#" class="btn btn-flex btn-sm btn-color-gray-700 bg-body fw-bold px-4" data-bs-toggle="modal" data-bs-target="#kt_modal_create_project">New Project</a>
-                                        </div>
-                                        <!--end::Secondary button-->
-                                        <!--begin::Primary button-->
-                                        <a href="#" class="btn btn-flex btn-center btn-dark btn-sm px-4" data-bs-toggle="modal" data-bs-target="#kt_modal_invite_friends">Reports</a>
-                                        <!--end::Primary button-->
-                                    </div>
-                                    <!--end::Actions-->
                                 </div>
                                 <!--end::Toolbar wrapper-->
                             </div>
@@ -70,7 +59,8 @@
                                         <!--begin: Pic-->
                                         <div class="me-7 mb-4">
                                             <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
-                                                <img src="assets/media/avatars/300-1.jpg" alt="image" />
+                                                <img src="<?= $page["logo"]?? "Views/Dash/theme/dist/assets/media/avatars/blank.png"?>" alt="image" />
+
                                                 <div class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-body h-20px w-20px"></div>
                                             </div>
                                         </div>
@@ -84,12 +74,6 @@
                                                     <!--begin::Name-->
                                                     <div class="d-flex align-items-center mb-2">
                                                         <a href="#" class="text-gray-900 text-hover-primary fs-2 fw-bold me-1"><?= $user["firstname"]." ". $user["lastname"] ?></a>
-                                                        <a href="#">
-                                                            <i class="ki-duotone ki-verify fs-1 text-primary">
-                                                                <span class="path1"></span>
-                                                                <span class="path2"></span>
-                                                            </i>
-                                                        </a>
                                                     </div>
                                                     <!--end::Name-->
                                                     <!--begin::Info-->
@@ -99,7 +83,7 @@
                                                                 <span class="path1"></span>
                                                                 <span class="path2"></span>
                                                                 <span class="path3"></span>
-                                                            </i><?= "cc"  ?></a>
+                                                            </i><?= "cc" ?></a>
                                                         <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary mb-2">
                                                             <i class="ki-duotone ki-sms fs-4 me-1">
                                                                 <span class="path1"></span>
@@ -123,18 +107,10 @@
                                         </li>
                                         <!--end::Nav item-->
                                         <!--begin::Nav item-->
-                                        <li class="nav-item mt-2">
-                                            <a class="nav-link text-active-primary ms-0 me-10 py-5" href="/editUser">Settings</a>
-                                        </li>
                                         <!--end::Nav item-->
                                         <!--begin::Nav item-->
                                         <li class="nav-item mt-2">
-                                            <a class="nav-link text-active-primary ms-0 me-10 py-5" href="#">Security</a>
-                                        </li>
-                                        <!--end::Nav item-->
-                                        <!--begin::Nav item-->
-                                        <li class="nav-item mt-2">
-                                            <a class="nav-link text-active-primary ms-0 me-10 py-5" href="#">Logs</a>
+                                            <a class="nav-link text-active-primary ms-0 me-10 py-5" href="/theme">Theme</a>
                                         </li>
                                         <!--end::Nav item-->
                                     </ul>
@@ -148,11 +124,11 @@
                                 <div class="card-header cursor-pointer">
                                     <!--begin::Card title-->
                                     <div class="card-title m-0">
-                                        <h3 class="fw-bold m-0">Profile Details</h3>
+                                        <h3 class="fw-bold m-0">Profil Details</h3>
                                     </div>
                                     <!--end::Card title-->
                                     <!--begin::Action-->
-                                    <a href="../dist/account/settings.html" class="btn btn-sm btn-primary align-self-center">Edit Profile</a>
+                                    <a href="/editUser" class="btn btn-sm btn-primary align-self-center">Edit Profile</a>
                                     <!--end::Action-->
                                 </div>
                                 <!--begin::Card header-->
@@ -920,274 +896,6 @@
                                         <!--end::Body-->
                                     </div>
                                     <!--end::List widget 5-->
-                                </div>
-                                <!--end::Col-->
-                                <!--begin::Col-->
-                                <div class="col-xl-8">
-                                    <!--begin::Table Widget 5-->
-                                    <div class="card card-flush h-xl-100">
-                                        <!--begin::Card header-->
-                                        <div class="card-header pt-7">
-                                            <!--begin::Title-->
-                                            <h3 class="card-title align-items-start flex-column">
-                                                <span class="card-label fw-bold text-dark">Stock Report</span>
-                                                <span class="text-gray-400 mt-1 fw-semibold fs-6">Total 2,356 Items in the Stock</span>
-                                            </h3>
-                                            <!--end::Title-->
-                                            <!--begin::Actions-->
-                                            <div class="card-toolbar">
-                                                <!--begin::Filters-->
-                                                <div class="d-flex flex-stack flex-wrap gap-4">
-                                                    <!--begin::Destination-->
-                                                    <div class="d-flex align-items-center fw-bold">
-                                                        <!--begin::Label-->
-                                                        <div class="text-muted fs-7 me-2">Cateogry</div>
-                                                        <!--end::Label-->
-                                                        <!--begin::Select-->
-                                                        <select class="form-select form-select-transparent text-dark fs-7 lh-1 fw-bold py-0 ps-3 w-auto" data-control="select2" data-hide-search="true" data-dropdown-css-class="w-150px" data-placeholder="Select an option">
-                                                            <option></option>
-                                                            <option value="Show All" selected="selected">Show All</option>
-                                                            <option value="a">Category A</option>
-                                                            <option value="b">Category B</option>
-                                                        </select>
-                                                        <!--end::Select-->
-                                                    </div>
-                                                    <!--end::Destination-->
-                                                    <!--begin::Status-->
-                                                    <div class="d-flex align-items-center fw-bold">
-                                                        <!--begin::Label-->
-                                                        <div class="text-muted fs-7 me-2">Status</div>
-                                                        <!--end::Label-->
-                                                        <!--begin::Select-->
-                                                        <select class="form-select form-select-transparent text-dark fs-7 lh-1 fw-bold py-0 ps-3 w-auto" data-control="select2" data-hide-search="true" data-dropdown-css-class="w-150px" data-placeholder="Select an option" data-kt-table-widget-5="filter_status">
-                                                            <option></option>
-                                                            <option value="Show All" selected="selected">Show All</option>
-                                                            <option value="In Stock">In Stock</option>
-                                                            <option value="Out of Stock">Out of Stock</option>
-                                                            <option value="Low Stock">Low Stock</option>
-                                                        </select>
-                                                        <!--end::Select-->
-                                                    </div>
-                                                    <!--end::Status-->
-                                                    <!--begin::Search-->
-                                                    <a href="../dist/apps/ecommerce/catalog/products.html" class="btn btn-light btn-sm">View Stock</a>
-                                                    <!--end::Search-->
-                                                </div>
-                                                <!--begin::Filters-->
-                                            </div>
-                                            <!--end::Actions-->
-                                        </div>
-                                        <!--end::Card header-->
-                                        <!--begin::Card body-->
-                                        <div class="card-body">
-                                            <!--begin::Table-->
-                                            <table class="table align-middle table-row-dashed fs-6 gy-3" id="kt_table_widget_5_table">
-                                                <!--begin::Table head-->
-                                                <thead>
-                                                <!--begin::Table row-->
-                                                <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
-                                                    <th class="min-w-150px">Item</th>
-                                                    <th class="text-end pe-3 min-w-100px">Product ID</th>
-                                                    <th class="text-end pe-3 min-w-150px">Date Added</th>
-                                                    <th class="text-end pe-3 min-w-100px">Price</th>
-                                                    <th class="text-end pe-3 min-w-100px">Status</th>
-                                                    <th class="text-end pe-0 min-w-75px">Qty</th>
-                                                </tr>
-                                                <!--end::Table row-->
-                                                </thead>
-                                                <!--end::Table head-->
-                                                <!--begin::Table body-->
-                                                <tbody class="fw-bold text-gray-600">
-                                                <tr>
-                                                    <!--begin::Item-->
-                                                    <td>
-                                                        <a href="#" class="text-dark text-hover-primary">Macbook Air M1</a>
-                                                    </td>
-                                                    <!--end::Item-->
-                                                    <!--begin::Product ID-->
-                                                    <td class="text-end">#XGY-356</td>
-                                                    <!--end::Product ID-->
-                                                    <!--begin::Date added-->
-                                                    <td class="text-end">02 Apr, 2023</td>
-                                                    <!--end::Date added-->
-                                                    <!--begin::Price-->
-                                                    <td class="text-end">$1,230</td>
-                                                    <!--end::Price-->
-                                                    <!--begin::Status-->
-                                                    <td class="text-end">
-                                                        <span class="badge py-3 px-4 fs-7 badge-light-primary">In Stock</span>
-                                                    </td>
-                                                    <!--end::Status-->
-                                                    <!--begin::Qty-->
-                                                    <td class="text-end" data-order="58">
-                                                        <span class="text-dark fw-bold">58 PCS</span>
-                                                    </td>
-                                                    <!--end::Qty-->
-                                                </tr>
-                                                <tr>
-                                                    <!--begin::Item-->
-                                                    <td>
-                                                        <a href="#" class="text-dark text-hover-primary">Surface Laptop 4</a>
-                                                    </td>
-                                                    <!--end::Item-->
-                                                    <!--begin::Product ID-->
-                                                    <td class="text-end">#YHD-047</td>
-                                                    <!--end::Product ID-->
-                                                    <!--begin::Date added-->
-                                                    <td class="text-end">01 Apr, 2023</td>
-                                                    <!--end::Date added-->
-                                                    <!--begin::Price-->
-                                                    <td class="text-end">$1,060</td>
-                                                    <!--end::Price-->
-                                                    <!--begin::Status-->
-                                                    <td class="text-end">
-                                                        <span class="badge py-3 px-4 fs-7 badge-light-danger">Out of Stock</span>
-                                                    </td>
-                                                    <!--end::Status-->
-                                                    <!--begin::Qty-->
-                                                    <td class="text-end" data-order="0">
-                                                        <span class="text-dark fw-bold">0 PCS</span>
-                                                    </td>
-                                                    <!--end::Qty-->
-                                                </tr>
-                                                <tr>
-                                                    <!--begin::Item-->
-                                                    <td>
-                                                        <a href="#" class="text-dark text-hover-primary">Logitech MX 250</a>
-                                                    </td>
-                                                    <!--end::Item-->
-                                                    <!--begin::Product ID-->
-                                                    <td class="text-end">#SRR-678</td>
-                                                    <!--end::Product ID-->
-                                                    <!--begin::Date added-->
-                                                    <td class="text-end">24 Mar, 2023</td>
-                                                    <!--end::Date added-->
-                                                    <!--begin::Price-->
-                                                    <td class="text-end">$64</td>
-                                                    <!--end::Price-->
-                                                    <!--begin::Status-->
-                                                    <td class="text-end">
-                                                        <span class="badge py-3 px-4 fs-7 badge-light-primary">In Stock</span>
-                                                    </td>
-                                                    <!--end::Status-->
-                                                    <!--begin::Qty-->
-                                                    <td class="text-end" data-order="290">
-                                                        <span class="text-dark fw-bold">290 PCS</span>
-                                                    </td>
-                                                    <!--end::Qty-->
-                                                </tr>
-                                                <tr>
-                                                    <!--begin::Item-->
-                                                    <td>
-                                                        <a href="#" class="text-dark text-hover-primary">AudioEngine HD3</a>
-                                                    </td>
-                                                    <!--end::Item-->
-                                                    <!--begin::Product ID-->
-                                                    <td class="text-end">#PXF-578</td>
-                                                    <!--end::Product ID-->
-                                                    <!--begin::Date added-->
-                                                    <td class="text-end">24 Mar, 2023</td>
-                                                    <!--end::Date added-->
-                                                    <!--begin::Price-->
-                                                    <td class="text-end">$1,060</td>
-                                                    <!--end::Price-->
-                                                    <!--begin::Status-->
-                                                    <td class="text-end">
-                                                        <span class="badge py-3 px-4 fs-7 badge-light-danger">Out of Stock</span>
-                                                    </td>
-                                                    <!--end::Status-->
-                                                    <!--begin::Qty-->
-                                                    <td class="text-end" data-order="46">
-                                                        <span class="text-dark fw-bold">46 PCS</span>
-                                                    </td>
-                                                    <!--end::Qty-->
-                                                </tr>
-                                                <tr>
-                                                    <!--begin::Item-->
-                                                    <td>
-                                                        <a href="#" class="text-dark text-hover-primary">HP Hyper LTR</a>
-                                                    </td>
-                                                    <!--end::Item-->
-                                                    <!--begin::Product ID-->
-                                                    <td class="text-end">#PXF-778</td>
-                                                    <!--end::Product ID-->
-                                                    <!--begin::Date added-->
-                                                    <td class="text-end">16 Jan, 2023</td>
-                                                    <!--end::Date added-->
-                                                    <!--begin::Price-->
-                                                    <td class="text-end">$4500</td>
-                                                    <!--end::Price-->
-                                                    <!--begin::Status-->
-                                                    <td class="text-end">
-                                                        <span class="badge py-3 px-4 fs-7 badge-light-primary">In Stock</span>
-                                                    </td>
-                                                    <!--end::Status-->
-                                                    <!--begin::Qty-->
-                                                    <td class="text-end" data-order="78">
-                                                        <span class="text-dark fw-bold">78 PCS</span>
-                                                    </td>
-                                                    <!--end::Qty-->
-                                                </tr>
-                                                <tr>
-                                                    <!--begin::Item-->
-                                                    <td>
-                                                        <a href="#" class="text-dark text-hover-primary">Dell 32 UltraSharp</a>
-                                                    </td>
-                                                    <!--end::Item-->
-                                                    <!--begin::Product ID-->
-                                                    <td class="text-end">#XGY-356</td>
-                                                    <!--end::Product ID-->
-                                                    <!--begin::Date added-->
-                                                    <td class="text-end">22 Dec, 2023</td>
-                                                    <!--end::Date added-->
-                                                    <!--begin::Price-->
-                                                    <td class="text-end">$1,060</td>
-                                                    <!--end::Price-->
-                                                    <!--begin::Status-->
-                                                    <td class="text-end">
-                                                        <span class="badge py-3 px-4 fs-7 badge-light-warning">Low Stock</span>
-                                                    </td>
-                                                    <!--end::Status-->
-                                                    <!--begin::Qty-->
-                                                    <td class="text-end" data-order="8">
-                                                        <span class="text-dark fw-bold">8 PCS</span>
-                                                    </td>
-                                                    <!--end::Qty-->
-                                                </tr>
-                                                <tr>
-                                                    <!--begin::Item-->
-                                                    <td>
-                                                        <a href="#" class="text-dark text-hover-primary">Google Pixel 6 Pro</a>
-                                                    </td>
-                                                    <!--end::Item-->
-                                                    <!--begin::Product ID-->
-                                                    <td class="text-end">#XVR-425</td>
-                                                    <!--end::Product ID-->
-                                                    <!--begin::Date added-->
-                                                    <td class="text-end">27 Dec, 2023</td>
-                                                    <!--end::Date added-->
-                                                    <!--begin::Price-->
-                                                    <td class="text-end">$1,060</td>
-                                                    <!--end::Price-->
-                                                    <!--begin::Status-->
-                                                    <td class="text-end">
-                                                        <span class="badge py-3 px-4 fs-7 badge-light-primary">In Stock</span>
-                                                    </td>
-                                                    <!--end::Status-->
-                                                    <!--begin::Qty-->
-                                                    <td class="text-end" data-order="124">
-                                                        <span class="text-dark fw-bold">124 PCS</span>
-                                                    </td>
-                                                    <!--end::Qty-->
-                                                </tr>
-                                                </tbody>
-                                                <!--end::Table body-->
-                                            </table>
-                                            <!--end::Table-->
-                                        </div>
-                                        <!--end::Card body-->
-                                    </div>
-                                    <!--end::Table Widget 5-->
                                 </div>
                                 <!--end::Col-->
                             </div>

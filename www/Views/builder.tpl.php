@@ -48,8 +48,9 @@
             return `<div class="float-right"><button class='btn btn-sm btn-primary drag-handle' ><i class="fa fa-arrows" aria-hidden="true"></i></button></div>`
         }
         function createImageEle(colSize = 12) {
+                const id = generateUniqueId(); // Générer un identifiant unique
             return $(
-                `<div class='col-sm-${colSize} bg-white p-2 component'>
+                `<div   id="${id}"   class='col-sm-${colSize} bg-white p-2 component'>
                     ${createDragHandle()}
                     <img width="260" border="0" src="https://static.ctctcdn.com/galileo/images/templates/Galileo_ImagePlaceholder/340x205.png" class="d-block mx-auto"/>
                 </div>'`
@@ -57,8 +58,9 @@
         }
 
         function createButtonEle(colSize = 12) {
+                const id = generateUniqueId(); // Générer un identifiant unique
             return $(
-                `<div class='col-sm-${colSize} bg-white p-2 component'>
+                `<div   id="${id}"  class='col-sm-${colSize} bg-white p-2 component'>
                     ${createDragHandle()}
                     <button class="btn btn-success d-block mx-auto">Click Me!</button>
                 </div>'`
@@ -66,9 +68,10 @@
         }
 
         function createconnexionFormEle(colSize = 12) {
+                const id = generateUniqueId(); // Générer un identifiant unique
             return $(
                 `
-                    <div class='col-sm-${colSize} bg-white p-2 component'>
+                    <div  id="${id}"   class='col-sm-${colSize} bg-white p-2 component'>
                           ${createDragHandle()}
                         <form>
                             <div class="mb-3">
@@ -91,10 +94,16 @@
         }
    
         function createRow() {
-            return $(`<div class='row m-0'></div>`);
+            const id = generateUniqueId(); // Générer un identifiant unique
+            return $(`<div id="${id}"  class='row m-0 dropzone'></div>`);
         }
         function createColumns() {
-            return $(`<div class='col bg-white dropzone'></div>`);
+                const id = generateUniqueId(); // Générer un identifiant unique
+            return $(`<div id="${id}" class='col bg-white dropzone'></div>`);
+        }
+
+        function generateUniqueId() {
+            return 'element-' + Math.random().toString(36).substr(2, 9);
         }
 
         const createEleFnMap = {
@@ -110,15 +119,12 @@
         const draggableClasses = {
             'mirror': 'opaque'
         }
-        // Sets the height and width of the draggable mirror to the same
         // height and width of the original element
         function setMirrorRect(event) {
             const originalRect = event.originalSource.getBoundingClientRect();
             event.mirror.style.height = `${Math.round(originalRect.height)}px`;
             event.mirror.style.width = `${Math.round(originalRect.width)}px`;
         }
-
-        // Custom Draggable class since the library doesn't support dropping out of specified
         // container. See https://github.com/Shopify/draggable/issues/85
         class CustomDraggable extends Draggable.Draggable {
             constructor(...args) {
@@ -147,9 +153,6 @@
                     this.overElement.classList.remove('draggable-over');
                     this.overElement = null;
                 }
-        
-
-
                 this.options.dropCallback({
                     sourceEvent: event,
                     source: event.data.originalSource,
@@ -159,10 +162,11 @@
             }
         }
 
+        console.log(document.querySelectorAll('.dropzone'))
         // Utility class for creating and destroying Sortable instances
         class LayoutDragging {
             create() {
-                this.sortable = new Draggable.Sortable(document.querySelector('.dropzone'), {
+                this.sortable = new Draggable.Sortable(document.querySelectorAll('.dropzone'), {
                     draggable: '.col-sm-12',
                     handle: '.drag-handle',
                     classes: draggableClasses
@@ -180,7 +184,7 @@
 
         const layoutDragging = new LayoutDragging();
         layoutDragging.create();
-        const draggableCards = new CustomDraggable(document.querySelector('.container-fluid'), {
+        const draggableCards = new CustomDraggable(document.querySelectorAll('.container-fluid'), {
             draggable: '.card',
             droppable: document.querySelectorAll('.dropzone'), // Custom option
             // splittable: '.email-body .row', // Custom Option
@@ -231,7 +235,7 @@
     // Convertir en objet JSON
     const positions = JSON.parse(storedPositions);
     Object.entries(positions).forEach(([name, x, y ]) => {
-        let container = document.querySelector('.dropzone');
+        let container = document.querySelectorAll('.dropzone');
         if(createEleFnMap[name]){
             const element = createEleFnMap[name]();
             const row = createRow();
@@ -244,13 +248,11 @@
             row.append(element.get(0));
             //document.querySelector('.dropzone').appendChild(row);
             //dropzone.appendChild(element.get(0));
-        
             }
         });
         } else {
         console.log('Aucun élément stocké dans le localStorage.');
         }
-
         const save = document.getElementById('save');
         save.addEventListener('click', function(e){
         
@@ -272,9 +274,7 @@
                 }
             });
         })
-            
-           
-         });
+    });
 
     </script>
 </body>
