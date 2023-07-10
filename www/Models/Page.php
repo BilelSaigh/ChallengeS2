@@ -9,16 +9,60 @@ require_once 'PageMemento.php';
 class Page extends Sql
 {
     protected Int $id = 0;
-    protected String $element;
-    protected float $x;
-    protected float $y;
+    protected String $name = "New website";
+    protected String $content;
+    protected $updated_at;
+    protected $created_at;
     protected Int $user_id;
 
-    // Ajoutez les propriétés pour le Memento
-    private $title;
-    private $content;
-    private $modificationDate;
-    private $html;
+    /**
+     * @return String
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param String $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updated_at;
+    }
+
+    /**
+     * @param mixed $updated_at
+     */
+    public function setUpdatedAt($updated_at): void
+    {
+        $this->updated_at = $updated_at;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt()
+    {
+        return $this->created_at;
+    }
+
+    /**
+     * @param mixed $created_at
+     */
+    public function setCreatedAt(): void
+    {
+        $this->created_at = date('d-m-Y-H-i-s');
+    }
+    protected $html;
 
     public function setId($id): void
     {
@@ -30,53 +74,6 @@ class Page extends Sql
         return $this->id;
     }
 
-    /**
-     * @return String
-     */
-    public function getElement(): string
-    {
-        return $this->element;
-    }
-
-    /**
-     * @param String $element
-     */
-    public function setElement(string $element): void
-    {
-        $this->element = $element;
-    }
-
-    /**
-     * @return float
-     */
-    public function getX(): float
-    {
-        return $this->x;
-    }
-
-    /**
-     * @param float $x
-     */
-    public function setX(float $x): void
-    {
-        $this->x = $x;
-    }
-
-    /**
-     * @return float
-     */
-    public function getY(): float
-    {
-        return $this->y;
-    }
-
-    /**
-     * @param float $y
-     */
-    public function setY(float $y): void
-    {
-        $this->y = $y;
-    }
 
     /**
      * @return Int
@@ -96,16 +93,6 @@ class Page extends Sql
 
     // Ajoutez les méthodes pour le Memento
 
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    public function setTitle($title)
-    {
-        $this->title = $title;
-    }
-
     public function getContent()
     {
         return $this->content;
@@ -121,9 +108,9 @@ class Page extends Sql
         return $this->modificationDate;
     }
 
-    public function setModificationDate($modificationDate)
+    public function setModificationDate()
     {
-        $this->modificationDate = $modificationDate;
+        $this->modificationDate = date('d-m-Y-H-i-s');
     }
 
     public function getHTML()
@@ -192,4 +179,12 @@ class Page extends Sql
         $statement = $pdo->prepare($query);
         $statement->execute([$title, $content, $modificationDate, $html, $id]);
     }
+
+
+    public function getMemento()
+    {
+        return  new PageMemento($this->getId(), $this->getTitle(), $this->getContent(), $this->getModificationDate());
+
+    }
+
 }

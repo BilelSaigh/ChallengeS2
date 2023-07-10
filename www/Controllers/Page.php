@@ -16,19 +16,19 @@ class Page extends Sql
     }
     public function createPage(): void
     {
+        $pageBuild = new Build();
+        //AND where name = $_GET["pageName"]
+        $content = $pageBuild->search(["user_id"=>$_SESSION['user']['id']]);
         $view = new View("Dash/pageBuilder","builder");
-        if($_POST){
-            $pageBuild = new Build();
+        $view->assign("content",$content);
+        if($_POST["action"]){
             //$_SESSION["user"]["id"]
-            $pageBuild->setUserId(1);
-            foreach($_POST as $element => $value){
-                $pageBuild->setElement($element);
-                if(is_array($value)){
-                    $pageBuild->setX($value["x"]);
-                    $pageBuild->setY($value["y"]);
-                }
-                $pageBuild->save();
-            }
+            $pageBuild->setUserId($_SESSION["user"]["id"]);
+            $pageBuild->setContent(cubrid_real_escape_string($_POST["content"]));
+            //verification d'existence
+            $pageBuild->setCreatedAt();
+            $pageBuild->save();
+
         }
 
     }
@@ -65,4 +65,8 @@ class Page extends Sql
 //        $view->assign("html", $html);
 
     }
+
+
+
+
 }

@@ -12,7 +12,6 @@ class Security{
 
     public function login(): void
 {
-    echo "Login";
     $connect = new ConnectUser();
     $user = new User();
     $view = new View("Auth/login", "front");
@@ -24,7 +23,7 @@ class Security{
             $email = $_POST["email"];
             $password = $_POST["pwd"];
 
-            if ($user->verifMail($email) && $user->verifypassword($password)) {
+            if ($user->verifMail(["email"=>$email]) && $user->verifypassword($password)) {
                 $user->generateToken();
                 echo "ça marche";
                 exit();

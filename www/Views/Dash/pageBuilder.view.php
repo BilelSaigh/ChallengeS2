@@ -48,6 +48,19 @@
     $(function () {
         $('#content-area').keditor();
         $('.fa-save').click(function (){
+            $.ajax({
+                type: 'post',
+                data: { action: 'send-content',
+                        content: $('#content-area').keditor('getContent', true)
+                },
+                success: function (data){
+                    console.log(data)
+                }
+                error: function (error) {
+                    console.log(error)
+
+                }
+            })
             console.log("ok")
             console.log("Content to save "+ $('#content-area').keditor('getContent', true))
         })
