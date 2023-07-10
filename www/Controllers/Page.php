@@ -33,20 +33,20 @@ class Page extends Sql
     }
 
     public function newPage(){
-        $installationFolder = __DIR__ .'/../Views/PageBuilder';
-        require_once $installationFolder . '/src/Core/helpers.php';
-        spl_autoload_register('phpb_autoload');
-
-        $config = require $installationFolder . '/config/config.example.php';
-        $builder = new PHPageBuilder($config);
-        $builder->handleRequest();
-
-        // Générer la page avec PHPageBuilder
-        $html = $builder->generate();
+//        $installationFolder = __DIR__ .'/../Views/PageBuilder';
+//        require_once $installationFolder . '/src/Core/helpers.php';
+//        spl_autoload_register('phpb_autoload');
+//
+//        $config = require $installationFolder . '/config/config.example.php';
+//        $builder = new PHPageBuilder($config);
+//        $builder->handleRequest();
+//
+//        // Générer la page avec PHPageBuilder
+//        $html = $builder->generate();
 
         // Afficher la page
         $view = new View("Dash/pageBuilder", "builder");
-        $view->assign("html", $html);
+//        $view->assign("html", $html);
 
     }
 }
