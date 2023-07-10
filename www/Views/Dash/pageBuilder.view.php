@@ -18,6 +18,17 @@
 <div data-keditor="html">
     <div id="content-area"></div>
 </div>
+<div class="row">
+    <div class="col">
+        <select id="versionDropdown" class="form-select">
+            <!-- Options pour les versions seront ajoutées dynamiquement -->
+        </select>
+        <button id="restoreButton" class="btn btn-primary my-2">Restaurer</button>
+    </div>
+</div>
+
+
+    
 <!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>-->
 <script type="text/javascript" src="Views/Dash/theme/dist/assets/plugins/custom/jquery-1.11.3/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="Views/Dash/theme/dist/assets/plugins/custom/bootstrap-3.4.1/js/bootstrap.min.js"></script>

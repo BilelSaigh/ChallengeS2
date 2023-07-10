@@ -3,7 +3,7 @@ namespace App\Core;
 
 abstract class Sql{
 
-    private $pdo;
+    protected $pdo;
     private $table;
 
     public function __construct(){
