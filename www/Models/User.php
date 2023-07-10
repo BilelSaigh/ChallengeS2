@@ -11,9 +11,27 @@ class User extends Sql
     protected String $email;
     protected String $pwd;
     protected  $token = null;
-    protected int $role ;
-    protected Int $status ;
+    protected String $role ;
+    protected Int $status =0;
     protected $date_inserted;
+
+    /**
+     * @param mixed $date_inserted
+     */
+    public function setDateInserted(): void
+    {
+        date_default_timezone_set('Europe/Paris');
+        $this->date_inserted = date('d-m-y h:i:s');
+    }
+
+    /**
+     * @param mixed $date_updated
+     */
+    public function setDateUpdated(): void
+    {
+        date_default_timezone_set('Europe/Paris');
+        $this->date_updated = date('d-m-y h:i:s');
+    }
     protected $date_updated;
     // private ?string $pwd = null;
 

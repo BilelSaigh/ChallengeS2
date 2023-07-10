@@ -64,7 +64,7 @@ class Security
                 $confMail->setAddress($_POST["email"]);
                 $user->generateToken();
                 $token = $user->getToken();
-                $user->setRole("1");
+                $user->setRole($_POST["role"]??"abonne");
                 $user->setEmail($_POST["email"]);
                 $user->setFirstname($_POST["firstname"]);
                 $user->setLastname($_POST["lastname"]);

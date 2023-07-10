@@ -6,6 +6,7 @@ use App\Forms\AddAdmin;
 use App\Forms\AddUser;
 use App\Forms\newEmail;
 use App\Forms\newPwd;
+use App\Models\Mail;
 use App\Models\User as ModelUser;
 
 class User
@@ -119,12 +120,24 @@ class User
         if($form->isSubmit()){
             $user = new ModelUser;
             $errors = Verificator::form($form->getConfig(), $_POST);
-            $user->verifMail($_POST["email"]);
+            $user->verifMail(["email"=>$_POST["email"]]);
             if(empty($errors)){
                 if ($this->addUser($user)){
-                    echo "ok";
+                    $confMail = new Mail();
+                    $confMail->setName($_POST["firstname"]);
+                    $confMail->setSubject("Mail de confirmation");
+                    $confMail->setAddress($_POST["email"]);
+                    $confMail->setMessage('
+                                          <div class="card-body">
+                                            <h5 class="card-title"> Adebc vous souhaite la bienvenue ! </h5>
+                                            <p class="card-text">Une fois votre compte validé vous pourrez commenter autant que vous le souhaitez !.</p>
+                                            <p class="card-text">Oublie pas le respect est OBLIGATOIRE chez nous ;)  .</p>
+                                                <button><a class="btn btn-primary" href="http://localhost:81/confirmation?key='.$token.'"> Confirmer votre mail. </a></button>)
+                                           </div>');
+                    $mail = $confMail->mail($confMail->initMail());
                 }
             }else{
+                $errors[] = "OUUPSS Something get wrong !";
                 $view->assign('errors', $errors);
             }
         }
@@ -142,7 +155,9 @@ class User
         $user->setLastname($_POST["lastname"]);
         $user->setEmail($_POST["email"]);
         $user->setPassword($_POST["pwd"]);
-        $user->setStatus($_POST["status"]);
+        $user->setRole($_POST["role"]??"abonne");
+        $user->setDateInserted();
+        $user->setDateUpdated();
         $user->save();
         return true;
 //        $view = new View("Dash/users", "back");

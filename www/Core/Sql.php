@@ -60,10 +60,19 @@ abstract class Sql{
 
     public function delete(): void
     {
-        echo $this->getId() ;
         $sql = "DELETE FROM ".$this->table." WHERE id = ".$this->getId();
         $queryPrepared = $this->pdo->prepare($sql);
         $queryPrepared->execute();
+    }
+
+    public function recupAll(): bool|array
+    {
+        $sql = "SELECT * FROM " . $this->table;
+        $queryPrepared = $this->pdo->prepare($sql);
+        $queryPrepared->execute();
+        return $queryPrepared->fetchAll();
+
+
     }
 
 }
