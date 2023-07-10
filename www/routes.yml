@@ -37,3 +37,15 @@
 /pagebuilder:
   controller: Page
   action: newpage
+
+/article/create:
+  controller: ArticleController
+  action: create
+
+/article/view:
+  controller: ArticleController
+  action: list
+
+/article/add-comment:
+  controller: ArticleController
+  action: addComment
