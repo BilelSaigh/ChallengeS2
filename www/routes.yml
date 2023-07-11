@@ -47,5 +47,11 @@
   action: list
 
 /article/add-comment:
-  controller: ArticleController
+  controller: CommentController
   action: addComment
+
+/article/report-comment:
+  controller: CommentController
+  action: reportComment
+
+

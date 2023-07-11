@@ -20,4 +20,25 @@ class CommentModel extends Sql
         $stmt->execute([$articleId]);
         return $stmt->fetchAll();
     }
+    public function increaseReportCount($commentId)
+    {
+        $query = "UPDATE comments SET report_count = report_count + 1 WHERE id = ?";
+        $stmt = $this->getPdo()->prepare($query);
+        $stmt->execute([$commentId]);
+    }
+
+    public function getReportCount($commentId)
+    {
+        $query = "SELECT report_count FROM comments WHERE id = ?";
+        $stmt = $this->getPdo()->prepare($query);
+        $stmt->execute([$commentId]);
+        return $stmt->fetchColumn();
+    }
+
+    public function deleteComment($commentId)
+    {
+        $query = "DELETE FROM comments WHERE id = ?";
+        $stmt = $this->getPdo()->prepare($query);
+        $stmt->execute([$commentId]);
+    }
 }

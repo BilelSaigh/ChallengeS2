@@ -46,39 +46,23 @@ public function list(): void
     $search = substr($search, 0, 20); // Limiter à 20 caractères
 
     // Récupérer tous les articles
-$articles = $this->articleModel->getAllArticles($sort, $search);
+    $articles = [];
 
-// Créer un tableau pour stocker les commentaires par article
-$commentsByArticle = [];
-
-// Récupérer les commentaires pour chaque article
-foreach ($articles as $article) {
-    $comments = $this->commentModel->getCommentsByArticleId($article['id']);
-    $commentsByArticle[$article['id']] = $comments;
-}
-
-// Passer à la vue les articles et les commentaires associés
-include 'Views/Main/view_article.view.php';
-
-}
-
-
-    public function addComment()
-{
-    if (isset($_POST['article_id'], $_POST['comment'])) {
-        $articleId = $_POST['article_id'];
-        $comment = $_POST['comment'];
-
-        // Appel à la méthode createComment() du modèle CommentModel
-        $this->commentModel->createComment($articleId, $comment);
-
+    if (!empty($search)) {
+        $articles = $this->articleModel->getAllArticles($sort, $search);
     }
-}
-    public function showComments()
-    {
-        $articleId = $_POST['article_id'];
-        $comments = $this->commentModel->getCommentsByArticleId($articleId);
-        // Affichage des commentaires
-        include 'Views/Main/view_comments.view.php';
+
+    // Créer un tableau pour stocker les commentaires par article
+    $commentsByArticle = [];
+
+    // Récupérer les commentaires pour chaque article
+    foreach ($articles as $article) {
+        $comments = $this->commentModel->getCommentsByArticleId($article['id']);
+        $commentsByArticle[$article['id']] = $comments;
     }
+
+    // Passer à la vue les articles et les commentaires associés
+    include 'Views/Main/view_article.view.php';
+}
+
 }

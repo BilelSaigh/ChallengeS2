@@ -14,22 +14,29 @@ class ArticleModel extends Sql
         $stmt->execute([$title, $userId, $content]);
         echo "Les données ont été insérées";
     }
-   public function getAllArticles($sort = 'desc', $search = '')
+    public function getAllArticles($sort = 'desc', $search = '')
     {
         $sql = "SELECT articles.id, articles.title, articles.content, articles.created_at, users.firstname, users.lastname 
                 FROM articles 
                 JOIN esgi_user AS users ON articles.user_id = users.id ";
-
+    
         if (!empty($search)) {
-            $sql .= "WHERE articles.title LIKE '%$search%' OR articles.content LIKE '%$search%' ";
+            $sql .= "WHERE articles.title LIKE :search OR articles.content LIKE :search ";
         }
-
+    
         $sql .= "ORDER BY articles.created_at $sort";
-
-        $queryPrepared = $this->getPdo()->query($sql);
-        return $queryPrepared->fetchAll();
+    
+        $stmt = $this->getPdo()->prepare($sql);
+    
+        if (!empty($search)) {
+            $searchTerm = "%$search%";
+            $stmt->bindParam(':search', $searchTerm);
+        }
+    
+        $stmt->execute();
+    
+        return $stmt->fetchAll();
     }
-
-
+    
 
 }
