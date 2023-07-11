@@ -6,7 +6,7 @@ use PHPMailer\PHPMailer\Exception;
 
 //Load Composer's autoloader
 require_once __DIR__ . '/../vendor/autoload.php';
-class Mail {
+class Mail extends Page{
     protected String $message;
     protected String $address;
     protected String $subject;

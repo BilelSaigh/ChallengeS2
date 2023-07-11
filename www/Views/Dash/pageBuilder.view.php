@@ -16,7 +16,9 @@
 
 <body>
 <div data-keditor="html">
-    <div id="content-area"></div>
+    <div id="content-area">
+        <?php if(!empty($page)) :echo $page->getContent() ;  endif ?>
+    </div>
 </div>
 <div class="row">
     <div class="col">
@@ -50,19 +52,19 @@
         $('.fa-save').click(function (){
             $.ajax({
                 type: 'post',
+                url:'/pagebuilder',
                 data: { action: 'send-content',
                         content: $('#content-area').keditor('getContent', true)
                 },
                 success: function (data){
                     console.log(data)
-                }
+                },
                 error: function (error) {
                     console.log(error)
 
                 }
             })
-            console.log("ok")
-            console.log("Content to save "+ $('#content-area').keditor('getContent', true))
+            // console.log("Content to save "+ $('#content-area').keditor('getContent', true))
         })
     });
 </script>

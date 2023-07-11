@@ -40,7 +40,7 @@
 
 /pagebuilder:
   controller: Page
-  action: newpage
+  action: createPage
 
 /profil:
   controller: User

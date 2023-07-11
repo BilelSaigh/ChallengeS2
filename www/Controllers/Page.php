@@ -3,6 +3,8 @@ namespace App\Controllers;
 
 use App\Core\Sql;
 use App\Core\View;
+use App\Models\Caretaker;
+use App\Models\Originator;
 use App\Models\Page as Build;
 use App\Models\PageMemento;
 
@@ -17,18 +19,33 @@ class Page extends Sql
     public function createPage(): void
     {
         $pageBuild = new Build();
+        $originator = new Originator();
         //AND where name = $_GET["pageName"]
-        $content = $pageBuild->search(["user_id"=>$_SESSION['user']['id']]);
-        $view = new View("Dash/pageBuilder","builder");
-        $view->assign("content",$content);
-        if($_POST["action"]){
-            //$_SESSION["user"]["id"]
-            $pageBuild->setUserId($_SESSION["user"]["id"]);
-            $pageBuild->setContent(cubrid_real_escape_string($_POST["content"]));
-            //verification d'existence
-            $pageBuild->setCreatedAt();
-            $pageBuild->save();
+        $pageBuild = $pageBuild->search(["user_id"=>$_SESSION['user']['id']]);
+        $originator->setState($pageBuild->getContent());
+        $view = new View("Dash/pageBuilder", "builder");
+        $view->assign("page",$pageBuild);
+        if(!empty($_POST["action"])){
+            $caretaker = new Caretaker($originator);
+            if (empty($pageBuild)){
+                $pageBuild->setUserId($_SESSION["user"]["id"]);
+            }
+            $pageBuild->setContent($_POST["content"][0]);
+            $pageBuild->setUpdatedAt();
+            $pageBuild->setStatus(0);
+            $caretaker->backup("test1");
+            $caretaker->backup("test9");
+            $caretaker->backup("test10");
+            $caretaker->backup("testml");
+            $caretaker->backup("testRT");
+//            $pageBuild->save();
+            echo "\n";
+            $caretaker->showHistory();
 
+            echo "\nClient: Now, let's rollback!\n\n";
+            $caretaker->undo();
+            echo "\nClient: Once more!\n\n";
+            $caretaker->undo();
         }
 
     }
