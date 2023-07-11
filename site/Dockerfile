@@ -13,10 +13,8 @@ RUN apt-get install -y libpq-dev \
 
 
 RUN apt-get install postgresql-client -y
-RUN apt-get install install
+RUN apt-get install 
 RUN apt-get update -y && apt-get install -y libpng-dev libfreetype6-dev libyaml-dev
-
-RUN composer install
 
 
 RUN  docker-php-ext-configure gd --with-freetype

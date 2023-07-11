@@ -19,15 +19,18 @@ class Page extends Sql
         $pageBuild = new Build();
         //AND where name = $_GET["pageName"]
         $content = $pageBuild->search(["user_id"=>$_SESSION['user']['id']]);
-        $view = new View("Dash/pageBuilder","builder");
+        $view = new View("Dash/pageBuilder", "builder");
         $view->assign("content",$content);
         if($_POST["action"]){
             //$_SESSION["user"]["id"]
             $pageBuild->setUserId($_SESSION["user"]["id"]);
-            $pageBuild->setContent(cubrid_real_escape_string($_POST["content"]));
+            $pageBuild->setContent($_POST["content"][0]);
             //verification d'existence
             $pageBuild->setCreatedAt();
-            $pageBuild->save();
+            $pageBuild->setUpdatedAt();
+            var_dump($pageBuild);
+            $pageBuild->insert();
+            echo "ok";
 
         }
 

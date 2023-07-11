@@ -39,8 +39,8 @@
   action: setting
 
 /pagebuilder:
-  controller: Page
-  action: newpage
+  controller: Pages
+  action: createPage
 
 /profil:
   controller: User

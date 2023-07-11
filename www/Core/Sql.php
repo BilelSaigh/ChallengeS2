@@ -24,7 +24,6 @@ abstract class Sql{
         $columnsToDeleted =get_class_vars(get_class());
         $columns = array_diff_key($columns, $columnsToDeleted);
         unset($columns["id"]);
-
         if(is_numeric($this->getId()) && $this->getId()>0)
         {
             $columnsUpdate = [];
@@ -33,25 +32,31 @@ abstract class Sql{
                 $columnsUpdate[]= $key."=:".$key;
             }
             $queryPrepared = $this->pdo->prepare("UPDATE ".$this->table." SET ".implode(",",$columnsUpdate)." WHERE id=".$this->getId());
-
         }else{
             $queryPrepared = $this->pdo->prepare("INSERT INTO ".$this->table." (".implode(",", array_keys($columns)).") 
                             VALUES (:".implode(",:", array_keys($columns)).")");
         }
-
         $queryPrepared->execute($columns);
     }
+    public function insert()
+    {
+        $sql = 'INSERT INTO esgi_page (name,content,updated_at,created_at,user_id)
+        VALUES ("new Website","tests","10-07-2023-23-12-27","10-07-2023-23-12-27","5")';
+        $queryPrepared = $this->pdo->prepare($sql);
+        $errorInfo = $queryPrepared->errorInfo();
+        var_dump($errorInfo); 
+       
+        $queryPrepared->execute();
+         }
 
     public function search(array $element)
 {
     $toSelect = [];
     $params = [];
-
     foreach ($element as $key => $value) {
         $toSelect[] = $key . "=:" . $key;
         $params[':' . $key] = $value;
     }
-
     $sql = "SELECT * FROM " . $this->table . " WHERE " . implode(' AND ', $toSelect);
     $queryPrepared = $this->pdo->prepare($sql);
     $queryPrepared->execute($params);
