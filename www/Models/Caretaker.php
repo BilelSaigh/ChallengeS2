@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Models;
-class Caretaker
+use App\Core\Sql;
+class Caretaker extends Sql
 {
     /**
      * @var Memento[]
@@ -22,6 +23,8 @@ class Caretaker
     {
         echo "\nCaretaker: Saving Originator's state...\n";
         $this->mementos[] = $this->originator->save();
+        $backup = new PageMemento($this->mementos);
+        $backup->save();
         $this->originator->setState($newState);
     }
 
@@ -31,8 +34,8 @@ class Caretaker
             return;
         }
         $memento = array_pop($this->mementos);
-
-        echo "Caretaker: Restoring state to: " . $memento->getName() . "\n";
+        var_dump($memento);
+        echo "Caretaker: Restoring state to: " . $memento["id"]. "\n";
         try {
             $this->originator->restore($memento);
         } catch (\Exception $e) {
@@ -43,9 +46,12 @@ class Caretaker
     public function showHistory(): void
     {
         echo "Caretaker: Here's the list of mementos:\n";
-        var_dump($this->mementos);
-        foreach ($this->mementos as $memento) {
-            echo $memento->getName() . "\n";
+        $allVersions = PageMemento::getAllVersions();
+        foreach ($allVersions as $version) {
+            echo "Version: " . $version['id'] . ", Date: " . $version['date'] . "\n";
+
         }
     }
+
+
 }

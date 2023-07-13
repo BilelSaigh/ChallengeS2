@@ -2,6 +2,7 @@
 
 namespace App\Memento\Interfaces;
 
+
 interface IMemento
 {
     public function getName(): string;

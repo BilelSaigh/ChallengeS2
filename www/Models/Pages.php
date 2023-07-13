@@ -8,26 +8,66 @@ use App\Models\PageMemento;
 class Pages extends Sql
 {
     protected Int $id = 0;
-    protected String $name = "New website";
-    protected String $content;
+    protected String $title = "New website";
+    protected String $description = "Ceci est ma super page";
+    protected Int $status = 0;
     protected $updated_at;
-    protected $created_at;
-    protected Int $user_id;
+
 
     /**
      * @return String
      */
-    public function getName(): string
+    public function getDescription(): string
     {
-        return $this->name;
+        return $this->description;
     }
 
     /**
-     * @param String $name
+     * @param String $description
      */
-    public function setName(string $name): void
+    public function setDescription(string $description): void
     {
-        $this->name = $name;
+        $this->description = $description;
+    }
+
+    /**
+     * @param Int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return Int
+     */
+    public function getStatus(): int
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param Int $status
+     */
+    public function setStatus(int $status): void
+    {
+        $this->status = $status;
+    }
+
+    /**
+     * @return String
+     */
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param String $title
+     */
+    public function setTitle(string $title): void
+    {
+        $this->title = $title;
     }
 
     /**
@@ -41,85 +81,15 @@ class Pages extends Sql
     /**
      * @param mixed $updated_at
      */
-    public function setUpdatedAt(): void
+    public function setUpdatedAt($updated_at): void
     {
-        $this->updated_at =  date('d-m-Y-H-i-s');
+        $this->updated_at = $updated_at;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getCreatedAt()
+    public function showAllPages():array
     {
-        return $this->created_at;
+        return parent::recupAll();
     }
-
-    /**
-     * @param mixed $created_at
-     */
-    public function setCreatedAt(): void
-    {
-        $this->created_at = date('d-m-Y-H-i-s');
-    }
-    public function setId($id): void
-    {
-        $this->id = $id;
-    }
-
-    public function getId(): Int
-    {
-        return $this->id;
-    }
-
-
-    /**
-     * @return Int
-     */
-    public function getUserId(): int
-    {
-        return $this->user_id;
-    }
-
-    /**
-     * @param Int $user_id
-     */
-    public function setUserId(int $user_id): void
-    {
-        $this->user_id = $user_id;
-    }
-
-    // Ajoutez les méthodes pour le Memento
-
-    public function getContent()
-    {
-        return $this->content;
-    }
-
-    public function setContent($content): void
-    {
-        $this->content = $content;
-    }
-
-    public function getModificationDate()
-    {
-        return $this->modificationDate;
-    }
-
-    public function setModificationDate()
-    {
-        $this->modificationDate = date('d-m-Y-H-i-s');
-    }
-
-    public function getHTML()
-    {
-        return $this->html;
-    }
-
-    public function setHTML($html)
-    {
-        $this->html = $html;
-    }
-
     public function createMemento()
     {
         // Récupérer la connexion PDO depuis la classe parente

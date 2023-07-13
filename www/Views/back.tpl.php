@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Ma super page</title>
-    <meta name="description" content="Ceci est ma super page">
+    <meta name="description" content="Ceci est mon projet de fin d année ">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta.2/css/bootstrap.css" rel="stylesheet" type="text/css" />
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <link href="Views/Dash/theme/dist/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
@@ -3632,6 +3632,7 @@
 
     <!--end::Global Javascript Bundle-->
     <!--begin::Custom Javascript(used for this page only)-->
+    <script src="Views/Dash/theme/dist/assets/js/custom/apps/projects/list/list.js"></script>
     <script src="Views/Dash/theme/dist/assets/js/custom/account/settings/signin-methods.js"></script>
     <script src="Views/Dash/theme/dist/assets/js/custom/account/settings/profile-details.js"></script>
     <script src="Views/Dash/theme/dist/assets/js/custom/account/settings/deactivate-account.js"></script>

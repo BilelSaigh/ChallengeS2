@@ -12,26 +12,35 @@
     <!-- End of KEditor styles -->
     <link rel="stylesheet" type="text/css" href="Views/Dash/theme/dist/assets/plugins/custom/code-prettify/src/prettify.css" />
     <link rel="stylesheet" type="text/css" href="Views/Dash/theme/dist/assets/css/examples.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+
 </head>
 
 <body>
-<div data-keditor="html">
-    <div id="content-area">
-        <?php if(!empty($page)) :echo $page->getContent() ;  endif ?>
+<main>
+
+    <div class="row d-flex">
+        <div class="col-6">
+            <select id="versionDropdown" class="form-select">
+                <!-- Options pour les versions seront ajoutées dynamiquement -->
+            </select>
+            <button id="restoreButton" class="btn btn-primary my-2">Restore last version</button>
+        </div>
+        <div class="col-6">
+            <a  id="publish" href="/publish?page=page" class="btn btn-primary my-2" target="_blank">Publish</a>
+        </div>
     </div>
-</div>
-<div class="row">
-    <div class="col">
-        <select id="versionDropdown" class="form-select">
-            <!-- Options pour les versions seront ajoutées dynamiquement -->
-        </select>
-        <button id="restoreButton" class="btn btn-primary my-2">Restaurer</button>
+    <div data-keditor="html">
+        <div id="content-area">
+            <?php if(!empty($page)) :echo $page->getContent() ;  endif ?>
+        </div>
     </div>
-</div>
+</main>
 
 
-    
-<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>-->
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
 <script type="text/javascript" src="Views/Dash/theme/dist/assets/plugins/custom/jquery-1.11.3/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="Views/Dash/theme/dist/assets/plugins/custom/bootstrap-3.4.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="Views/Dash/theme/dist/assets/plugins/custom/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
@@ -52,12 +61,44 @@
         $('.fa-save').click(function (){
             $.ajax({
                 type: 'post',
-                url:'/pagebuilder',
+                url:'/updatePage',
                 data: { action: 'send-content',
                         content: $('#content-area').keditor('getContent', true)
                 },
                 success: function (data){
                     console.log(data)
+                    $('#content-area').html($('#content-area').keditor('getContent', true));
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Sauvegarde réussie',
+                        text: 'Les modifications ont été enregistrées avec succès!',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+
+
+                },
+                error: function (error) {
+                    console.log(error)
+
+                }
+            })
+            // console.log("Content to save "+ $('#content-area').keditor('getContent', true))
+        })
+        $('#restoreButton').click(function (){
+            $.ajax({
+                type: 'post',
+                url:'/updatePage',
+                data: { action: 'undo',
+                },
+                success: function (data){
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Restauration réussie',
+                        text: 'La version précédente a été restaurée avec succès!',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                 },
                 error: function (error) {
                     console.log(error)

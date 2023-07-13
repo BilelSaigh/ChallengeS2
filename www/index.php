@@ -37,6 +37,7 @@ $uri = (empty($uri))?"/":$uri;
 // $controller->login();
 
 if(!file_exists("routes.yml")) {
+    http_response_code(404);
     die("Le fichier de routing n'existe pas");
 }
 
@@ -44,7 +45,8 @@ $routes = \yaml_parse_file("routes.yml");
 
 //Page 404
 if(empty($routes[$uri])) {
-    die("Page 404");
+    http_response_code(404);
+
 }
 
 if(empty($routes[$uri]["controller"]) || empty($routes[$uri]["action"])) {

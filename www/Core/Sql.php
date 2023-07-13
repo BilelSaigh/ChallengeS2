@@ -38,17 +38,6 @@ abstract class Sql{
         }
         $queryPrepared->execute($columns);
     }
-    public function insert()
-    {
-        $sql = 'INSERT INTO esgi_page (name,content,updated_at,created_at,user_id)
-        VALUES ("new Website","tests","10-07-2023-23-12-27","10-07-2023-23-12-27","5")';
-        $queryPrepared = $this->pdo->prepare($sql);
-        $errorInfo = $queryPrepared->errorInfo();
-        var_dump($errorInfo); 
-       
-        $queryPrepared->execute();
-         }
-
     public function search(array $element)
 {
     $toSelect = [];
@@ -60,7 +49,20 @@ abstract class Sql{
     $sql = "SELECT * FROM " . $this->table . " WHERE " . implode(' AND ', $toSelect);
     $queryPrepared = $this->pdo->prepare($sql);
     $queryPrepared->execute($params);
-    return $queryPrepared->fetchObject(get_called_class());
+   return $queryPrepared->fetchObject(get_called_class());
+}
+    public function multipleSearch(array $element)
+{
+    $toSelect = [];
+    $params = [];
+    foreach ($element as $key => $value) {
+        $toSelect[] = $key . "=:" . $key;
+        $params[':' . $key] = $value;
+    }
+    $sql = "SELECT * FROM " . $this->table . " WHERE " . implode(' AND ', $toSelect);
+    $queryPrepared = $this->pdo->prepare($sql);
+    $queryPrepared->execute($params);
+   return $queryPrepared->fetchAll();
 }
 
     public function delete(): void
@@ -77,6 +79,15 @@ abstract class Sql{
         $queryPrepared->execute();
         return $queryPrepared->fetchAll();
 
+
+    }
+//à ameliorer
+    public function lastInsert($search)
+    {
+        $sql = "SELECT * FROM ". $this->table. " WHERE page_id =".$search." ORDER BY updated_at DESC LIMIT 1";
+        $queryPrepared = $this->pdo->prepare($sql);
+        $queryPrepared->execute();
+        return $queryPrepared->fetchObject(get_called_class());
 
     }
 

@@ -1,5 +1,4 @@
 <?php $listTitle  = "Users List" ; ?>
-    <!--begin::Navbar-->
     <div class="card">
         <div class="card-header border-0 pt-6">
     <!--begin::Card header-->

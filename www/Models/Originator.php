@@ -1,5 +1,7 @@
 <?php
     namespace App\Models;
+    use App\Core\Sql;
+
     class Originator
     {
         private $state;
@@ -15,17 +17,11 @@
          /**
          * Saves the current state inside a memento.
          */
-//        public function save(): Memento
-//        {
-//    echo "oui";
-//    var_dump($this->state);
-//    return new Memento($this->state);
-//    }
+        public function save(): Memento
+        {
+            return new Memento($this->state);
+        }
 
-    public  function save(): Memento
-    {
-        return new Memento($this->state);
-    }
 
         /**
          * Restores the Originator's state from a memento object.

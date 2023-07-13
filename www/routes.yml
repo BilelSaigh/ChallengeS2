@@ -38,9 +38,21 @@
   controller: User
   action: setting
 
-/pagebuilder:
+/pages:
+    controller: Page
+    action : listPages
+
+/updatepage:
   controller: Page
-  action: createPage
+  action: updatePage
+
+/showpage:
+  controller: Page
+  action: showPage
+
+/publish:
+  controller: Page
+  action: publish
 
 /profil:
   controller: User
@@ -53,3 +65,4 @@
 /error404:
   controller: Error
   action: error404
+

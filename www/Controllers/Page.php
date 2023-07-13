@@ -7,7 +7,10 @@ use App\Models\Caretaker;
 use App\Models\Originator;
 use App\Models\Page as Build;
 use App\Models\PageMemento;
+use App\Models\User;
 
+use App\Models\Pages;
+use DateTime;
 use PHPageBuilder\PHPageBuilder;
 use PHPageBuilder\Modules\GrapesJS\PageBuilder;
 class Page extends Sql
@@ -16,38 +19,65 @@ class Page extends Sql
     {
         $view = new View("Dash/pageBuilder","builder");
     }
-    public function createPage(): void
+
+    public function showPage():void
     {
-        $pageBuild = new Build();
+        $lastpage= new Build();
         $originator = new Originator();
         //AND where name = $_GET["pageName"]
-        $pageBuild = $pageBuild->search(["user_id"=>$_SESSION['user']['id']]);
-        $originator->setState($pageBuild->getContent());
+        $_SESSION['page'] = $_GET["id"];
+        $lastpage = $lastpage->lastInsert($_SESSION['page']);
         $view = new View("Dash/pageBuilder", "builder");
-        $view->assign("page",$pageBuild);
-        if(!empty($_POST["action"])){
-            $caretaker = new Caretaker($originator);
-            if (empty($pageBuild)){
-                $pageBuild->setUserId($_SESSION["user"]["id"]);
-            }
+        $view->assign("page",$lastpage);
+    }
+    public function updatePage(): void
+    {
+//        $lastpage= new Build();
+//        $originator = new Originator();
+//        //AND where name = $_GET["pageName"]
+//        $lastpage = $lastpage->search(["user_id"=>$_SESSION['user']['id'],"page_id"=>$_GET["id"]]);
+//        $pageId = $_GET["id"];
+//        $originator->setState($lastpage);
+//        $caretaker = new Caretaker($originator);
+//        $view = new View("Dash/pageBuilder", "builder");
+//        $view->assign("page",$lastpage);
+        if(!empty($_POST["action"] ) && $_POST["action"]=== "send-content"){
+//            $caretaker->backup($lastpage);
+            $pageBuild = new Build();
             $pageBuild->setContent($_POST["content"][0]);
+            $pageBuild->setUserId($_SESSION['user']['id']);
+            $pageBuild->setPageId( $_SESSION['page']);
             $pageBuild->setUpdatedAt();
             $pageBuild->setStatus(0);
-            $caretaker->backup("test1");
-            $caretaker->backup("test9");
-            $caretaker->backup("test10");
-            $caretaker->backup("testml");
-            $caretaker->backup("testRT");
-//            $pageBuild->save();
+            $pageBuild->save();
+
+
+
+//            $caretaker->backup("test1");
+//            $caretaker->backup("test9");
+//            $caretaker->backup("test10");
+//            $caretaker->backup("testml");
+//            $caretaker->backup("testRT");
+//            echo "\n";
+//            $caretaker->showHistory();
+//            echo "\nClient: Now, let's rollback!\n\n";
+//            $caretaker->undo();
+//            echo "\nClient: Once more!\n\n";
+//            $caretaker->undo();
+        }else if(!empty($_POST["action"]) && $_POST["action"]=== "undo"){
             echo "\n";
-            $caretaker->showHistory();
-
-            echo "\nClient: Now, let's rollback!\n\n";
-            $caretaker->undo();
-            echo "\nClient: Once more!\n\n";
-            $caretaker->undo();
+//            $oldContent = $lastpage->multipleSearch((["name" => 'New Website', "user_id" => $_SESSION["user"]["id"]]));
+//            foreach ($oldContent as $content){
+//                $obj = $content->mementos[0]->getState();
+//                $content = $obj->content;
+//                echo $content;
+//                $caretaker->backup($content);
+//            }
+//            var_dump($caretaker);
+//            $caretaker->showHistory();
+//            echo "\nClient: Now, let's rollback!\n\n";
+//            $caretaker->undo();
         }
-
     }
     public function restorePageFromMemento()
     {
@@ -65,24 +95,41 @@ class Page extends Sql
         // ... Autres actions ou rendu de vues ...
     }
 
-    public function newPage(){
-//        $installationFolder = __DIR__ .'/../Views/PageBuilder';
-//        require_once $installationFolder . '/src/Core/helpers.php';
-//        spl_autoload_register('phpb_autoload');
-//
-//        $config = require $installationFolder . '/config/config.example.php';
-//        $builder = new PHPageBuilder($config);
-//        $builder->handleRequest();
-//
-//        // Générer la page avec PHPageBuilder
-//        $html = $builder->generate();
-
+    public function publish()
+    {
+        $page = new Build();
+        $page = $page->search(["user_id"=>$_SESSION['user']['id']]);
+        $page->setStatus(1);
+        $page->save();
         // Afficher la page
-        $view = new View("Dash/pageBuilder", "builder");
-//        $view->assign("html", $html);
+        $view = new View("Dash/pageBuild", "cleanPage");
+        $view->assign("page",$page);
 
     }
 
+
+    public function listPages(): void
+    {
+        $page = new Pages();
+        $user = new User();
+        $pages = $page->showAllPages();
+        $users = $user->showAllUsers();
+        $subscribers = $this->countUsersWithRoleZero($users,3);
+        $team = $this->countUsersWithRoleZero($users,2) + $this->countUsersWithRoleZero($users,1) + $this->countUsersWithRoleZero($users,0);
+        $view = new View("Dash/pages", "back");
+        $view->assign("page", $pages);
+        $view->assign("subscribers", $subscribers);
+        $view->assign("users", $users);
+        $view->assign("team", $team);
+
+    }
+    function countUsersWithRoleZero($users,$indice): int
+    {
+        $filteredUsers = array_filter($users, function ($user) use ($indice) {
+            return $user['role'] === $indice;
+        });
+        return count($filteredUsers);
+    }
 
 
 
