@@ -168,7 +168,6 @@ class User
         $user = new ModelUser();
         $user->setId($_SESSION["user"]["id"]);
         $user->deleteUser();
-        var_dump($user);
         header('Location:login');
     }
 

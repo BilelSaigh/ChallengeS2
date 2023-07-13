@@ -10,9 +10,11 @@ class User extends Sql
     protected String $lastname;
     protected String $email;
     protected String $pwd;
+    protected String $logo;
     protected  $token = null;
     protected String $role ;
     protected Int $status =0;
+
     protected $date_inserted;
 
     /**
@@ -49,6 +51,22 @@ class User extends Sql
     public function setId(int $id): void
     {
         $this->id = $id;
+    }
+
+    /**
+     * @return String
+     */
+    public function getLogo(): string
+    {
+        return $this->logo;
+    }
+
+    /**
+     * @param String $logo
+     */
+    public function setLogo(string $logo): void
+    {
+        $this->logo = $logo;
     }
 
     /**

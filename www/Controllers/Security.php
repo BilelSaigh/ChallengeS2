@@ -35,6 +35,8 @@ class Security
                         'email'     => $verifiedUser->getEmail(),
                         'token'     => $verifiedUser->getToken(),
                         'status'    => $verifiedUser->getStatus(),
+                        'logo'    => $verifiedUser->getLogo(),
+                        'role'    => $verifiedUser->getRole(),
                     ];
                     $_SESSION["user"] = $userData;
                     header('Location: /profil');
@@ -117,8 +119,7 @@ class Security
             $user->setToken();
             $user->save();
             session_destroy();
-            var_dump($_SESSION['user']["token"]);
-            header("Location: /login");
+            header('Location: login');
         }
         $error = new Error();
         $error->errorRedirection(404);

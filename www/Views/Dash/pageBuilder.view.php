@@ -35,6 +35,15 @@
             <?php if(!empty($page)) :echo $page->getContent() ;  endif ?>
         </div>
     </div>
+
+    <?php
+    var_dump($_SESSION['user']);
+    if($_SESSION['user']['role']===0): ?>
+    <div class="row">
+        <button id="deletePage" class="btn btn-danger my-2">Delete page</button>
+    </div>
+    <?php endif; ?>
+
 </main>
 
 
