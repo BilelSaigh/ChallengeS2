@@ -12,7 +12,7 @@ class User extends Sql
     protected String $pwd;
     protected String $logo;
     protected  $token = null;
-    protected String $role ;
+    protected Int $role ;
     protected Int $status =0;
 
     protected $date_inserted;
@@ -163,7 +163,7 @@ class User extends Sql
     /**
      * @return int $role
      */
-    public function getRole($role): int
+    public function getRole(): int
     {
         return $this->role;
     }

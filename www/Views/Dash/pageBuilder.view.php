@@ -30,19 +30,18 @@
             <a  id="publish" href="/publish?page=page" class="btn btn-primary my-2" target="_blank">Publish</a>
         </div>
     </div>
+    <?php
+    if($_SESSION['user']['role']===0): ?>
+    <div class="row">
+        <button id="deletePage" class="btn btn-danger my-2">Delete page</button>
+    </div>
+    <?php endif; ?>
     <div data-keditor="html">
         <div id="content-area">
             <?php if(!empty($page)) :echo $page->getContent() ;  endif ?>
         </div>
     </div>
 
-    <?php
-    var_dump($_SESSION['user']);
-    if($_SESSION['user']['role']===0): ?>
-    <div class="row">
-        <button id="deletePage" class="btn btn-danger my-2">Delete page</button>
-    </div>
-    <?php endif; ?>
 
 </main>
 
@@ -114,7 +113,24 @@
 
                 }
             })
+
             // console.log("Content to save "+ $('#content-area').keditor('getContent', true))
+        })
+        $('#deletePage').click(function () {
+            $.ajax({
+                type: 'post',
+                url: '/deletePage',
+                data: {
+                    action: 'delete',
+                },
+                success: function (data) {
+                     location.assign('pages')
+                },
+                error: function (error) {
+                    console.log(error)
+
+                }
+            })
         })
     });
 </script>

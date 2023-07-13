@@ -54,6 +54,10 @@
   controller: Page
   action: publish
 
+/deletepage:
+  controller: Page
+  action: deletePage
+
 /profil:
   controller: User
   action: home

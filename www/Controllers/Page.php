@@ -28,6 +28,7 @@ class Page extends Sql
         $_SESSION['page'] = $_GET["id"];
         $lastpage = $lastpage->lastInsert($_SESSION['page']);
         $view = new View("Dash/pageBuilder", "builder");
+
         $view->assign("page",$lastpage);
     }
     public function updatePage(): void
@@ -50,8 +51,6 @@ class Page extends Sql
             $pageBuild->setUpdatedAt();
             $pageBuild->setStatus(0);
             $pageBuild->save();
-
-
 
 //            $caretaker->backup("test1");
 //            $caretaker->backup("test9");
@@ -131,6 +130,12 @@ class Page extends Sql
         return count($filteredUsers);
     }
 
+    public function deletePage():void
+    {
+        $deletePage = new Pages();
+        $deletePage->setId($_SESSION["page"]);
+        $deletePage->delete();
+    }
 
 
 }

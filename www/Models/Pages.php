@@ -41,6 +41,14 @@ class Pages extends Sql
     /**
      * @return Int
      */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return Int
+     */
     public function getStatus(): int
     {
         return $this->status;

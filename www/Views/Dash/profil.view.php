@@ -83,7 +83,13 @@
                                                                 <span class="path1"></span>
                                                                 <span class="path2"></span>
                                                                 <span class="path3"></span>
-                                                            </i><?= "cc" ?></a>
+                                                            </i><?= match ($user['role']) {
+                                                                   "1"=>  "editor",
+                                                                   "2"=>  "moderator",
+                                                                   "3"=>  "user",
+                                                                default => "admin"
+                                                            }
+                                                            ?></a>
                                                         <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary mb-2">
                                                             <i class="ki-duotone ki-sms fs-4 me-1">
                                                                 <span class="path1"></span>
