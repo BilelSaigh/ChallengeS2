@@ -15,6 +15,7 @@ use PHPageBuilder\PHPageBuilder;
 use PHPageBuilder\Modules\GrapesJS\PageBuilder;
 class Page extends Sql
 {
+
     public function updateTheme(): void
     {
         $view = new View("Dash/pageBuilder","builder");
@@ -23,83 +24,44 @@ class Page extends Sql
     public function showPage():void
     {
         $lastpage= new Build();
-        $originator = new Originator();
-        //AND where name = $_GET["pageName"]
         $_SESSION['page'] = $_GET["id"];
         $lastpage = $lastpage->lastInsert($_SESSION['page']);
+        $allVersion = $this->recupAllByOrder($_SESSION['page']);
         $view = new View("Dash/pageBuilder", "builder");
         $view->assign("page",$lastpage);
+        $view->assign("allVersion",$allVersion);
     }
     public function updatePage(): void
     {
-//        $lastpage= new Build();
-//        $originator = new Originator();
-//        //AND where name = $_GET["pageName"]
-//        $lastpage = $lastpage->search(["user_id"=>$_SESSION['user']['id'],"page_id"=>$_GET["id"]]);
-//        $pageId = $_GET["id"];
-//        $originator->setState($lastpage);
-//        $caretaker = new Caretaker($originator);
-//        $view = new View("Dash/pageBuilder", "builder");
-//        $view->assign("page",$lastpage);
-        if(!empty($_POST["action"] ) && $_POST["action"]=== "send-content"){
-//            $caretaker->backup($lastpage);
             $pageBuild = new Build();
+            $originator = new Originator();
+            $caretaker = new Caretaker($originator);
+            $originator->setState($pageBuild->lastInsert($_SESSION['page']));
+            $caretaker->backup();
+        if(!empty($_POST["action"]) && $_POST["action"] === "send-content"){
             $pageBuild->setContent($_POST["content"][0]);
             $pageBuild->setUserId($_SESSION['user']['id']);
             $pageBuild->setPageId( $_SESSION['page']);
             $pageBuild->setUpdatedAt();
             $pageBuild->setStatus(0);
+            $originator->setState($pageBuild);
+            $caretaker->backup();
             $pageBuild->save();
+            $caretaker->showHistory();
+        }else if(!empty($_GET["action"]) && $_GET["action"] === "undo"){
+            echo "\nClient: Now, let's rollback!\n\n";
+            $caretaker->undo();
+            $restoredContent = $originator->getState()->getContent();
+            echo json_encode(['content' => $restoredContent]);
 
-//            $caretaker->backup("test1");
-//            $caretaker->backup("test9");
-//            $caretaker->backup("test10");
-//            $caretaker->backup("testml");
-//            $caretaker->backup("testRT");
-//            echo "\n";
-//            $caretaker->showHistory();
-//            echo "\nClient: Now, let's rollback!\n\n";
-//            $caretaker->undo();
-//            echo "\nClient: Once more!\n\n";
-//            $caretaker->undo();
-        }else if(!empty($_POST["action"]) && $_POST["action"]=== "undo"){
-            echo "\n";
-//            $oldContent = $lastpage->multipleSearch((["name" => 'New Website', "user_id" => $_SESSION["user"]["id"]]));
-//            foreach ($oldContent as $content){
-//                $obj = $content->mementos[0]->getState();
-//                $content = $obj->content;
-//                echo $content;
-//                $caretaker->backup($content);
-//            }
-//            var_dump($caretaker);
-//            $caretaker->showHistory();
-//            echo "\nClient: Now, let's rollback!\n\n";
-//            $caretaker->undo();
         }
     }
-    public function restorePageFromMemento()
-    {
-        // Créez une instance de Page
-        $page = new Build();
-
-        // Effectuez des modifications sur la page
-
-        // Créez une instance de PageMemento
-        $memento = new PageMemento($page->getId(), $page->getTitle(), $page->getContent(), $page->getModificationDate());
-
-        // Restaurez la page à partir du memento
-        $page->restoreFromMemento($memento);
-
-        // ... Autres actions ou rendu de vues ...
-    }
-
     public function publish()
     {
         $page = new Build();
         $page = $page->search(["user_id"=>$_SESSION['user']['id']]);
         $page->setStatus(1);
         $page->save();
-        // Afficher la page
         $view = new View("Dash/pageBuild", "cleanPage");
         $view->assign("page",$page);
 

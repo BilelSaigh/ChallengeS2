@@ -70,7 +70,6 @@ abstract class Sql{
         $sql = "DELETE FROM ".$this->table." WHERE id = ".$this->getId();
         $queryPrepared = $this->pdo->prepare($sql);
         $queryPrepared->execute();
-        var_dump($queryPrepared->execute());
     }
 
     public function recupAll(): bool|array
@@ -90,6 +89,13 @@ abstract class Sql{
         $queryPrepared->execute();
         return $queryPrepared->fetchObject(get_called_class());
 
+    }
+    public function recupAllByOrder($pageId): bool|array
+    {
+        $sql = "SELECT * FROM ". $this->table." WHERE page_id = :pageId ORDER BY updated_at DESC";
+        $queryPrepared = $this->pdo->prepare($sql);
+        $queryPrepared->execute(["pageId" => $pageId]);
+        return $queryPrepared->fetchAll();
     }
 
 }

@@ -2,10 +2,9 @@
 namespace App\Models;
 use App\Memento\Interfaces\IMemento;
 
-class Memento implements IMemento
+class Memento
 {
     private $state;
-    private $id =0;
     private $date;
 
     public function __construct( $state)
@@ -15,25 +14,9 @@ class Memento implements IMemento
     }
 
     /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
-    }
-
-    /**
      * The Originator uses this method when restoring its state.
      */
-    public function getState(): string
+    public function getState()
     {
         return $this->state;
     }
@@ -41,10 +24,10 @@ class Memento implements IMemento
     /**
      * The rest of the methods are used by the Caretaker to display metadata.
      */
-    public function getName(): string
+    public function getName()
     {
-        echo $this->state->getId();
-        return $this->date . " / (" . substr($this->state->getId(), 0, 9) . "...)";
+        $state = $this->getState();
+        return $this->date . " / (" . substr($state->getContent(), 0, 9) . "...)"." / ".$state->getId();
     }
 
     public function getDate(): string
@@ -58,14 +41,6 @@ class Memento implements IMemento
     public function setState($state): void
     {
         $this->state = $state;
-    }
-
-    /**
-     * @param string $date
-     */
-    public function setDate(string $date): void
-    {
-        $this->date = $date;
     }
 
 

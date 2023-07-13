@@ -28,7 +28,7 @@ if (!empty($_SESSION["user"])){
                     <li class="nav-item">
                     </li>
                     </ul>
-                        <a class="btn btn-outline-dark d-flex" href="/pagebuilder" role="button">Back to edition</a>
+                        <a class="btn btn-outline-dark d-flex" href="/pages" role="button">Back to edition</a>
                 </div>
               </div>
             </nav>
