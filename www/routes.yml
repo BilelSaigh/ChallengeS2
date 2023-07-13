@@ -70,3 +70,7 @@
   controller: Error
   action: error404
 
+/{slug}:
+  controller : Page
+  action : getSlug
+

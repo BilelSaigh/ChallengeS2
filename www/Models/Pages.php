@@ -9,10 +9,26 @@ class Pages extends Sql
 {
     protected Int $id = 0;
     protected String $title = "New website";
+    protected String $slug;
     protected String $description = "Ceci est ma super page";
     protected Int $status = 0;
     protected $updated_at;
 
+    /**
+     * @return String
+     */
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param String $slug
+     */
+    public function setSlug(string $slug): void
+    {
+        $this->slug = $slug;
+    }
 
     /**
      * @return String

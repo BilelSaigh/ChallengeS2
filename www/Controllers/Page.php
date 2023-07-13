@@ -28,7 +28,6 @@ class Page extends Sql
         $_SESSION['page'] = $_GET["id"];
         $lastpage = $lastpage->lastInsert($_SESSION['page']);
         $view = new View("Dash/pageBuilder", "builder");
-
         $view->assign("page",$lastpage);
     }
     public function updatePage(): void
@@ -138,4 +137,18 @@ class Page extends Sql
     }
 
 
+    public function getSlug($slug): void
+    {
+        $page = new Pages();
+        $page = $page->search(["slug" => $slug]);
+        if ($page) {
+            $pageData = new Build();
+            $pageData = $pageData->lastInsert($page->getId());
+        } else {
+            $error = new Error();
+            $error->errorRedirection(404);
+        }
+        $view = new View("Dash/pageBuild", "cleanPage");
+        $view->assign("page", $pageData);
+    }
 }
