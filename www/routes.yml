@@ -50,7 +50,7 @@
   controller: Page
   action: showPage
 
-/publish:
+/preview:
   controller: Page
   action: publish
 

@@ -8,7 +8,6 @@ class Page extends Sql
     protected Int $id = 0;
     protected Int $page_id;
 
-    protected String $name = "New Website";
     protected  $content;
     protected  $updated_at;
     protected Int $status = 0;
@@ -44,22 +43,6 @@ class Page extends Sql
     public function setPageId(int $page_id): void
     {
         $this->page_id = $page_id;
-    }
-
-    /**
-     * @return String
-     */
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param String $name
-     */
-    public function setName(string $name): void
-    {
-        $this->name = $name;
     }
 
     /**

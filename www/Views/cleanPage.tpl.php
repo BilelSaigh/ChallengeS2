@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title><?= $page->getName()?>></title>
+    <title><?=  $page->getTitle()?></title>
     <link rel="stylesheet" type="text/css" href="Views/Dash/theme/dist/assets/plugins/custom/font-awesome-4.7.0/css/font-awesome.min.css" data-type="keditor-style" />
     <link rel="stylesheet" type="text/css" href="Views/Dash/theme/dist/assets/plugins/custom/code-prettify/src/prettify.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
@@ -12,6 +12,7 @@
 
 <body>
 <?php
+
 if (!empty($_SESSION["user"])){
     echo '<header>
             <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -37,7 +38,10 @@ if (!empty($_SESSION["user"])){
 
     ?>
     <main>
-        <?php  include  $this->view?>
+        <div class="container-fluid">
+
+            <?php include  $this->view?>
+        </div>
     </main>
         <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
             <p class="col-md-4 mb-0 text-muted">&copy; 2023 ChallengeS2, Inc</p>

@@ -8,9 +8,9 @@ use App\Models\PageMemento;
 class Pages extends Sql
 {
     protected Int $id = 0;
-    protected String $title = "New website";
+    protected String $title;
     protected String $slug;
-    protected String $description = "Ceci est ma super page";
+    protected String $description;
     protected Int $status = 0;
     protected $updated_at;
 
@@ -43,7 +43,7 @@ class Pages extends Sql
      */
     public function setDescription(string $description): void
     {
-        $this->description = $description;
+        (empty($description))? $this->description ="Ceci est ma super page" :$this->description = $description;
     }
 
     /**
@@ -91,7 +91,7 @@ class Pages extends Sql
      */
     public function setTitle(string $title): void
     {
-        $this->title = $title;
+        (empty($title))? $this->title  ="New website" :$this->title = $title;
     }
 
     /**
@@ -105,9 +105,9 @@ class Pages extends Sql
     /**
      * @param mixed $updated_at
      */
-    public function setUpdatedAt($updated_at): void
+    public function setUpdatedAt(): void
     {
-        $this->updated_at = $updated_at;
+        $this->updated_at = date('Y-m-d H:i:s');
     }
 
     public function showAllPages():array
