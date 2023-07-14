@@ -2,13 +2,9 @@
   controller: Main
   action: index
 
-/dashboard:
+/admin:
   controller: Main
   action: dashboard
-
-/contact:
-  controller: Main
-  action: contact
 
 /login:
   controller: Security
@@ -22,11 +18,11 @@
   controller: Security
   action: register
 
-/confirmation:
+/admin/confirmation:
   controller: Security
   action: confirmation
 
-/users:
+/admin/users:
   controller : User
   action : showUsers
 
@@ -38,7 +34,7 @@
   controller: User
   action: setting
 
-/pages:
+/admin/pages:
     controller: Page
     action : listPages
 
@@ -46,9 +42,13 @@
   controller: Page
   action: updatePage
 
-/showpage:
+/admin/showpage:
   controller: Page
   action: showPage
+
+/admin/newpage:
+  controller: Page
+  action: createPage
 
 /preview:
   controller: Page
@@ -58,7 +58,7 @@
   controller: Page
   action: deletePage
 
-/profil:
+/admin/profil:
   controller: User
   action: home
 

@@ -7,10 +7,10 @@
     <meta name="description" content="Ceci est mon projet de fin d année ">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta.2/css/bootstrap.css" rel="stylesheet" type="text/css" />
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-    <link href="Views/Dash/theme/dist/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="../Views/Dash/theme/dist/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="Views/Dash/theme/dist/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
-    <link href="Views/Dash/theme/dist/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="../Views/Dash/theme/dist/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="../Views/Dash/theme/dist/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
 
 
     <!-- <link rel="shortcut icon" href="assets/media/logos/favicon.ico" /> -->
@@ -597,7 +597,7 @@
                             <div class="app-navbar-item ms-3 me-6" id="kt_header_user_menu_toggle">
                                 <!--begin::Menu wrapper-->
                                 <div class="cursor-pointer symbol symbol-35px" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
-                                    <img class="symbol symbol-35px" src="<?= $_SESSION["user"]["logo"] ?? "Views/Dash/theme/dist/assets/media/avatars/blank.png"?>" alt="user" />
+                                    <img class="symbol symbol-35px" src="<?= $_SESSION["user"]["logo"] ?? "../Views/Dash/theme/dist/assets/media/avatars/blank.png"?>" alt="user" />
                                 </div>
                                 <!--begin::User account menu-->
                                 <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px" data-kt-menu="true">
@@ -606,7 +606,7 @@
                                         <div class="menu-content d-flex align-items-center px-3">
                                             <!--begin::Avatar-->
                                             <div class="symbol symbol-50px me-5">
-                                                <img alt="Logo" src="<?= $_SESSION["user"]["logo"] ?? "Views/Dash/theme/dist/assets/media/avatars/blank.png"?>" />
+                                                <img alt="Logo" src="<?= $_SESSION["user"]["logo"] ?? "../Views/Dash/theme/dist/assets/media/avatars/blank.png"?>" />
                                             </div>
                                             <!--end::Avatar-->
                                             <!--begin::Username-->
@@ -3494,7 +3494,7 @@
                                             <!--end::Checkbox-->
                                             <!--begin::Avatar-->
                                             <div class="symbol symbol-35px symbol-circle">
-                                                <img alt="Pic" src="<?= $page["logo"]?? "Views/Dash/theme/dist/assets/media/avatars/blank.png"?>" />
+                                                <img alt="Pic" src="<?= $page["logo"]?? "../Views/Dash/theme/dist/assets/media/avatars/blank.png"?>" />
                                             </div>
                                             <!--end::Avatar-->
                                             <!--begin::Details-->
@@ -3573,7 +3573,7 @@
                                 <!--end::Message-->
                                 <!--begin::Illustration-->
                                 <div class="text-center px-5">
-                                    <img src="Views/theme/dist/assets/media/illustrations/sketchy-1/1.png" alt="" class="w-100 h-200px h-sm-325px" />
+                                    <img src="../Views/theme/dist/assets/media/illustrations/sketchy-1/1.png" alt="" class="w-100 h-200px h-sm-325px" />
                                 </div>
                                 <!--end::Illustration-->
                             </div>
@@ -3594,25 +3594,25 @@
     <script>var hostUrl = "assets/";</script>
 
 
-    <script src="Views/Dash/theme/dist/assets/plugins/global/plugins.bundle.js"></script>
-    <script src="Views/Dash/theme/dist/assets/js/scripts.bundle.js"></script>
+    <script src="../Views/Dash/theme/dist/assets/plugins/global/plugins.bundle.js"></script>
+    <script src="../Views/Dash/theme/dist/assets/js/scripts.bundle.js"></script>
     <!--end::Global Javascript Bundle-->
     <!--begin::Custom Javascript(used for this page only)-->
-    <script src="Views/Dash/theme/dist/assets/js/custom/apps/user-management/users/list/table.js"></script>
-    <script src="Views/Dash/theme/dist/assets/js/custom/apps/user-management/users/list/export-users.js"></script>
-    <script src="Views/Dash/theme/dist/assets/js/custom/apps/user-management/users/list/add.js"></script>
-    <script src="Views/Dash/theme/dist/assets/js/widgets.bundle.js"></script>
-    <script src="Views/Dash/theme/dist/assets/js/custom/apps/chat/chat.js"></script>
-    <script src="Views/Dash/theme/dist/assets/js/custom/utilities/modals/upgrade-plan.js"></script>
-    <script src="Views/Dash/theme/dist/assets/js/custom/utilities/modals/create-project/type.js"></script>
-    <script src="Views/Dash/theme/dist/assets/js/custom/utilities/modals/create-project/budget.js"></script>
-    <script src="Views/Dash/theme/dist/assets/js/custom/utilities/modals/create-project/settings.js"></script>
-    <script src="Views/Dash/theme/dist/assets/js/custom/utilities/modals/create-project/team.js"></script>
-    <script src="Views/Dash/theme/dist/assets/js/custom/utilities/modals/create-project/targets.js"></script>
-    <script src="Views/Dash/theme/dist/assets/js/custom/utilities/modals/create-project/files.js"></script>
-    <script src="Views/Dash/theme/dist/assets/js/custom/utilities/modals/create-project/complete.js"></script>
-    <script src="Views/Dash/theme/dist/assets/js/custom/utilities/modals/create-project/main.js"></script>
-    <script src="Views/Dash/theme/dist/assets/js/custom/utilities/modals/users-search.js"></script>
+    <script src="../Views/Dash/theme/dist/assets/js/custom/apps/user-management/users/list/table.js"></script>
+    <script src="../Views/Dash/theme/dist/assets/js/custom/apps/user-management/users/list/export-users.js"></script>
+    <script src="../Views/Dash/theme/dist/assets/js/custom/apps/user-management/users/list/add.js"></script>
+    <script src="../Views/Dash/theme/dist/assets/js/widgets.bundle.js"></script>
+    <script src="../Views/Dash/theme/dist/assets/js/custom/apps/chat/chat.js"></script>
+    <script src="../Views/Dash/theme/dist/assets/js/custom/utilities/modals/upgrade-plan.js"></script>
+    <script src="../Views/Dash/theme/dist/assets/js/custom/utilities/modals/create-project/type.js"></script>
+    <script src="../Views/Dash/theme/dist/assets/js/custom/utilities/modals/create-project/budget.js"></script>
+    <script src="../Views/Dash/theme/dist/assets/js/custom/utilities/modals/create-project/settings.js"></script>
+    <script src="../Views/Dash/theme/dist/assets/js/custom/utilities/modals/create-project/team.js"></script>
+    <script src="../Views/Dash/theme/dist/assets/js/custom/utilities/modals/create-project/targets.js"></script>
+    <script src="../Views/Dash/theme/dist/assets/js/custom/utilities/modals/create-project/files.js"></script>
+    <script src="../Views/Dash/theme/dist/assets/js/custom/utilities/modals/create-project/complete.js"></script>
+    <script src="../Views/Dash/theme/dist/assets/js/custom/utilities/modals/create-project/main.js"></script>
+    <script src="../Views/Dash/theme/dist/assets/js/custom/utilities/modals/users-search.js"></script>
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
@@ -3620,37 +3620,37 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <!--begin::Global Javascript Bundle(mandatory for all pages)-->
 
-    <script src="Views/Dash/theme/dist/assets/js/widgets.bundle.js"></script>
-    <script src="Views/Dash/theme/dist/assets/plugins/global/plugins.bundle.js"></script>
+    <script src="../Views/Dash/theme/dist/assets/js/widgets.bundle.js"></script>
+    <script src="../Views/Dash/theme/dist/assets/plugins/global/plugins.bundle.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
     <!--end::Global Javascript Bundle-->
     <!--begin::Vendors Javascript(used for this page only)-->
-    <script src="Views/Dash/theme/dist/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+    <script src="../Views/Dash/theme/dist/assets/plugins/custom/datatables/datatables.bundle.js"></script>
     <!--end::Vendors Javascript-->
     <!--begin::Custom Javascript(used for this page only)-->
-    <script src="Views/Dash/theme/dist/assets/js/custom/apps/user-management/users/list/table.js"></script>
+    <script src="../Views/Dash/theme/dist/assets/js/custom/apps/user-management/users/list/table.js"></script>
 
     <!--end::Global Javascript Bundle-->
     <!--begin::Custom Javascript(used for this page only)-->
-    <script src="Views/Dash/theme/dist/assets/js/custom/apps/projects/list/list.js"></script>
-    <script src="Views/Dash/theme/dist/assets/js/custom/account/settings/signin-methods.js"></script>
-    <script src="Views/Dash/theme/dist/assets/js/custom/account/settings/profile-details.js"></script>
-    <script src="Views/Dash/theme/dist/assets/js/custom/account/settings/deactivate-account.js"></script>
-    <script src="Views/Dash/theme/dist/assets/js/custom/pages/user-profile/general.js"></script>
-    <script src="Views/Dash/theme/dist/assets/js/custom/utilities/modals/create-project/type.js"></script>
-    <script src="Views/Dash/theme/dist/assets/js/custom/utilities/modals/create-project/budget.js"></script>
-    <script src="Views/Dash/theme/dist/assets/js/custom/utilities/modals/create-project/settings.js"></script>
-    <script src="Views/Dash/theme/dist/assets/js/custom/utilities/modals/create-project/team.js"></script>
-    <script src="Views/Dash/theme/dist/assets/js/custom/utilities/modals/create-project/targets.js"></script>
-    <script src="Views/Dash/theme/dist/assets/js/custom/utilities/modals/create-project/files.js"></script>
-    <script src="Views/Dash/theme/dist/assets/js/custom/utilities/modals/create-project/complete.js"></script>
-    <script src="Views/Dash/theme/dist/assets/js/custom/utilities/modals/create-project/main.js"></script>
-    <script src="Views/Dash/theme/dist/assets/js/custom/utilities/modals/offer-a-deal/type.js"></script>
-    <script src="Views/Dash/theme/dist/assets/js/custom/utilities/modals/offer-a-deal/details.js"></script>
-    <script src="Views/Dash/theme/dist/assets/js/custom/utilities/modals/offer-a-deal/finance.js"></script>
-    <script src="Views/Dash/theme/dist/assets/js/custom/utilities/modals/offer-a-deal/complete.js"></script>
-    <script src="Views/Dash/theme/dist/assets/js/custom/utilities/modals/offer-a-deal/main.js"></script>
-    <script src="Views/Dash/theme/dist/assets/js/custom/utilities/modals/two-factor-authentication.js"></script>
+    <script src="../Views/Dash/theme/dist/assets/js/custom/apps/projects/list/list.js"></script>
+    <script src="../Views/Dash/theme/dist/assets/js/custom/account/settings/signin-methods.js"></script>
+    <script src="../Views/Dash/theme/dist/assets/js/custom/account/settings/profile-details.js"></script>
+    <script src="../Views/Dash/theme/dist/assets/js/custom/account/settings/deactivate-account.js"></script>
+    <script src="../Views/Dash/theme/dist/assets/js/custom/pages/user-profile/general.js"></script>
+    <script src="../Views/Dash/theme/dist/assets/js/custom/utilities/modals/create-project/type.js"></script>
+    <script src="../Views/Dash/theme/dist/assets/js/custom/utilities/modals/create-project/budget.js"></script>
+    <script src="../Views/Dash/theme/dist/assets/js/custom/utilities/modals/create-project/settings.js"></script>
+    <script src="../Views/Dash/theme/dist/assets/js/custom/utilities/modals/create-project/team.js"></script>
+    <script src="../Views/Dash/theme/dist/assets/js/custom/utilities/modals/create-project/targets.js"></script>
+    <script src="../Views/Dash/theme/dist/assets/js/custom/utilities/modals/create-project/files.js"></script>
+    <script src="../Views/Dash/theme/dist/assets/js/custom/utilities/modals/create-project/complete.js"></script>
+    <script src="../Views/Dash/theme/dist/assets/js/custom/utilities/modals/create-project/main.js"></script>
+    <script src="../Views/Dash/theme/dist/assets/js/custom/utilities/modals/offer-a-deal/type.js"></script>
+    <script src="../Views/Dash/theme/dist/assets/js/custom/utilities/modals/offer-a-deal/details.js"></script>
+    <script src="../Views/Dash/theme/dist/assets/js/custom/utilities/modals/offer-a-deal/finance.js"></script>
+    <script src="../Views/Dash/theme/dist/assets/js/custom/utilities/modals/offer-a-deal/complete.js"></script>
+    <script src="../Views/Dash/theme/dist/assets/js/custom/utilities/modals/offer-a-deal/main.js"></script>
+    <script src="../Views/Dash/theme/dist/assets/js/custom/utilities/modals/two-factor-authentication.js"></script>
 
 </body>
 </html>

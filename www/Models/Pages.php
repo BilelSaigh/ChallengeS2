@@ -25,9 +25,9 @@ class Pages extends Sql
     /**
      * @param String $slug
      */
-    public function setSlug(string $slug): void
+    public function setSlug(): void
     {
-        $this->slug = $slug;
+        $this->slug = trim(str_replace(' ', '-', $this->getTitle()));
     }
 
     /**

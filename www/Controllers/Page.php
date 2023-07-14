@@ -16,8 +16,11 @@ use PHPageBuilder\Modules\GrapesJS\PageBuilder;
 class Page extends Sql
 {
 
-    public function updateTheme(): void
+    public function createPage(): void
     {
+        if (!empty($_SESSION['page'])) {
+            unset($_SESSION['page']);
+        }
         $view = new View("Dash/pageBuilder","builder");
     }
 
@@ -40,31 +43,41 @@ class Page extends Sql
     public function updatePage(): void
     {
             $pageBuild = new Build();
-            $originator = new Originator();
-            $caretaker = new Caretaker($originator);
-            $originator->setState($pageBuild->lastInsert($_SESSION['page']));
-            $caretaker->backup();
         if(!empty($_POST["action"]) && $_POST["action"] === "send-content"){
             $pageBuild->setContent($_POST["content"][0]);
             $pageBuild->setUserId($_SESSION['user']['id']);
             $pageBuild->setPageId( $_SESSION['page']);
             $pageBuild->setUpdatedAt();
             $pageBuild->setStatus(0);
-            $originator->setState($pageBuild);
-            $caretaker->backup();
             $pageBuild->save();
-            $caretaker->showHistory();
         }else if(!empty($_POST["action"]) && $_POST["action"] === "undo"){
             $pageBuild = $pageBuild->search(["id"=>$_POST["id"], "page_id"=>$_SESSION["page"]]);
             $responseData['content'] = $pageBuild->getContent();
             echo json_encode($responseData);
         }else if(isset($_POST["title"]) && !empty($_POST["action"] === "editTitle"))
         {
-            $newTitle = new Pages();
-            $newTitle->setId($_SESSION["page"]);
-            $newTitle->setTitle($_POST["title"]);
-            $newTitle->setUpdatedAt();
-            $newTitle->save();
+            $new = new Pages();
+            $alreadyExist = $new->search(["title"=>$_POST["title"]]);
+            if (empty($alreadyExist)){
+                if (isset($_SESSION["page"])){
+                    $new->setId($_SESSION["page"]);
+                    $new->setTitle($_POST["title"]);
+                    $new->setUpdatedAt();
+                    $new->save();
+                }else{
+                    $new = new Pages();
+                    $new->setTitle($_POST["title"]);
+                    $new->setUpdatedAt();
+                    $new->setSlug();
+                    $new->setDescription("");
+                    $new->save();
+
+                }
+            }else{
+                $response = array('error' => 'Pages Already exist ! ');
+                http_response_code(400);
+                echo json_encode($response);
+            }
         }
         else if(!empty($_POST["action"] === "backToDraft"))
         {

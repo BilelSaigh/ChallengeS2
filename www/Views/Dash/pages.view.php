@@ -89,6 +89,13 @@
         <h2 class="fs-2 fw-semibold my-2">Pages
             <span class="fs-6 text-gray-400 ms-1">by Admin</span></h2>
         <!--end::Heading-->
+        <div class="d-flex flex-wrap my-1">
+            <!--begin::Select wrapper-->
+            <div class="m-0">
+                <a href="newpage" class="btn btn-info btn-sm me-3">Create new page</a>
+            </div>
+            <!--end::Select wrapper-->
+        </div>
     </div>
     <!--end::Toolbar-->
     <!--begin::Row-->
@@ -101,15 +108,6 @@
             <a href="/showpage?id=<?= $infos["id"]?>" class="card border-hover-primary">
                 <!--begin::Card header-->
                 <div class="card-header border-0 pt-9">
-                    <!--begin::Card Title-->
-                    <div class="card-title m-0">
-                        <!--begin::Avatar-->
-                        <div class="symbol symbol-50px w-50px bg-light">
-                            <img src="assets/media/svg/brand-logos/plurk.svg" alt="image" class="p-3" />
-                        </div>
-                        <!--end::Avatar-->
-                    </div>
-                    <!--end::Car Title-->
                     <!--begin::Status-->
                     <div class="card-toolbar">
                         <?php if($infos["status"] == "1") : ?>
