@@ -29,7 +29,6 @@ class Caretaker extends Sql
 
     public function backup(): void
     {
-        echo "\nCaretaker: Saving Originator's state...\n";
         $this->mementos[] = $this->originator->saveToMemento();
     }
 
@@ -38,6 +37,9 @@ class Caretaker extends Sql
     }
     public function undo(): void
     {
+        echo 'ici00';
+        var_dump($this->mementos);
+        die();
         if (!count($this->mementos)) {
             return;
         }

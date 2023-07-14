@@ -33,6 +33,7 @@ class Page extends Sql
     }
     public function updatePage(): void
     {
+
             $pageBuild = new Build();
             $originator = new Originator();
             $caretaker = new Caretaker($originator);
@@ -48,11 +49,11 @@ class Page extends Sql
             $caretaker->backup();
             $pageBuild->save();
             $caretaker->showHistory();
-        }else if(!empty($_GET["action"]) && $_GET["action"] === "undo"){
-            echo "\nClient: Now, let's rollback!\n\n";
-            $caretaker->undo();
-            $restoredContent = $originator->getState()->getContent();
-            echo json_encode(['content' => $restoredContent]);
+        }else if(!empty($_POST["action"]) && $_POST["action"] === "undo"){
+            $pageBuild = $pageBuild->search(["id"=>$_POST["id"], "page_id"=>$_SESSION["page"]]);
+            $responseData['content'] = $pageBuild->getContent();
+            echo json_encode($responseData);
+
 
         }
     }

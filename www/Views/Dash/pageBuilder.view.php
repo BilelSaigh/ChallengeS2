@@ -19,7 +19,8 @@
         <div class="row d-flex">
             <div class="col">
                 <select id="versionDropdown" name="versionDropdown" class="form-select">
-                    <?php foreach ($allVersion as $version) : ?>
+                    <?php
+                    foreach ($allVersion as $version) : ?>
                         <option value="<?= $version["id"]?>"> <?= "Version du ".$version["updated_at"] ?> </option>
                     <?php endforeach; ?>
                 </select>
@@ -36,7 +37,9 @@
         <?php endif; ?>
         <div data-keditor="html">
             <div id="content-area">
-                <?php if(!empty($page)) :echo $page->getContent() ;  endif ?>
+                <?php if(!empty($page)) :echo $page->getContent() ;
+
+                endif ?>
             </div>
         </div>
 
@@ -70,7 +73,6 @@
                             content: $('#content-area').keditor('getContent', true)
                     },
                     success: function (data){
-                        console.log(data)
                         $('#content-area').html($('#content-area').keditor('getContent', true));
                         Swal.fire({
                             icon: 'success',
@@ -93,16 +95,15 @@
             })
             $('#restoreButton').click(function (){
                 var selectedVersionId = $("#versionDropdown").val();
+                console.log(selectedVersionId)
                 $.ajax({
-                    type: 'GET',
+                    type: 'post',
                     url:'/updatePage',
                     data: { action: 'undo', id: selectedVersionId},
                     success: function (data)
                     {
-                        console.log(data.content)
-                        var responseData = JSON.parse(data);
-                        var restoredContent = responseData.content;
-                        $('#content-area').html(restoredContent);
+                        const datas = JSON.parse(data)
+                        $('#content-area').keditor('setContent',datas.content)
                         Swal.fire({
                             icon: 'success',
                             title: 'Restauration réussie',
