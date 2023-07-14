@@ -21,24 +21,13 @@ class Security{
     if ($connect->isSubmit()) {
         $errors = Verificator::form($connect->getConfig(), $_POST);
         if (empty($errors)) {
-            $user->setEmail($_POST["email"]);
-            $userPwd = $_POST["pwd"];
+            $email = $_POST["email"];
+            $password = $_POST["pwd"];
 
-            // Passer l'e-mail dans un tableau avec la clé "email"
-            $toSearch = ["email" => $user->getEmail()];
-            $userVerified = new User();
-            $userVerified  = $user->verifMail($toSearch);
-            if ($userVerified ) {
-                
-               if($userVerified->verifypassword( $userPwd)){
-                $userVerified->generateToken();
-                // echo $userVerified->getToken();
-                $userVerified->save();
-                   echo "Vous êtes connectés";
-                   exit();
-
-               }
-              
+            if ($user->verifMail($email) && $user->verifypassword($password)) {
+                $user->generateToken();
+                echo "ça marche";
+                exit();
             } else {
                 $errors[] = "Email ou mot de passe invalide.";
                 $view->assign('errors', $errors);
@@ -48,8 +37,6 @@ class Security{
         }
     }
 }
-
-
 
 
 
@@ -78,6 +65,10 @@ class Security{
                 $user->save();
                 $confMail->setMessage('<button><a href="http://localhost/confirmation?key='.$token.'"> Cliquez ici pour confirmer votre mail. </a></button>');
                 $mail = $confMail->mail($confMail->initMail());
+
+                $view = new View("Main/login", "front");
+                $view->assign('form', $form->getConfig());
+
             }else{
                 ($alreadyRegistered) ? $view->assign('errors', "Inscription incorrect") :  $view->assign('errors', $errors);
             }

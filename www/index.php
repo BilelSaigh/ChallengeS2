@@ -3,6 +3,14 @@ namespace App;
 //Contrainte : utilisation des Namespace
 
 
+
+
+
+
+
+
+
+
 spl_autoload_register(function ($class) {
     //Core/View.php
     $class = str_replace("App\\","", $class);
