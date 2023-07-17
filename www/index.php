@@ -96,6 +96,8 @@
 //
 
 namespace App;
+use App\Core\View;
+
 session_start();
 
 // Contrainte : utilisation des Namespace
@@ -116,7 +118,7 @@ $uri = (empty($uri)) ? "/" : $uri;
 // Charger les routes depuis le fichier YAML
 if(!file_exists("routes.yml")) {
     http_response_code(404);
-    die("Le fichier de routing n'existe pas");
+    $view = new View("Error/404", "error");
 }
 
 $routes = \yaml_parse_file("routes.yml");
@@ -154,7 +156,8 @@ foreach ($routes as $route => $config) {
 if ($matchedRoute === null) {
     // Page 404
     http_response_code(404);
-    include "Views/error404.tpl.php";
+    $view = new View("Error/404", "error");
+
     exit();
 }
 
@@ -163,7 +166,8 @@ $action = $routes[$matchedRoute]["action"];
 
 // Vérification de l'existence du fichier de contrôleur
 if (!file_exists("Controllers/" . $controller . ".php")){
-    die("Le fichier Controllers/" . $controller . ".php n'existe pas");
+    http_response_code(404);
+    $view = new View("Error/404", "error");
 }
 
 include "Controllers/" . $controller . ".php";
@@ -172,15 +176,16 @@ include "Controllers/" . $controller . ".php";
 // N'oubliez pas d'ajouter le namespace \App\Controllers\Security
 $controller = "\\App\\Controllers\\" . $controller;
 if (!class_exists($controller)){
-    die("La classe " . $controller . " n'existe pas");
+    http_response_code(404);
+    $view = new View("Error/404", "error");
 }
 
 $objet = new $controller();
 
 // Est-ce que l'objet contient bien la méthode ?
 if (!method_exists($objet, $action)){
-    die("L'action " . $action . " n'existe pas");
-}
+    http_response_code(404);
+    include "Views/error404.tpl.php";}
 
 // Appel de la méthode avec les paramètres dynamiques
 $objet->$action(...$matchedParams);

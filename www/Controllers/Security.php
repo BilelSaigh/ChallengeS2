@@ -19,6 +19,7 @@ class Security
         $user = new User();
         $view = new View("Auth/login", "front");
         $view->assign('form', $connect->getConfig());
+        $view->assign('title', "login");
         if ($connect->isSubmit()) {
             $errors = Verificator::form($connect->getConfig(), $_POST);
             if (empty($errors)) {
