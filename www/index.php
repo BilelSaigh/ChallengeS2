@@ -157,8 +157,6 @@ if ($matchedRoute === null) {
     // Page 404
     http_response_code(404);
     $view = new View("Error/404", "error");
-
-    exit();
 }
 
 $controller = $routes[$matchedRoute]["controller"];
@@ -183,9 +181,9 @@ if (!class_exists($controller)){
 $objet = new $controller();
 
 // Est-ce que l'objet contient bien la méthode ?
-if (!method_exists($objet, $action)){
+if (!method_exists($objet, $action)) {
     http_response_code(404);
-    include "Views/error404.tpl.php";}
-
+    $view = new View("Error/404", "error");
+}
 // Appel de la méthode avec les paramètres dynamiques
 $objet->$action(...$matchedParams);

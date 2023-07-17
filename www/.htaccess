@@ -4,4 +4,4 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ /index.php [L,QSA]
 
 #Gestion des pages erreur
-ErrorDocument 404 http://127.0.0.1/error404
+ErrorDocument 404 /error404

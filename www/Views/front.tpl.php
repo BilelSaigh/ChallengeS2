@@ -64,8 +64,17 @@
                     <!--begin::Form-->
                     <?php include $this->view; ?>
                     <!--begin::Link-->
-                    <div class="text-gray-400 fw-semibold fs-4">New Here?
-                        <a href="/admin/register" class="link-primary fw-bold">Create an Account</a></div>
+                    <div class="text-gray-400 fw-semibold fs-4">
+
+                        <?php echo $title;
+                        if ($title == "login ") :  ?>
+                            New Here?
+                            <a href="/admin/register" class="link-primary fw-bold">Create an Account</a>
+                        <?php else :?>
+                        Already have an account?
+                            <a href="/admin/login" class="link-primary fw-bold">Sign in here</a>
+                        <?php endif;?>
+                    </div>
                     <!--end::Link-->
                     <!--end::Form-->
                 </div>
