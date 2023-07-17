@@ -12,7 +12,7 @@ class ConnectUser extends AForm
         return [
             "config"=>[
                 "method"=>$this->getMethod(),
-                "action"=>"login",
+                "action"=>"/admin/login",
                 "enctype"=>"",
                 "submit"=>"Se connecter",
                 "cancel"=>"Annuler"

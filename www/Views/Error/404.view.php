@@ -10,7 +10,7 @@
             </span>
 
             <div class="card-body mx-auto">
-                <a type="button" href="/admin"
+                <a type="button" href="/admin/login"
                    class="btn btn-sm btn-info text-white"> Back To Home </a>
             </div>
         </div>

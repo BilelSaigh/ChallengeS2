@@ -40,7 +40,7 @@ class Security
                         'role'    => $verifiedUser->getRole(),
                     ];
                     $_SESSION["user"] = $userData;
-                    header('Location: /profil');
+                    header('Location: /admin/profil');
                 } else {
                     $errors[] = "Email ou mot de passe invalide.";
                     $view->assign('errors', $errors);
@@ -82,7 +82,7 @@ class Security
                                                 <button><a class="btn btn-primary" href="http://localhost:81/confirmation?key='.$token.'"> Confirmer votre mail. </a></button>)
                                            </div>');
                 $mail = $confMail->mail($confMail->initMail());
-                header('Location: login');
+                header('Location: /admin/login');
             }else{
                 ($alreadyRegistered) ? $view->assign('errors', "Inscription incorrect") :  $view->assign('errors', $errors);
             }
@@ -121,10 +121,11 @@ class Security
             $user->setToken();
             $user->save();
             session_destroy();
-            header('Location: login');
+            header('Location: /admin/login');
+        }else{
+            $error = new Error();
+            $error->errorRedirection(404);
         }
-        $error = new Error();
-        $error->errorRedirection(404);
     }
 
 }

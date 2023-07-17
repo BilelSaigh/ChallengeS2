@@ -26,11 +26,11 @@
   controller : User
   action : showUsers
 
-/deleteuser:
+/admin/deleteuser:
   controller: User
   action: deleteUsers
 
-/edituser:
+/admin/edituser:
   controller: User
   action: setting
 
@@ -38,11 +38,11 @@
     controller: Page
     action : listPages
 
-/updatepage:
+/admin/updatepage:
   controller: Page
   action: updatePage
 
-/admin/showpage:
+/showpage:
   controller: Page
   action: showPage
 
@@ -54,7 +54,7 @@
   controller: Page
   action: publish
 
-/deletepage:
+/admin/deletepage:
   controller: Page
   action: deletePage
 
@@ -62,7 +62,7 @@
   controller: User
   action: home
 
-/signout:
+/admin/signout:
   controller: Security
   action: logout
 

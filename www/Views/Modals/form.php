@@ -10,7 +10,7 @@
                     name="<?= $name;?>"
                     type="<?= $input["type"]?>"
                     placeholder=" <?= $input["placeholder"]?>"
-                    class="form-control form-control-lg form-control-solid"
+                    class="form-control form-control-lg my-3 form-control-solid"
 
             >
 
@@ -18,6 +18,6 @@
 
 
 
-    <input type="submit" class="btn btn-lg btn-primary w-100 mb-5" name="submit" value="<?= $config["config"]["submit"] ?>">
+    <input type="submit" class="btn btn-lg btn-primary w-100 mb-5 my-3" name="submit" value="<?= $config["config"]["submit"] ?>">
 <!--    <input type="reset"  value="--><?php //= $config["config"]["cancel"] ?><!--">-->
 </form>
