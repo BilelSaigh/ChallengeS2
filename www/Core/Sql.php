@@ -9,7 +9,7 @@ abstract class Sql{
     public function __construct(){
         //Mettre en place un SINGLETON
         try{
-            $this->pdo = new \PDO("pgsql:host=database;port=5432;dbname=esgi" , "esgi" , "Test1234" );
+            $this->pdo = new \PDO("pgsql:host=database;port=5432;dbname=esgi_s2_bdd" , "nimda" , "nimdaesgi" );
         }catch(\Exception $e){
             die("Erreur SQL : ".$e->getMessage());
         }
@@ -41,16 +41,35 @@ abstract class Sql{
 
         $queryPrepared->execute($columns);
     }
+
     public function search(array $element)
+{
+    $toSelect = [];
+    $params = [];
+
+    foreach ($element as $key => $value) {
+        $toSelect[] = $key . "=:" . $key;
+        $params[':' . $key] = $value;
+    }
+
+    $sql = "SELECT * FROM " . $this->table . " WHERE " . implode(' AND ', $toSelect);
+    $queryPrepared = $this->pdo->prepare($sql);
+    $queryPrepared->execute($params);
+
+    return $queryPrepared->fetchObject(get_called_class());
+}
+
+
+    public function recupAll(): array
     {
-        foreach($element as $key => $value){
-            $toSelect [] = $key."=:". $key; 
-        }
-        $sql = "SELECT * FROM ".$this->table." WHERE ". implode(' AND ',$toSelect);
-        $queryPrepared=$this->pdo->prepare($sql);
-        // print_r($element);
-        // $queryPrepared->execute([$element]);
-        $queryPrepared->execute(array_values($element));
-        // print_r($queryPrepared->execute([$element]));
+        $sql = "SELECT * FROM ".$this->table;
+        $queryPrepared = $this->pdo->query($sql);
+        return $queryPrepared->fetchAll();
+    }
+
+    public function delete()
+    {
+        $sql = "DELETE FROM ".$this->table." WHERE id:='".$id."'";
+
     }
 }
