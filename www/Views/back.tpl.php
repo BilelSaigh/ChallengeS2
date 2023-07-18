@@ -1,9 +1,8 @@
-
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Ma super page</title>
+    <title><?= $title ?></title>
     <meta name="description" content="Ceci est mon projet de fin d année ">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta.2/css/bootstrap.css" rel="stylesheet" type="text/css" />
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
@@ -11,7 +10,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="../Views/Dash/theme/dist/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
     <link href="../Views/Dash/theme/dist/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
-
 
     <!-- <link rel="shortcut icon" href="assets/media/logos/favicon.ico" /> -->
 </head>
@@ -846,7 +844,7 @@
                                         <!--begin:Menu item-->
                                         <div class="menu-item">
                                             <!--begin:Menu link-->
-                                            <a class="menu-link" href="../dist/pages/sitemap.html">
+                                            <a class="menu-link" href="/admin/sitemap">
 													<span class="menu-bullet">
 														<span class="bullet bullet-dot"></span>
 													</span>

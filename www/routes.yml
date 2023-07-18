@@ -70,6 +70,10 @@
   controller: Security
   action: logout
 
+/admin/sitemap:
+  controller: SiteMapGenerator
+  action: generate
+
 /error404:
   controller: Error
   action: error404

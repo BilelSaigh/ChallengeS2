@@ -23,6 +23,8 @@ class Page extends Sql
             unset($_SESSION['page']);
         }
         $view = new View("Dash/pageBuilder","builder");
+        $view->assign("title","New page");
+
     }
 
     public function showPage():void
@@ -50,7 +52,6 @@ class Page extends Sql
             $pageBuild->setPageId( $_SESSION['page']);
             $pageBuild->setUpdatedAt();
             $pageBuild->save();
-            echo "ici";
         }else if(!empty($_POST["action"]) && $_POST["action"] === "undo"){
             $pageBuild = $pageBuild->search(["id"=>$_POST["id"], "page_id"=>$_SESSION["page"]]);
             $responseData['content'] = $pageBuild->getContent();
@@ -116,6 +117,7 @@ class Page extends Sql
         $team = $this->countUsersWithRoleZero($users,2) + $this->countUsersWithRoleZero($users,1) + $this->countUsersWithRoleZero($users,0);
         $view = new View("Dash/pages", "back");
         $view->assign("page", $pages);
+        $view->assign("title", 'My Pages');
         $view->assign("subscribers", $subscribers);
         $view->assign("users", $users);
         $view->assign("team", $team);
