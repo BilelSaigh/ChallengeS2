@@ -37,3 +37,7 @@
 /pagebuilder:
   controller: Page
   action: newpage
+
+/installer:
+  controller: Installer
+  action: index
