@@ -8,6 +8,7 @@ use App\Models\Originator;
 use App\Models\Page as Build;
 use App\Models\PageMemento;
 use App\Models\User;
+use App\Models\Front;
 
 use App\Models\Pages;
 use DateTime;
@@ -143,9 +144,12 @@ class Page extends Sql
         if (!empty($page)) {
             $pageData = new Build();
             $pageData = $pageData->lastInsert($page->getId());
+            $front = new Front();
+            $front = $front->search(['id'=>1]);
             $view = new View("Dash/pageBuild", "cleanPage");
             $view->assign("title",$page->getTitle());
             $view->assign("page", $pageData->getContent());
+            $view->assign("front", $front);
         } else {
             $error = new Error();
             $error->errorRedirection(404);

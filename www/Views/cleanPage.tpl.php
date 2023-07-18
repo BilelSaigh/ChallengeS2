@@ -3,14 +3,28 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title><?=  $title?></title>
+    <title><?= $title?></title>
     <link rel="stylesheet" type="text/css" href="Views/Dash/theme/dist/assets/plugins/custom/font-awesome-4.7.0/css/font-awesome.min.css" data-type="keditor-style" />
     <link rel="stylesheet" type="text/css" href="Views/Dash/theme/dist/assets/plugins/custom/code-prettify/src/prettify.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link href="Views/Dash/theme/dist/assets/s" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 
 </head>
-
+<style>
+    body {
+        font-family:<?= $front->getPolices() ?> ;
+    }
+    p {
+        color: <?= $front->getTextColor() ?> ;
+        text-size:  <?= $front->getTextSize() ?> ;
+    }
+    .btn-primary, .btn-primary:hover, .btn-primary:active  {
+        background-color: <?= $front->getBtnColor() ?> ;
+        border-color : <?= $front->getBtnColor() ?> ;
+    }
+</style>
 <body>
+
 <?php
 
 if (!empty($_SESSION["user"])){

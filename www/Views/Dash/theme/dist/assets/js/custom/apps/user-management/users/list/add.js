@@ -107,15 +107,6 @@ var KTUsersAddUser = function () {
              })
          });
 
-        // Validate form before submit
-            // if (validator) {
-            //     validator.validate().then(function (status) {
-             //         if (status === 'Valid') {
-                    // } else {
-        //             }
-        //         });
-        //     }
-
         // Cancel button handler
         const cancelButton = element.querySelector('[data-kt-users-modal-action="cancel"]');
         cancelButton.addEventListener('click', e => {

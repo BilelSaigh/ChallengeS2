@@ -81,3 +81,7 @@
 /installer:
   controller: Installer
   action: start
+
+/admin/front:
+  controller: Front
+  action: update

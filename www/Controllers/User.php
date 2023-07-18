@@ -8,6 +8,7 @@ use App\Forms\newEmail;
 use App\Forms\newPwd;
 use App\Models\Mail;
 use App\Models\User as ModelUser;
+use App\Models\Front;
 
 class User
 {
@@ -99,11 +100,6 @@ class User
 
     }
 
-    public function contact(): void
-    {
-        $view = new View("Main/contact", "front");
-    }
-
     public function dashboard(): void
     {
         $view = new View("Dash/pageBuilder","back");
@@ -160,63 +156,22 @@ class User
         $user->setDateUpdated();
         $user->save();
         return true;
-//        $view = new View("Dash/users", "back");
-//        $view->assign("users",$users);
     }
     public function deleteUsers(): void
     {
         $user = new ModelUser();
         $user->setId($_SESSION["user"]["id"]);
         $user->deleteUser();
-        header('Location:login');
+        header('Location:/admin/login');
     }
 
- /*   public function showUsers(): void
+    public function theme():void
     {
-            $form = new AddAdmin();
-            $users = new ModelUser();
-            $view = new View("Dash/users", "back");
-            $users = $users->showAllUsers();
-            $view->assign("users",$users);
-            $view->assign('form', $form->getConfig());
-            if($form->isSubmit()){
-                $user = new ModelUser;
-                $errors = Verificator::form($form->getConfig(), $_POST);
-                $user->verifMail($_POST["email"]);
-                if(empty($errors)){
-                    if ($this->addUser($user)){
-                        echo "ok";
-                    }
-                }else{
-                    $view->assign('errors', $errors);
-                }
-            }
+        $view = new View("Dash/theme");
+        $front = new Front();
+        $front = $front->search(['id'=>1]);
+        $view->assign('title','Theme');
+        $view->assign('front',$front);
     }
-    public function updateUsers(): void
-    {
-        $users = new ModelUser();
-        $view = new View("Dash/users", "back");
-        $users = $users->updateUser();
-        $view->assign("users",$users);
-    }
-    public function addUser($user): bool
-    {
-        $user->setFirstname($_POST["firstname"]);
-        $user->setLastname($_POST["lastname"]);
-        $user->setEmail($_POST["email"]);
-        $user->setPassword($_POST["pwd"]);
-        $user->setStatus($_POST["status"]);
-        $user->save();
-        return true;
-//        $view = new View("Dash/users", "back");
-//        $view->assign("users",$users);
-    }
-    public function deleteUsers(): void
-    {
-        var_dump($_POST);
-        $user = new ModelUser();
-        $view = new View("Dash/users", "back");
-        $users = $user->deleteUser();
-        $view->assign("users",$user);
-    }*/
+
 }
