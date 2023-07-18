@@ -21,8 +21,6 @@ class Router
             throw new \Exception("Page non trouvée", 404);
         }
 
-        echo "Route trouvée : " . $uri . PHP_EOL;
-
 
         $route = $this->routes[$uri];
 
@@ -37,7 +35,7 @@ class Router
             throw new \Exception("La class ".$controller." n'existe pas", 500);
         }
 
-        echo "Contrôleur : " . $controller . PHP_EOL;
+        
 
         $controllerInstance = new $controller();
 
@@ -45,7 +43,11 @@ class Router
             throw new \Exception("L'action ".$action." n'existe pas", 500);
         }
 
-        echo "Action : " . $action . PHP_EOL;
+
+
+        // echo "Route trouvée : " . $uri . PHP_EOL;
+        // echo "Contrôleur : " . $controller . PHP_EOL;
+        // echo "Action : " . $action . PHP_EOL;
 
         $controllerInstance->$action();
         

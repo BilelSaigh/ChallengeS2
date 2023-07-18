@@ -1,20 +1,34 @@
 import Component from "./Components.js";
 
+export function createElement(type, attributes = {}, children = []) {
+  return {
+    type,
+    attributes,
+    children,
+  };
+}
+
+export const createTextNode = (text) => {
+  return document.createTextNode(text);
+};
+
+
+
 export default function generateStructure(structure) {
-  if(structure instanceof Component) {
-    const element = generateStructure(structure.render())
+  if (structure instanceof Component) {
+    const element = generateStructure(structure.render());
     structure.element = element;
     return element;
-  } else{
+  } else {
     const element = document.createElement(structure.type);
     if (structure.attributes) {
       for (let attrName in structure.attributes) {
         if (attrName.startsWith("data-")) {
           element.dataset[attrName.replace("data-", "")] =
-              structure.attributes[attrName];
+            structure.attributes[attrName];
         } else if (attrName === "style") {
           Object.assign(element.style, structure.attributes[attrName]);
-        }else element.setAttribute(attrName, structure.attributes[attrName]);
+        } else element.setAttribute(attrName, structure.attributes[attrName]);
       }
     }
     if (structure.events) {
@@ -33,21 +47,20 @@ export default function generateStructure(structure) {
         element.appendChild(subChild);
       }
     }
-    if (structure.class){
-      element.className = structure.class
+    if (structure.class) {
+      element.className = structure.class;
     }
     return element;
   }
 }
 
 export const domRender = {
-  render : (element, domElement, props = {}) => {
+  render: (element, domElement, props = {}) => {
     const component = new Component(props);
     component.setElement(domElement);
     const newElement = generateStructure(component.render());
-    domElement.replaceChild(newElement,component.element);
+    domElement.replaceChild(newElement, component.element);
     component.element = newElement;
     // domElement.appendChild(component.element)
   },
-
-}
+};

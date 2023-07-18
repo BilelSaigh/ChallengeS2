@@ -7,7 +7,7 @@ class Installer
     public function index()
     {
         $filePath = './ChallengeJs/index.html';
-        echo $filePath;
+        // echo $filePath;
         if (file_exists($filePath)) {
             header('Content-Type: text/html');
             readfile($filePath);

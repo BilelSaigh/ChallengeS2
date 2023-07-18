@@ -10,7 +10,7 @@ use App\Core\Verificator;
 
 class Security{
 
-    public function logiNn(): void
+    public function login(): void
 {
     echo "Login";
     $connect = new ConnectUser();
