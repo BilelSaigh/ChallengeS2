@@ -98,6 +98,7 @@
                             content: $('#content-area').keditor('getContent', true)
                         },
                         success: function (data){
+                            console.log(data)
                             $('#content-area').html($('#content-area').keditor('getContent', true));
                             Swal.fire({
                                 icon: 'success',
@@ -168,7 +169,7 @@
                         action: 'delete',
                     },
                     success: function (data) {
-                         location.assign('pages')
+                         location.assign('/admin/pages')
                     },
                     error: function (error) {
                         Swal.fire({

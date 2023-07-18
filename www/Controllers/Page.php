@@ -48,8 +48,8 @@ class Page extends Sql
             $pageBuild->setUserId($_SESSION['user']['id']);
             $pageBuild->setPageId( $_SESSION['page']);
             $pageBuild->setUpdatedAt();
-            $pageBuild->setStatus(0);
             $pageBuild->save();
+            echo "ici";
         }else if(!empty($_POST["action"]) && $_POST["action"] === "undo"){
             $pageBuild = $pageBuild->search(["id"=>$_POST["id"], "page_id"=>$_SESSION["page"]]);
             $responseData['content'] = $pageBuild->getContent();
@@ -62,6 +62,7 @@ class Page extends Sql
                 if (isset($_SESSION["page"])){
                     $new->setId($_SESSION["page"]);
                     $new->setTitle($_POST["title"]);
+                    $new->setSlug();
                     $new->setUpdatedAt();
                     $new->save();
                 }else{
@@ -71,7 +72,6 @@ class Page extends Sql
                     $new->setSlug();
                     $new->setDescription("");
                     $new->save();
-
                 }
             }else{
                 $response = array('error' => 'Pages Already exist ! ');
@@ -98,7 +98,8 @@ class Page extends Sql
             $page->save();
             $view = new View("Dash/pageBuild", "cleanPage");
             $view->assign("pageData",$pageData);
-            $view->assign("page",$page);
+            $view->assign("title",$page->getTitle());
+            $view->assign("page",$pageData->getContent());
         }
 
     }
@@ -143,7 +144,8 @@ class Page extends Sql
             $pageData = new Build();
             $pageData = $pageData->lastInsert($page->getId());
             $view = new View("Dash/pageBuild", "cleanPage");
-            $view->assign("page", $pageData);
+            $view->assign("title",$page->getTitle());
+            $view->assign("page", $pageData->getContent());
         } else {
             $error = new Error();
             $error->errorRedirection(404);

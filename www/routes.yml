@@ -1,8 +1,8 @@
-/:
+/admin:
   controller: Main
   action: index
 
-/admin:
+/:
   controller: Main
   action: dashboard
 
@@ -34,11 +34,15 @@
   controller: User
   action: setting
 
+/admin/theme:
+  controller: User
+  action: theme
+
 /admin/pages:
     controller: Page
     action : listPages
 
-/admin/updatepage:
+/updatepage:
   controller: Page
   action: updatePage
 
@@ -54,7 +58,7 @@
   controller: Page
   action: publish
 
-/admin/deletepage:
+/deletepage:
   controller: Page
   action: deletePage
 

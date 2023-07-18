@@ -27,7 +27,7 @@ class Pages extends Sql
      */
     public function setSlug(): void
     {
-        $this->slug = trim(str_replace(' ', '-', $this->getTitle()));
+        $this->slug = strtolower(trim(str_replace(' ', '-', $this->getTitle())));
     }
 
     /**
@@ -91,7 +91,7 @@ class Pages extends Sql
      */
     public function setTitle(string $title): void
     {
-        (empty($title))? $this->title  ="New website" :$this->title = $title;
+        $this->title = strtolower($title);
     }
 
     /**
