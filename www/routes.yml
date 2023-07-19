@@ -41,3 +41,18 @@
 /installer:
   controller: Installer
   action: index
+/comment/create:
+  controller: Comment
+  action: create
+/comment:
+  controller: Comment
+  action: store
+/comment/{id}/edit:
+  action: edit
+  controller: Comment
+/comment/{id}:
+  controller: Comment
+  action: update
+/comment/{id}/delete:
+  controller: Comment
+  action: delete
