@@ -7,19 +7,23 @@ use App\Forms\AddUser;
 use App\Forms\newEmail;
 use App\Forms\newPwd;
 use App\Models\Mail;
+use App\Models\Setting;
 use App\Models\User as ModelUser;
-use App\Models\Front;
 
 class User
 {
     public function home(): void
     {
         $connection = new Verificator();
+        $website = new Setting();
         if($connection->isConnected($_SESSION['user']["token"])) {
+            $website=$website->search(["id"=>1]);
+            $website= $website->getWebsiteName();
             $title = "Profil";
             $view = new View("Dash/profil", "back");
             $view->assign('title', $title);
             $view->assign('user', $_SESSION['user']);
+            $view->assign('websiteTitle', $website);
         }else{
             $error = new Error();
            $error->errorRedirection(404);
@@ -27,6 +31,7 @@ class User
     }
     public function setting(): void
     {
+        $errors = [];
         $newPwd = new newPwd();
         $newEmail = new newEmail();
         $connection = new Verificator();
@@ -37,6 +42,7 @@ class User
         $user->setEmail($_SESSION["user"]["email"]);
         $user->setStatus($_SESSION["user"]["status"]);
         $user->setPassword($_SESSION["user"]["pwd"]);
+        $user->setRole($_SESSION["user"]["role"]);
         if($connection->isConnected($_SESSION['user']["token"])) {
             $title = "Profil";
             $view = new View("Dash/editUser");
@@ -57,6 +63,7 @@ class User
                         'email' => $user->getEmail(),
                         'token' => $user->getToken(),
                         'status' => $user->getStatus(),
+                        'role' => $user->getRole(),
                     ];
                     $_SESSION["user"] = $userData;
                     $view->assign("user",$userData);
@@ -68,7 +75,7 @@ class User
                 if ($user->verifypassword($_POST["confirmemailpassword"])){
                     $user->setEmail($_POST["newEmail"]);
                     $verifiedUser = $user->verifMail(["email"=>$user->getEmail()]);
-                    if (!$verifiedUser) {
+                    if (!empty($verifiedUser)) {
                         $user->setEmail($_POST["newEmail"]);
                         $user->generateToken();
                         $user->save();
@@ -85,11 +92,11 @@ class User
                         $view->assign("user",$userData);
 
                     }else{
-                        $errors[] = "Email ou mot de passe invalide.";
+                        $errors[] = "Email déjà utilisé.";
                         $view->assign('errors', $errors);
                     }
                 }else {
-                    $errors[] = "Email ou mot de passe invalide.";
+                    $errors[] = "Mot de passe invalide.";
                     $view->assign('errors', $errors);
                 }
             }
@@ -112,6 +119,7 @@ class User
         $view = new View("Dash/users", "back");
         $users = $users->showAllUsers();
         $view->assign("users",$users);
+        $view->assign("title","List Users");
         $view->assign('form', $form->getConfig());
         if($form->isSubmit()){
             $user = new ModelUser;
@@ -144,6 +152,7 @@ class User
         $view = new View("Dash/users", "back");
         $users = $users->updateUser();
         $view->assign("users",$users);
+        $view->assign("title","List Users");
     }
     public function addUser($user): bool
     {
@@ -168,10 +177,11 @@ class User
     public function theme():void
     {
         $view = new View("Dash/theme");
-        $front = new Front();
-        $front = $front->search(['id'=>1]);
+        $settings = new Setting();
+        $settings = $settings->recupAll();
+        $_SESSION["setting"] = $settings;
         $view->assign('title','Theme');
-        $view->assign('front',$front);
+        $view->assign('setting',$_SESSION["setting"][0]);
     }
 
 }

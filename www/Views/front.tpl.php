@@ -2,9 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Oswald HTML Free - Bootstrap 5 HTML Multipurpose Admin Dashboard Theme by Keenthemes</title>
-    <meta charset="utf-8" />
-    <meta name="description" content="Axel admin dashboard live demo. Check out all the features of the admin panel. A large number of settings, additional services and widgets." />
+    <meta name="description" content="CMS permettant la création d'un site portefolio personnalisé à 100%" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
     <link href="../Views/Dash/theme/dist/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
@@ -55,6 +53,29 @@
             <div class="d-flex flex-center flex-column flex-column-fluid">
                 <!--begin::Wrapper-->
                 <div class="w-lg-500px p-10 p-lg-15 mx-auto">
+                    <?php if (!empty($errors)):
+                        foreach ($errors as $error):?>
+                    <!--begin::Alert-->
+                    <div class="alert alert-danger d-flex align-items-center p-5">
+                        <!--begin::Icon-->
+                        <i class="ki-duotone ki-shield-tick fs-2hx text-error me-4"><span class="path1"></span><span class="path2"></span></i>
+                        <!--end::Icon-->
+
+                        <!--begin::Wrapper-->
+                        <div class="d-flex flex-column">
+                            <!--begin::Title-->
+                            <h4 class="mb-1 text-dark">Oups, something went wrong ! </h4>
+                            <!--end::Title-->
+
+                            <!--begin::Content-->
+                            <span><?= $error ?></span>
+                            <!--end::Content-->
+                        </div>
+                        <!--end::Wrapper-->
+                    </div>
+                    <!--end::Alert-->
+                    <?php endforeach;
+                    endif; ?>
                     <!--begin::Form-->
                     <?php include $this->view; ?>
                     <!--begin::Link-->

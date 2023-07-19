@@ -161,7 +161,6 @@ var KTUsersList = function () {
                         url: url,
                         data : data,
                         success : function (response) {
-                            console.log(response);
                             Swal.fire({
                                 text: "You have deleted " + userName + " !",
                                 icon: "success",
@@ -180,7 +179,6 @@ var KTUsersList = function () {
 
                         },
                         error: function (xhr,status,error){
-                            console.error(error);
                             Swal.fire({
                                 text: customerName + " was not deleted.",
                                 icon: "error",
