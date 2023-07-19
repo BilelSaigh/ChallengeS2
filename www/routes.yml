@@ -77,3 +77,7 @@
 /installer:
   controller: Installer
   action: start
+
+/admin/chart:
+  controller: ChartController
+  action: displayChart

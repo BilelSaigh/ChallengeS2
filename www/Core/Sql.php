@@ -17,6 +17,11 @@ abstract class Sql{
         $this->table = end($classExploded);
         $this->table = "esgi_".$this->table;
     }
+    
+    protected function fetchAll(string $query): array {
+        $stmt = $this->pdo->query($query);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
 
     public function save(): void
     {
