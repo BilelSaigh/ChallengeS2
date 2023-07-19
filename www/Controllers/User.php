@@ -6,17 +6,41 @@ use App\Forms\AddAdmin;
 use App\Forms\AddUser;
 use App\Models\User as ModelUser;
 
-class User{
-    public function index(){
-
+class User
+{
+    public function index()
+    {
         $pseudo = "Prof";
         $view = new View("Main/index", "front");
         $view->assign("pseudo", $pseudo);
+        
+        // Vérifier le format de retour demandé
+        $format = $this->getRequestFormat();
+        
+        // Adapter la réponse en fonction du format demandé
+        if ($format === 'json') {
+            header('Content-Type: application/json');
+            echo json_encode(['pseudo' => $pseudo]);
+        }else {
+            // Afficher la vue par défaut pour les autres formats
+            include "Main/index.view.php";
+        }
     }
 
-    public function contact(){
-        $view = new View("Main/contact", "front");
+    public function contact()
+{
+    // Vérifier le format de retour demandé
+    $format = $this->getRequestFormat();
+
+    // Adapter la réponse en fonction du format demandé
+    if ($format === 'json') {
+        header('Content-Type: application/json');
+        echo json_encode(['message' => 'Contact form submitted']);
+    }else {
+        // Afficher la vue par défaut pour les autres formats
+        include "Main/contact.view.php";
     }
+}
 
     public function dashboard(){
         $view = new View("Dash/pageBuilder","back");
