@@ -40,21 +40,20 @@
   controller: Page
   action: newpage
 
-/installer:
-  controller: Installer
-  action: index
-/comment/create:
-  controller: Comment
+/article/create:
+  controller: ArticleController
   action: create
-/comment:
-  controller: Comment
-  action: store
-/comment/{id}/edit:
-  action: edit
-  controller: Comment
-/comment/{id}:
-  controller: Comment
-  action: update
-/comment/{id}/delete:
-  controller: Comment
-  action: delete
+
+/article/view:
+  controller: ArticleController
+  action: list
+
+/article/add-comment:
+  controller: CommentController
+  action: addComment
+
+/article/report-comment:
+  controller: CommentController
+  action: reportComment
+
+

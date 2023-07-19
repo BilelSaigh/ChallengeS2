@@ -72,4 +72,8 @@ abstract class Sql{
         $sql = "DELETE FROM ".$this->table." WHERE id:='".$id."'";
 
     }
+    public function getPdo()
+    {
+        return $this->pdo;
+    }
 }
