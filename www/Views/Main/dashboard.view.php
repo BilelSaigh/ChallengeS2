@@ -17,48 +17,47 @@
     <div id="chartdiv"></div>
     <div id="chartdiv2"></div>
     <script type="text/javascript">
-        var chartData = <?php echo json_encode($formattedChartData); ?>;
+    var chartData = <?php echo json_encode($formattedData); ?>;
 
-        // Créer un graphique amCharts
-        var chart1 = am4core.create("chartdiv", am4charts.XYChart);
-        chart1.data = chartData;
+    // Créer un graphique amCharts
+    var chart = am4core.create("chartdiv", am4charts.PieChart);
+    chart.data = chartData;
 
-        // Créer un titre pour le graphique 1
-        var title1 = chart1.titles.create();
-        title1.text = "Nombre d'utilisateurs par prénom";
-        title1.fontSize = 18;
-        title1.marginBottom = 15;
+    // Créer un titre pour le graphique
+    var title = chart.titles.create();
+    title.text = "Répartition des pages Publiée/Brouillon";
+    title.fontSize = 18;
+    title.marginBottom = 15;
 
-        // Créer des axes
-        var categoryAxis = chart1.xAxes.push(new am4charts.CategoryAxis());
-        categoryAxis.dataFields.category = "prenom";
+    // Ajouter et configurer les séries
+    var series = chart.series.push(new am4charts.PieSeries());
+    series.dataFields.value = "count";
+    series.dataFields.category = "status";
+    series.slices.template.tooltipText = "Statut: {category}\nNombre de pages: {value}";
 
-        var valueAxis = chart1.yAxes.push(new am4charts.ValueAxis());
+    // Modifier les libellés
+    series.labels.template.adapter.add("text", function(text, target) {
+      var category = target.dataItem.category;
+      if (category === "true") {
+        return "Publié";
+      }
+      if (category === "false") {
+        return "Brouillon";
+      }
+      return text;
+    });
 
-        // Créer une série de colonnes
-        var series = chart1.series.push(new am4charts.ColumnSeries());
-        series.dataFields.valueY = "nombre_utilisateurs";
-        series.dataFields.categoryX = "prenom";
-        series.name = "Nombre d'utilisateurs";
-        series.columns.template.tooltipText = "Prénom: {categoryX}\nNombre d'utilisateurs: {valueY}";
+    // Ajouter une légende
+    chart.legend = new am4charts.Legend();
 
-        // Configurer l'apparence du graphique
-        chart1.cursor = new am4charts.XYCursor();
-        chart1.cursor.lineX.disabled = true;
-        chart1.cursor.lineY.disabled = true;
-        chart1.cursor.behavior = "none";
-        chart1.cursor.fullWidthLineX = true;
-        chart1.cursor.fullWidthLineY = true;
-        chart1.cursor.xAxis = categoryAxis;
-        chart1.cursor.yAxis = valueAxis;
+    // Appliquer un thème animé au graphique
+    chart.hiddenState.properties.opacity = 0;
+    chart.legend = new am4charts.Legend();
+    chart.legend.useDefaultMarker = true;
 
-        // Ajouter un curseur de survol pour mettre en évidence les colonnes
-        series.columns.template.adapter.add("fill", function(fill, target) {
-            if (target.dataItem && target.dataItem.index === chart1.cursor.lineX.pixelX) {
-                return am4core.color("#36B5A1");
-            }
-            return fill;
-        });
+    chart.colors.step = 2;
+
+    series.hiddenState.properties.radius = am4core.percent(0);
 
         //Graph 2
         var chartData2 = <?php echo json_encode($chartData); ?>;
