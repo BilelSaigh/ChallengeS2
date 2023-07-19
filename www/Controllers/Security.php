@@ -45,7 +45,7 @@ class Security{
         $form = new AddUser();
         $view = new View("Auth/register", "front");
         $view->assign('form', $form->getConfig());
-
+        
         if($form->isSubmit()){
             $errors = Verificator::form($form->getConfig(), $_POST);
             $user = new User;

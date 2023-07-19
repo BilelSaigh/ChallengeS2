@@ -126,6 +126,7 @@ class User extends Sql
         return $this->role;
     }
 
+
     /**
      * @return mixed
      */
