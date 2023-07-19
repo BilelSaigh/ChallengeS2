@@ -44,16 +44,23 @@ class AddAdmin extends AForm
                 ],
                 "pwd"=>[
                     "class"=>"form-control form-control-solid mb-3 mb-lg-0",
-                    "type"=>"password",
+                    "type"=>"text",
                     "placeholder"=>"Votre mot de passe",
-                    "error"=>"Votre mot de passe est incorrect"
+                    "error"=>"Votre mot de passe est incorrect",
+                    "value"=> uniqid()
                 ],
                 "role"=>[
-                    "type"=>"radio",
-                    "class"=>"form-check-input me-3",
-                    "error"=>"Aucun role n'a été séléctionné",
-                    "value" => ["0"=>"user","1"=>"admin","3"=>"editor","4"=>"moderator"]
-                ]
+                    "type"=>"select",
+                    "class"=>"form-select",
+                    "options"=>["Choose user role ","0"=>"abonné/e", "1"=>"admin","3"=>"editor","4"=>"moderator"],
+                    "error"=>"Aucun role n'a été séléctionné"
+                ],
+//                "role"=>[
+//                    "type"=>"radio",
+//                    "class"=>"form-check-input me-3",
+//                    "error"=>"Aucun role n'a été séléctionné",
+//                    "value" => ["0"=>"user","1"=>"admin","3"=>"editor","4"=>"moderator"]
+//                ]
             ]
         ];
     }

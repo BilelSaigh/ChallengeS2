@@ -4,15 +4,11 @@
   #format: html
   format: application/json
 
-/dashboard:
+/admin:
   controller: Main
   action: dashboard
 
-/contact:
-  controller: Main
-  action: contact
-
-/login:
+/admin/login:
   controller: Security
   action: login
 
@@ -20,25 +16,69 @@
   controller: Security
   action: logout
 
-/register:
+/admin/register:
   controller: Security
   action: register
 
-/confirmation:
+/admin/confirmation:
   controller: Security
   action: confirmation
 
-/users:
+/admin/users:
   controller : User
   action : showUsers
 
-/deleteuser:
+/admin/deleteuser:
   controller: User
   action: deleteUsers
 
-/pagebuilder:
+/admin/edituser:
+  controller: User
+  action: setting
+
+/admin/pages:
+    controller: Page
+    action : listPages
+
+/admin/updatepage:
   controller: Page
-  action: newpage
+  action: updatePage
+
+/showpage:
+  controller: Page
+  action: showPage
+
+/admin/newpage:
+  controller: Page
+  action: createPage
+
+/preview:
+  controller: Page
+  action: publish
+
+/admin/deletepage:
+  controller: Page
+  action: deletePage
+
+/admin/profil:
+  controller: User
+  action: home
+
+/admin/signout:
+  controller: Security
+  action: logout
+
+/error404:
+  controller: Error
+  action: error404
+
+/{slug}:
+  controller : Page
+  action : getSlug
+/admin/chart:
+  controller: ChartController
+  action: displayChart
+
 
 /article/create:
   controller: ArticleController

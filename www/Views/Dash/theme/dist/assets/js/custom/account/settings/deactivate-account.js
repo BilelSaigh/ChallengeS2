@@ -56,18 +56,35 @@ var KTAccountSettingsDeactivateAccount = function () {
                         }
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            Swal.fire({
-                                text: 'Your account has been deactivated.', 
-                                icon: 'success',
-                                confirmButtonText: "Ok",
-                                buttonsStyling: false,
-                                customClass: {
-                                    confirmButton: "btn btn-light-primary"
+                            $.ajax({
+                                type: "get",
+                                url: "deleteuser",
+                                success: function (response) {
+                                    Swal.fire({
+                                        text: 'Your account has been deactivated.',
+                                        icon: 'success',
+                                        confirmButtonText: "Ok",
+                                        buttonsStyling: false,
+                                        customClass: {
+                                            confirmButton: "btn btn-light-primary"
+                                        }
+                                    })
+                                },
+                                error: function (error) {
+                                    swal.fire({
+                                        text: "Sorry, looks like there are some errors detected, please try again.",
+                                        icon: "error",
+                                        buttonsStyling: false,
+                                        confirmButtonText: "Ok, got it!",
+                                        customClass: {
+                                            confirmButton: "btn btn-light-primary"
+                                        }
+                                    });
                                 }
                             })
                         } else if (result.isDenied) {
                             Swal.fire({
-                                text: 'Account not deactivated.', 
+                                text: 'Account not deactivated.',
                                 icon: 'info',
                                 confirmButtonText: "Ok",
                                 buttonsStyling: false,
@@ -76,21 +93,10 @@ var KTAccountSettingsDeactivateAccount = function () {
                                 }
                             })
                         }
-                    });
-
-                } else {
-                    swal.fire({
-                        text: "Sorry, looks like there are some errors detected, please try again.",
-                        icon: "error",
-                        buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
-                        customClass: {
-                            confirmButton: "btn btn-light-primary"
-                        }
-                    });
+                    })
                 }
-            });
-        });
+            })
+        })
     }
 
     // Public methods

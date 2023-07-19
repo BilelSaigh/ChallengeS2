@@ -17,6 +17,11 @@ abstract class Sql{
         $this->table = end($classExploded);
         $this->table = "esgi_".$this->table;
     }
+    
+    protected function fetchAll(string $query): array {
+        $stmt = $this->pdo->query($query);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
 
     public function save(): void
     {
@@ -24,7 +29,6 @@ abstract class Sql{
         $columnsToDeleted =get_class_vars(get_class());
         $columns = array_diff_key($columns, $columnsToDeleted);
         unset($columns["id"]);
-
         if(is_numeric($this->getId()) && $this->getId()>0)
         {
             $columnsUpdate = [];
@@ -33,47 +37,70 @@ abstract class Sql{
                 $columnsUpdate[]= $key."=:".$key;
             }
             $queryPrepared = $this->pdo->prepare("UPDATE ".$this->table." SET ".implode(",",$columnsUpdate)." WHERE id=".$this->getId());
-
         }else{
             $queryPrepared = $this->pdo->prepare("INSERT INTO ".$this->table." (".implode(",", array_keys($columns)).") 
                             VALUES (:".implode(",:", array_keys($columns)).")");
         }
-
         $queryPrepared->execute($columns);
     }
-
     public function search(array $element)
 {
     $toSelect = [];
     $params = [];
-
     foreach ($element as $key => $value) {
         $toSelect[] = $key . "=:" . $key;
         $params[':' . $key] = $value;
     }
-
     $sql = "SELECT * FROM " . $this->table . " WHERE " . implode(' AND ', $toSelect);
     $queryPrepared = $this->pdo->prepare($sql);
     $queryPrepared->execute($params);
-
-    return $queryPrepared->fetchObject(get_called_class());
+   return $queryPrepared->fetchObject(get_called_class());
+}
+    public function multipleSearch(array $element)
+{
+    $toSelect = [];
+    $params = [];
+    foreach ($element as $key => $value) {
+        $toSelect[] = $key . "=:" . $key;
+        $params[':' . $key] = $value;
+    }
+    $sql = "SELECT * FROM " . $this->table . " WHERE " . implode(' AND ', $toSelect);
+    $queryPrepared = $this->pdo->prepare($sql);
+    $queryPrepared->execute($params);
+   return $queryPrepared->fetchAll();
 }
 
-
-    public function recupAll(): array
+    public function delete(): void
     {
-        $sql = "SELECT * FROM ".$this->table;
-        $queryPrepared = $this->pdo->query($sql);
+        $sql = "DELETE FROM ".$this->table." WHERE id = ".$this->getId();
+        $queryPrepared = $this->pdo->prepare($sql);
+        $queryPrepared->execute();
+    }
+
+    public function recupAll(): bool|array
+    {
+        $sql = "SELECT * FROM " . $this->table;
+        $queryPrepared = $this->pdo->prepare($sql);
+        $queryPrepared->execute();
+        return $queryPrepared->fetchAll();
+
+
+    }
+//à ameliorer
+    public function lastInsert($search)
+    {
+        $sql = "SELECT * FROM ". $this->table. " WHERE page_id =".$search." ORDER BY updated_at DESC LIMIT 1";
+        $queryPrepared = $this->pdo->prepare($sql);
+        $queryPrepared->execute();
+        return $queryPrepared->fetchObject(get_called_class());
+
+    }
+    public function recupAllByOrder($pageId): bool|array
+    {
+        $sql = "SELECT * FROM ". $this->table." WHERE page_id = :pageId ORDER BY updated_at DESC";
+        $queryPrepared = $this->pdo->prepare($sql);
+        $queryPrepared->execute(["pageId" => $pageId]);
         return $queryPrepared->fetchAll();
     }
 
-    public function delete()
-    {
-        $sql = "DELETE FROM ".$this->table." WHERE id:='".$id."'";
-
-    }
-    public function getPdo()
-    {
-        return $this->pdo;
-    }
 }

@@ -10,10 +10,30 @@ class User extends Sql
     protected String $lastname;
     protected String $email;
     protected String $pwd;
+    protected String $logo;
     protected  $token = null;
-    protected int $role = 0;
-    protected Int $status = 0;
+    protected Int $role ;
+    protected Int $status =0;
+
     protected $date_inserted;
+
+    /**
+     * @param mixed $date_inserted
+     */
+    public function setDateInserted(): void
+    {
+        date_default_timezone_set('Europe/Paris');
+        $this->date_inserted = date('d-m-y h:i:s');
+    }
+
+    /**
+     * @param mixed $date_updated
+     */
+    public function setDateUpdated(): void
+    {
+        date_default_timezone_set('Europe/Paris');
+        $this->date_updated = date('d-m-y h:i:s');
+    }
     protected $date_updated;
 
     /**
@@ -30,6 +50,22 @@ class User extends Sql
     public function setId(int $id): void
     {
         $this->id = $id;
+    }
+
+    /**
+     * @return String
+     */
+    public function getLogo(): string
+    {
+        return $this->logo;
+    }
+
+    /**
+     * @param String $logo
+     */
+    public function setLogo(string $logo): void
+    {
+        $this->logo = $logo;
     }
 
     /**
@@ -95,6 +131,11 @@ class User extends Sql
     {
         $this->pwd = password_hash($pwd, PASSWORD_DEFAULT);
     }
+    
+    
+     public function setPassword(string $pwd): void {
+         $this->pwd = $pwd;
+     }
 
     /**
      * @return int
@@ -121,11 +162,10 @@ class User extends Sql
     /**
      * @return int $role
      */
-    public function getRole($role): int
+    public function getRole(): int
     {
         return $this->role;
     }
-
 
     /**
      * @return mixed
@@ -152,7 +192,10 @@ class User extends Sql
         $bytes = random_bytes(128);
         $this->token = substr(str_shuffle(bin2hex($bytes)), 0, 10);
     }
-
+    public function setToken()
+    {
+        $this->token = " ";
+    }
 
     /**
      * @return mixed
@@ -164,16 +207,10 @@ class User extends Sql
 
     public function verifypassword($pwdverif): bool
     {
-        if (password_verify($pwdverif, $this->pwd)) {
-            return true;
-        } else {
-            return false;
-        }
+        return password_verify($pwdverif, $this->pwd);
     }
 
-
-
-    public function verifMail(array $toSearch):self|bool
+    public function verifMail($toSearch)
     {
        return parent::search($toSearch);
     }

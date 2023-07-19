@@ -1,7 +1,10 @@
 <?php
 namespace App\Core;
 
-class Verificator{
+use App\Controllers\Error;
+
+class Verificator
+{
 
     public static function form(array $config, array $data): array
     {
@@ -9,7 +12,6 @@ class Verificator{
         if(count($config["inputs"]) != count($data)-1){
             die("Tentative de Hack");
         }
-
         foreach ($config["inputs"] as $name=>$input){
 
             if(!empty($input["required"]) || empty($data[$name]) ){
@@ -25,9 +27,7 @@ class Verificator{
             if(!empty($input["confirm"]) && $data[$name] != $data[$input["confirm"]]){
                 $listOfErrors[] = $input["error"];
             }
-
         }
-
         return $listOfErrors;
     }
 
@@ -35,13 +35,18 @@ class Verificator{
     {
         return filter_var($email, FILTER_VALIDATE_EMAIL);
     }
+
     public static function checkPwd($password): bool
     {
         return strlen($password)>=8
         && preg_match("/[0-9]/", $password, $match)
         && preg_match("/[a-z]/", $password, $match)
         && preg_match("/[A-Z]/", $password, $match);
-        
+    }
+
+    public static function isConnected($token): bool
+    {
+       return !empty($token);
     }
 
 

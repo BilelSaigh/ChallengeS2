@@ -22,14 +22,53 @@ class Router
         }
 
 
+                // Recherche de la route correspondante avec un slug dynamique
+        $matchedRoute = null;
+        $matchedParams = [];
+
+        foreach ($routes as $route => $config) {
+        if (strpos($route, '{slug}') !== false) {
+            // Si la route contient "{slug}", il s'agit d'une route avec un slug
+            $pattern = str_replace('{slug}', '([^/]+)', $route);
+            $regex = '#^' . $pattern . '$#';
+
+            if (preg_match($regex, $uri, $matches)) {
+                $matchedRoute = $route;
+                $matchedParams = [];
+
+                // Récupérer les valeurs des paramètres
+                for ($i = 1; $i < count($matches); $i++) {
+                    $matchedParams[] = $matches[$i];
+                }
+                break;
+            }
+        } else {
+                // Si la route est une correspondance exacte
+                if ($uri === $route) {
+                    $matchedRoute = $route;
+                    break;
+                }
+            }
+        }
+
+        if ($matchedRoute === null) {
+        // Page 404
+            http_response_code(404);
+            $view = new View("Error/404", "error");
+        }
+
+
         $route = $this->routes[$uri];
 
         if (empty($route["controller"]) || empty($route["action"])) {
             throw new \Exception("Absence de controller ou d'action dans le ficher de routing pour la route ".$uri);
         }
 
-        $controller = "\\App\\Controllers\\" . $route["controller"];
-        $action = $route["action"];
+        // $controller = "\\App\\Controllers\\" . $route["controller"];
+        // $action = $route["action"];
+
+        $controller = $routes[$matchedRoute]["controller"];
+        $action = $routes[$matchedRoute]["action"];
 
         if (!class_exists($controller)) {
             throw new \Exception("La class ".$controller." n'existe pas", 500);

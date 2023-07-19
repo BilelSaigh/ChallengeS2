@@ -6,50 +6,61 @@ use App\Forms\ConnectUser;
 use App\Models\Mail;
 use App\Models\User;
 use App\Core\Verificator;
+use App\Controllers\Error;
 
 
-class Security{
+
+class Security
+{
 
     public function login(): void
-{
-    $connect = new ConnectUser();
-    $user = new User();
-    $view = new View("Auth/login", "front");
-    $view->assign('form', $connect->getConfig());
-
-    if ($connect->isSubmit()) {
-        $errors = Verificator::form($connect->getConfig(), $_POST);
-        if (empty($errors)) {
-            $email = $_POST["email"];
-            $password = $_POST["pwd"];
-
-            if ($user->verifMail(["email"=>$email]) && $user->verifypassword($password)) {
-                $user->generateToken();
-                echo "ça marche";
-                exit();
+    {
+        $connect = new ConnectUser();
+        $user = new User();
+        $view = new View("Auth/login", "front");
+        $view->assign('form', $connect->getConfig());
+        $view->assign('title', "login");
+        if ($connect->isSubmit()) {
+            $errors = Verificator::form($connect->getConfig(), $_POST);
+            if (empty($errors)) {
+                $user->setEmail($_POST["email"]);
+                $userPwd = $_POST["pwd"];
+                $verifiedUser = $user->verifMail(["email"=>$user->getEmail()]);
+                if ($verifiedUser && $verifiedUser->verifypassword($userPwd)) {
+                    $verifiedUser->generateToken();
+                    $userData = [
+                        'id' => $verifiedUser->getId(),
+                        'firstname' => $verifiedUser->getFirstname(),
+                        'lastname'  => $verifiedUser->getLastname(),
+                        'pwd'       => $verifiedUser->getPwd(),
+                        'email'     => $verifiedUser->getEmail(),
+                        'token'     => $verifiedUser->getToken(),
+                        'status'    => $verifiedUser->getStatus(),
+                        'logo'    => $verifiedUser->getLogo(),
+                        'role'    => $verifiedUser->getRole(),
+                    ];
+                    $_SESSION["user"] = $userData;
+                    header('Location: /admin/profil');
+                } else {
+                    $errors[] = "Email ou mot de passe invalide.";
+                    $view->assign('errors', $errors);
+                }
             } else {
-                $errors[] = "Email ou mot de passe invalide.";
                 $view->assign('errors', $errors);
             }
-        } else {
-            $view->assign('errors', $errors);
         }
     }
-}
-
-
 
     public function register(): void
     {
         $form = new AddUser();
         $view = new View("Auth/register", "front");
+        $view->assign('title', "register");
         $view->assign('form', $form->getConfig());
-        
         if($form->isSubmit()){
             $errors = Verificator::form($form->getConfig(), $_POST);
             $user = new User;
             $alreadyRegistered = $user->verifMail(["email"=>$_POST["email"]]);
-
             if(empty($errors) && empty($alreadyRegistered)){
                 $confMail = new Mail();
                 $confMail->setName($_POST["firstname"]);
@@ -57,41 +68,45 @@ class Security{
                 $confMail->setAddress($_POST["email"]);
                 $user->generateToken();
                 $token = $user->getToken();
+                $user->setRole($_POST["role"]??"abonne");
                 $user->setEmail($_POST["email"]);
                 $user->setFirstname($_POST["firstname"]);
                 $user->setLastname($_POST["lastname"]);
                 $user->setPwd($_POST["pwd"]);
                 $user->save();
-                $confMail->setMessage('<button><a href="http://localhost/confirmation?key='.$token.'"> Cliquez ici pour confirmer votre mail. </a></button>');
+                $confMail->setMessage('
+                                          <div class="card-body">
+                                            <h5 class="card-title"> Adebc vous souhaite la bienvenue ! </h5>
+                                            <p class="card-text">Une fois votre compte validé vous pourrez commenter autant que vous le souhaitez !.</p>
+                                            <p class="card-text">Oublie pas le respect est OBLIGATOIRE chez nous ;)  .</p>
+                                                <button><a class="btn btn-primary" href="http://localhost:81/confirmation?key='.$token.'"> Confirmer votre mail. </a></button>)
+                                           </div>');
                 $mail = $confMail->mail($confMail->initMail());
-
-                $view = new View("Main/login", "front");
-                $view->assign('form', $form->getConfig());
-
+                header('Location: /admin/login');
             }else{
                 ($alreadyRegistered) ? $view->assign('errors', "Inscription incorrect") :  $view->assign('errors', $errors);
             }
         }
     }
-
     /**
      * @return void
      */
-    
     public function confirmation():void
     {
         if (isset($_GET['key']) && !empty(($_GET['key']))){
             $user = new User;
-            echo "Oui validation";
+            $connect = new ConnectUser();
             $newUser = $user->verifMail(["token" =>$_GET['key']]);
             if (!empty($newUser)){
                 $newUser->setStatus(1);
                 $newUser->save();
-                $view = new View("Dash/home", "back");
+                $_SESSION["user"] = $newUser;
+                $view = new View("Auth/login", "front");
+                $view->assign('form', $connect->getConfig());
                 $view->assign('user', $user);
             }else{
                 echo '<div class="alert-error" style="text-align: center; padding: 1em ;">
-                        <span> Compte innexistant, veuiller verifier que la durée du mail n est pas expirée </span>
+                        <span> Compte innexistant, veuillez verifier que la durée du mail n est pas expirée </span>
                     </div>';
             }
         }
@@ -99,7 +114,18 @@ class Security{
 
     public function logout(): void
     {
-        echo "Logout";
+        $connection = new Verificator();
+        $user = new User();
+        if($connection->isConnected($_SESSION['user']["token"])) {
+            $user->setId($_SESSION["user"]["id"]);
+            $user->setToken();
+            $user->save();
+            session_destroy();
+            header('Location: /admin/login');
+        }else{
+            $error = new Error();
+            $error->errorRedirection(404);
+        }
     }
 
 }
