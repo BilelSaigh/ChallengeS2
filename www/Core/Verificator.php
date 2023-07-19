@@ -18,12 +18,12 @@ class Verificator{
             if($input["type"]=="email" && !self::checkEmail($data[$name])){
                 $listOfErrors[]=$input["error"];
             }
-            if($input["type"]=="password" && !self::checkPwd($data[$name]) && empty($input["confirm"])) {
-                $listOfErrors[]=$input["error"];
+            if($input["type"] == "password" && empty($input["confirm"]) && !self::checkPwd($data[$name]) ){
+                $listOfErrors[] = $input["error"];
             }
 
-            if( !empty($input["confirm"]) && $data[$name]!=$data[$input["confirm"]]  ){
-                $listOfErrors[]=$input["error"];
+            if(!empty($input["confirm"]) && $data[$name] != $data[$input["confirm"]]){
+                $listOfErrors[] = $input["error"];
             }
 
         }
@@ -35,11 +35,13 @@ class Verificator{
     {
         return filter_var($email, FILTER_VALIDATE_EMAIL);
     }
-    public static function checkPwd($pwd): bool
+    public static function checkPwd($password): bool
     {
-        return strlen($pwd)>=8
-            && preg_match("/[0-9]/",$pwd, $result )
-            && preg_match("/[A-Z]/",$pwd, $result );
+        return strlen($password)>=8
+        && preg_match("/[0-9]/", $password, $match)
+        && preg_match("/[a-z]/", $password, $match)
+        && preg_match("/[A-Z]/", $password, $match);
+        
     }
 
 
