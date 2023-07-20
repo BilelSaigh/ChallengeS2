@@ -21,15 +21,10 @@
                                 </div>
                                 <!--begin::Card header-->
                                 <!--begin::Content-->
+                                <?php if ($_SESSION['user']['role']===0):  ?>
                                 <div id="kt_account_settings_profile_details" class="collapse show">
-                                    <!--begin::Form-->
-                                    <form id="kt_account_profile_details_form" class="form">
                                         <!--begin::Card body-->
                                         <div class="card-body border-top p-9">
-                                                </div>
-                                                <!--end::Col-->
-                                            </div>
-                                            <!--end::Input group-->
                                             <!--begin::Input group-->
                                             <div class="row mb-6">
                                                 <!--begin::Label-->
@@ -37,7 +32,7 @@
                                                 <!--end::Label-->
                                                 <!--begin::Col-->
                                                 <div class="col-lg-8 fv-row">
-                                                    <input type="text" name="company" class="form-control form-control-lg form-control-solid" placeholder="Company name" value="<?=$page["name"] ?>" />
+                                                    <input type="text" name="company" class="form-control form-control-lg form-control-solid"  id="title" placeholder="Website name" value="<?= $websiteTitle?>" />
                                                 </div>
                                                 <!--end::Col-->
                                             </div>
@@ -50,9 +45,9 @@
                                             <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Save Changes</button>
                                         </div>
                                         <!--end::Actions-->
-                                    </form>
-                                    <!--end::Form-->
                                 </div>
+                                <?php endif; ?>
+
                                 <!--end::Content-->
                             </div>
                             <!--end::Basic info-->
@@ -72,7 +67,7 @@
                                                 <div class="alert alert-danger d-flex align-items-center p-5">
                                                     <i class="ki-duotone ki-shield-tick fs-2hx text-danger me-4"><span class="path1"></span><span class="path2"></span></i>
                                                     <div class="d-flex flex-column">
-                                                        <h4 class="mb-1 text-dark">This is an alert</h4>
+                                                        <h4 class="mb-1 text-dark">Something went wrong ! </h4>
                                                         <span>'.$error.'</span>
                                                     </div>
                                                 </div>';
@@ -246,3 +241,4 @@
                     <!--end::Content wrapper-->
                 </div>
             </div>
+>

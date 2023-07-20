@@ -87,5 +87,11 @@
   action: start
 
 /admin/front:
-  controller: Front
+  controller: Settings
   action: update
+  security: admin
+
+/admin/menu:
+  controller: Settings
+  action: updateMenu
+  security: admin

@@ -141,56 +141,71 @@ var KTUsersList = function () {
                 const userName = parent.querySelectorAll('td')[1].querySelectorAll('a')[1].innerText;
                 // Get user id
                 let userId = parent.querySelectorAll('td')[1].querySelectorAll('a')[0].innerText;
-                let data = '&id=' + encodeURIComponent(userId);
                 let url = "deleteuser";
-                // SweetAlert2 pop up --- official docs reference: https://sweetalert2.github.io/
-                Swal.fire({
-                    text: "Are you sure you want to delete " + userName + " ?",
-                    icon: "warning",
-                    showCancelButton: true,
-                    buttonsStyling: false,
-                    confirmButtonText: "Yes, delete!",
-                    cancelButtonText: "No, cancel",
-                    customClass: {
-                        confirmButton: "btn fw-bold btn-danger",
-                        cancelButton: "btn fw-bold btn-active-light-primary"
-                    }
-                }).then(function (result) {
-                    $.ajax({
-                        type: "post",
-                        url: url,
-                        data : data,
-                        success : function (response) {
-                            Swal.fire({
-                                text: "You have deleted " + userName + " !",
-                                icon: "success",
-                                buttonsStyling: false,
-                                confirmButtonText: "Ok, got it!",
-                                customClass: {
-                                    confirmButton: "btn fw-bold btn-primary",
-                                }
-                            }).then(function () {
-                                // Remove current row
-                                datatable.row($(parent)).remove().draw();
-                            }).then(function () {
-                                // Detect checked checkboxes
-                                toggleToolbars();
-                            });
+                let sessionId = document.getElementById("idSession").value
+                if (sessionId != userId){
+                    Swal.fire({
+                        text: "Are you sure you want to delete " + userName + " ?",
+                        icon: "warning",
+                        showCancelButton: true,
+                        buttonsStyling: false,
+                        confirmButtonText: "Yes, delete!",
+                        cancelButtonText: "No, cancel",
+                        customClass: {
+                            confirmButton: "btn fw-bold btn-danger",
+                            cancelButton: "btn fw-bold btn-active-light-primary"
+                        }
+                    }).then(function (result) {
+                        $.ajax({
+                            type: "post",
+                            url: url,
+                            data : { action: "deleteUser", id: userId },
+                            success : function (response) {
+                                console.log(response)
+                                Swal.fire({
+                                    text: "You have deleted " + userName + " !",
+                                    icon: "success",
+                                    buttonsStyling: false,
+                                    confirmButtonText: "Ok, got it!",
+                                    customClass: {
+                                        confirmButton: "btn fw-bold btn-primary",
+                                    }
+                                }).then(function (log) {
+                                    console.log(response)
+                                    // Remove current row
+                                    datatable.row($(parent)).remove().draw();
+                                }).then(function () {
+                                    // Detect checked checkboxes
+                                    toggleToolbars();
+                                });
 
-                        },
-                        error: function (xhr,status,error){
-                            Swal.fire({
-                                text: customerName + " was not deleted.",
-                                icon: "error",
-                                buttonsStyling: false,
-                                confirmButtonText: "Ok, got it!",
-                                customClass: {
-                                    confirmButton: "btn fw-bold btn-primary",
-                                }
-                            });
+                            },
+                            error: function (xhr,status,error){
+                                Swal.fire({
+                                    text: userName + " was not deleted.",
+                                    icon: "error",
+                                    buttonsStyling: false,
+                                    confirmButtonText: "Ok, got it!",
+                                    customClass: {
+                                        confirmButton: "btn fw-bold btn-primary",
+                                    }
+                                });
+                            }
+                        });
+                    });
+                }else {
+                    Swal.fire({
+                        text: "You are "+ userName + ", you cannot delete your self here...",
+                        icon: "error",
+                        buttonsStyling: false,
+                        confirmButtonText: "Ok, got it!",
+                        customClass: {
+                            confirmButton: "btn fw-bold btn-primary",
                         }
                     });
-                });
+                }
+
+
             })
         });
     }

@@ -1,4 +1,4 @@
 
-                <?php if(!empty($page)) :echo $page ;  endif ?>
+                <?php  if(!empty($content)) :echo $content ;  endif ?>
 
 

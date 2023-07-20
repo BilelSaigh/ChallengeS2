@@ -59,6 +59,7 @@ var KTAccountSettingsDeactivateAccount = function () {
                             $.ajax({
                                 type: "get",
                                 url: "deleteuser",
+                                data: {action: "deleteSelf"},
                                 success: function (response) {
                                     Swal.fire({
                                         text: 'Your account has been deactivated.',

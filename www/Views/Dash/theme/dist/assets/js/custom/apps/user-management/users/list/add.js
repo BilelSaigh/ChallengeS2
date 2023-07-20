@@ -46,15 +46,15 @@ var KTUsersAddUser = function () {
         const submitButton = element.querySelector('[data-kt-users-modal-action="submit"]');
          submitButton.addEventListener('click', function(e)  {
              e.preventDefault();
+             console.log("ok")
              var form = $('#kt_modal_add_user_form');
              var status = document.querySelector('input[type=radio]:checked').value;
-             var url = form.attr('action');
              var formData = form.serialize();
              formData += '&status='+ encodeURIComponent(status);
              formData += '&submit='+ encodeURIComponent("S'inscrire");
              $.ajax({
                  type: "post",
-                 url: url,
+                 url: "users",
                  data : formData,
                  success: function (response) {
                      console.log(response);
@@ -111,7 +111,6 @@ var KTUsersAddUser = function () {
         const cancelButton = element.querySelector('[data-kt-users-modal-action="cancel"]');
         cancelButton.addEventListener('click', e => {
             e.preventDefault();
-
             Swal.fire({
                 text: "Are you sure you would like to cancel?",
                 icon: "warning",
@@ -145,6 +144,7 @@ var KTUsersAddUser = function () {
         const closeButton = element.querySelector('[data-kt-users-modal-action="close"]');
         closeButton.addEventListener('click', e => {
             e.preventDefault();
+            console.log("ok")
 
             Swal.fire({
                 text: "Are you sure you would like to cancel?",
@@ -298,15 +298,6 @@ var KTUsersAddUser = function () {
                  });
              }
          })
-
-        // Validate form before submit
-            // if (validator) {
-            //     validator.validate().then(function (status) {
-             //         if (status === 'Valid') {
-                    // } else {
-        //             }
-        //         });
-        //     }
 
         // Cancel button handler
         const cancelButton = element.querySelector('[data-kt-users-modal-action="cancel"]');

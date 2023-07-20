@@ -10,7 +10,7 @@ class User extends Sql
     protected String $lastname;
     protected String $email;
     protected String $pwd;
-    protected String $logo;
+    protected String $logo = "../Views/Dash/theme/dist/assets/media/avatars/blank.jpg";
     protected  $token = null;
     protected Int $role ;
     protected Int $status =0;
@@ -22,8 +22,7 @@ class User extends Sql
      */
     public function setDateInserted(): void
     {
-        date_default_timezone_set('Europe/Paris');
-        $this->date_inserted = date('d-m-y h:i:s');
+        $this->date_inserted = date("Y-m-d H:i:s");
     }
 
     /**
@@ -31,8 +30,7 @@ class User extends Sql
      */
     public function setDateUpdated(): void
     {
-        date_default_timezone_set('Europe/Paris');
-        $this->date_updated = date('d-m-y h:i:s');
+        $this->date_updated = date("Y-m-d H:i:s");
     }
     protected $date_updated;
     // private ?string $pwd = null;

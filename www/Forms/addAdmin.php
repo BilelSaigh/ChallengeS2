@@ -13,7 +13,7 @@ class AddAdmin extends AForm
         return [
             "config"=>[
                 "method"=>$this->getMethod(),
-                "action"=>"users",
+                "action"=>"",
                 "id"=> "kt_modal_add_user_form",
                 "enctype"=>"",
                 "submit"=>"S'inscrire",
@@ -26,7 +26,7 @@ class AddAdmin extends AForm
                     "placeholder"=>"Votre prénom",
                     "min"=>2,
                     "max"=>60,
-                    "error"=>"Votre prénom doit faire entre 2 et 60 caractères"
+                    "error"=>"Your firstname must contain at least 2 letters"
                 ],
                 "lastname"=>[
                     "class"=>"form-control form-control-solid mb-3 mb-lg-0",
@@ -34,33 +34,27 @@ class AddAdmin extends AForm
                     "placeholder"=>"Votre nom",
                     "min"=>2,
                     "max"=>120,
-                    "error"=>"Votre nom doit faire entre 2 et 120 caractères"
+                    "error"=>"Your lastname must contain at least 2 letters"
                 ],
                 "email"=>[
                     "class"=>"form-control form-control-solid mb-3 mb-lg-0",
                     "type"=>"email",
                     "placeholder"=>"Votre email",
-                    "error"=>"Le format de votre email est incorrect"
+                    "error"=>"Your email is incorrect"
                 ],
                 "pwd"=>[
                     "class"=>"form-control form-control-solid mb-3 mb-lg-0",
-                    "type"=>"text",
+                    "type"=>"password",
                     "placeholder"=>"Votre mot de passe",
-                    "error"=>"Votre mot de passe est incorrect",
+                    "error"=>"Your password is incorrect",
                     "value"=> uniqid()
                 ],
                 "role"=>[
                     "type"=>"select",
                     "class"=>"form-select",
-                    "options"=>["Choose user role ","0"=>"abonné/e", "1"=>"admin","3"=>"editor","4"=>"moderator"],
-                    "error"=>"Aucun role n'a été séléctionné"
+                    "options"=>["Choose user role ","0"=>"admin", "1"=>"editor","2"=>"moderator","3"=>"user"],
+                    "error"=>"No role has been selected"
                 ],
-//                "role"=>[
-//                    "type"=>"radio",
-//                    "class"=>"form-check-input me-3",
-//                    "error"=>"Aucun role n'a été séléctionné",
-//                    "value" => ["0"=>"user","1"=>"admin","3"=>"editor","4"=>"moderator"]
-//                ]
             ]
         ];
     }

@@ -87,7 +87,7 @@
                                         <div class="menu-content d-flex align-items-center px-3">
                                             <!--begin::Avatar-->
                                             <div class="symbol symbol-50px me-5">
-                                                <img alt="Logo" src="<?= $_SESSION["user"]["logo"] ?? "../Views/Dash/theme/dist/assets/media/avatars/blank.png"?>" />
+                                                <img alt="Logo" src="<?= $_SESSION["user"]["logo"]?>" />
                                             </div>
                                             <!--end::Avatar-->
                                             <!--begin::Username-->
@@ -278,6 +278,18 @@
                                             <!--end:Menu link-->
                                         </div>
                                         <!--end:Menu item-->
+                                        <!--begin:Menu item-->
+                                        <div class="menu-item">
+                                            <!--begin:Menu link-->
+                                            <a class="menu-link" href="/admin/menu">
+													<span class="menu-bullet">
+														<span class="bullet bullet-dot"></span>
+													</span>
+                                                <span class="menu-title">Menu</span>
+                                            </a>
+                                            <!--end:Menu link-->
+                                        </div>
+                                        <!--end:Menu item-->
                                     </div>
                                     <!--end:Menu sub-->
                                 </div>
@@ -368,6 +380,7 @@
     <!--end::Vendors Javascript-->
     <!--begin::Custom Javascript(used for this page only)-->
     <script src="../Views/Dash/theme/dist/assets/js/custom/apps/user-management/users/list/table.js"></script>
+    <script src="../Views/Dash/theme/dist/assets/js/custom/settings.js"></script>
 
     <!--end::Global Javascript Bundle-->
     <!--begin::Custom Javascript(used for this page only)-->

@@ -11,8 +11,9 @@ class Pages extends Sql
     protected String $title;
     protected String $slug;
     protected String $description;
-    protected Int $status = 0;
+    protected Int $status ;
     protected $updated_at;
+    protected int $menu;
 
     /**
      * @return String
@@ -84,6 +85,22 @@ class Pages extends Sql
     public function getTitle(): string
     {
         return $this->title;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMenu(): int
+    {
+        return $this->menu;
+    }
+
+    /**
+     * @param int $menu
+     */
+    public function setMenu(int $menu): void
+    {
+        $this->menu = $menu;
     }
 
     /**

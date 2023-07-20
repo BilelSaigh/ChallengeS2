@@ -46,8 +46,11 @@ class User
         if($connection->isConnected($_SESSION['user']["token"])) {
             $title = "Profil";
             $view = new View("Dash/editUser");
+            $website = new Setting();
+            $website=$website->search(["id"=>1]);
             $view->assign('title', $title);
             $view->assign('user', $_SESSION['user']);
+            $view->assign('websiteTitle', $website->getWebsiteName());
             if(!empty($_POST["newpassword"]) && $_POST["newpassword"] === $_POST["confirmpassword"]){
                 $pwdErrors = Verificator::checkPwd($_POST["newpassword"]);
                 if (!empty($pwdErrors)){
@@ -124,10 +127,11 @@ class User
         if($form->isSubmit()){
             $user = new ModelUser;
             $errors = Verificator::form($form->getConfig(), $_POST);
-            $user->verifMail(["email"=>$_POST["email"]]);
-            if(empty($errors)){
+            $verifUser = $user->verifMail(["email"=>$_POST["email"]]);
+            if(empty($errors) && empty($verifUser)){
                 if ($this->addUser($user)){
                     $confMail = new Mail();
+
                     $confMail->setName($_POST["firstname"]);
                     $confMail->setSubject("Mail de confirmation");
                     $confMail->setAddress($_POST["email"]);
@@ -136,12 +140,12 @@ class User
                                             <h5 class="card-title"> Adebc vous souhaite la bienvenue ! </h5>
                                             <p class="card-text">Une fois votre compte validé vous pourrez commenter autant que vous le souhaitez !.</p>
                                             <p class="card-text">Oublie pas le respect est OBLIGATOIRE chez nous ;)  .</p>
-                                                <button><a class="btn btn-primary" href="http://localhost:81/confirmation?key='.$token.'"> Confirmer votre mail. </a></button>)
+                                                <button><a class="btn btn-primary" href="http://localhost:81/confirmation?key='.$user->getToken().'"> Confirmer votre mail. </a></button>
                                            </div>');
                     $mail = $confMail->mail($confMail->initMail());
                 }
             }else{
-                $errors[] = "OUUPSS Something get wrong !";
+                $errors[] = "User already exist !";
                 $view->assign('errors', $errors);
             }
         }
@@ -159,19 +163,25 @@ class User
         $user->setFirstname($_POST["firstname"]);
         $user->setLastname($_POST["lastname"]);
         $user->setEmail($_POST["email"]);
-        $user->setPassword($_POST["pwd"]);
-        $user->setRole($_POST["role"]??"abonne");
+        $user->setPwd($_POST["pwd"]);
+        $user->setRole($_POST["role"]??"3");
         $user->setDateInserted();
         $user->setDateUpdated();
+        $user->generateToken();
         $user->save();
         return true;
     }
     public function deleteUsers(): void
     {
         $user = new ModelUser();
-        $user->setId($_SESSION["user"]["id"]);
-        $user->deleteUser();
-        header('Location:/admin/login');
+        if ($_POST["action"] == "deleteUser"){
+            $user->setId($_POST["id"]);
+            $user->deleteUser();
+        }else if ($_POST["action"] == "deleteSelf"){
+            $user->setId($_SESSION["user"]["id"]);
+            $user->deleteUser();
+            header('Location:/admin/login');
+        }
     }
 
     public function theme():void
