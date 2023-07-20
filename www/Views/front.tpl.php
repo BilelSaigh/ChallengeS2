@@ -53,7 +53,9 @@
             <div class="d-flex flex-center flex-column flex-column-fluid">
                 <!--begin::Wrapper-->
                 <div class="w-lg-500px p-10 p-lg-15 mx-auto">
-                    <?php if (!empty($errors)):
+                    <?php
+                    if (!empty($errors)):
+                        if (count($errors) > 1):
                         foreach ($errors as $error):?>
                     <!--begin::Alert-->
                     <div class="alert alert-danger d-flex align-items-center p-5">
@@ -75,14 +77,15 @@
                     </div>
                     <!--end::Alert-->
                     <?php endforeach;
-                    endif; ?>
+                    endif;
+                    endif;
+                    ?>
                     <!--begin::Form-->
-                    <?php include $this->view; ?>
+                    <?php include $this->view;?>
                     <!--begin::Link-->
                     <div class="text-gray-400 fw-semibold fs-4">
-
-                        <?php echo $title;
-                        if ($title == "login ") :  ?>
+                        <?php
+                        if ($title == "login") :  ?>
                             New Here?
                             <a href="/admin/register" class="link-primary fw-bold">Create an Account</a>
                         <?php else :?>

@@ -27,7 +27,6 @@
                     </a>
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-
                             <div class=" navbar-form navbar-left form-group">
                                 <select id="versionDropdown" name="versionDropdown" class="form-select form-control">
                                     <?php foreach ($allVersion as $version) : ?>

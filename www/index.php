@@ -96,6 +96,7 @@
 //
 
 namespace App;
+use App\Core\Security;
 use App\Core\View;
 
 session_start();
@@ -141,7 +142,6 @@ foreach ($routes as $route => $config) {
             for ($i = 1; $i < count($matches); $i++) {
                 $matchedParams[] = $matches[$i];
             }
-
             break;
         }
     } else {
@@ -161,29 +161,42 @@ if ($matchedRoute === null) {
 
 $controller = $routes[$matchedRoute]["controller"];
 $action = $routes[$matchedRoute]["action"];
+$security = $routes[$matchedRoute]["security"];
+$role = $routes[$matchedRoute]["role"];
 
 // Vérification de l'existence du fichier de contrôleur
 if (!file_exists("Controllers/" . $controller . ".php")){
     http_response_code(404);
     $view = new View("Error/404", "error");
 }
-
 include "Controllers/" . $controller . ".php";
 
 // Le fichier existe, mais est-ce qu'il possède la bonne classe ?
 // N'oubliez pas d'ajouter le namespace \App\Controllers\Security
+
 $controller = "\\App\\Controllers\\" . $controller;
 if (!class_exists($controller)){
     http_response_code(404);
     $view = new View("Error/404", "error");
 }
-
 $objet = new $controller();
 
-// Est-ce que l'objet contient bien la méthode ?
-if (!method_exists($objet, $action)) {
+$secu = new Security();
+$controller = "\\App\\Core\\Security";
+if (isset($security) && $security === true && !$secu->isLoggedIn()){
     http_response_code(404);
     $view = new View("Error/404", "error");
-}
+} elseif(isset($role) && !$secu->whoIAm($role))
+{
+    http_response_code(404);
+    $view = new View("Error/404", "error");
+}else {
+
+// Est-ce que l'objet contient bien la méthode ?
+    if (!method_exists($objet, $action)) {
+        http_response_code(404);
+        $view = new View("Error/404", "error");
+    }
 // Appel de la méthode avec les paramètres dynamiques
-$objet->$action(...$matchedParams);
+    $objet->$action(...$matchedParams);
+}
