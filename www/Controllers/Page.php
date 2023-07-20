@@ -86,6 +86,7 @@ class Page extends Sql
             $newTitle = new Pages();
             $newTitle->setId($_SESSION["page"]);
             $newTitle->setUpdatedAt();
+            $newTitle->setStatus(0);
             $newTitle->save();
         }
     }
@@ -93,15 +94,21 @@ class Page extends Sql
     {
         if (isset($_GET["id"])){
             $page = new Pages();
+            $pages = new Pages();
+            $pages = $pages->recupAll();
             $pageData = new Build();
+            $setting = new Setting();
+            $setting = $setting->search(['id'=>1]);
             $page = $page->search(["id"=>$_GET["id"]]);
             $pageData = $pageData->search(["page_id"=>$_GET["id"]]);
             $page->setStatus(1);
             $page->save();
             $view = new View("Dash/pageBuild", "cleanPage");
             $view->assign("pageData",$pageData);
+            $view->assign("front",$setting);
+            $view->assign("pages",$pages);
             $view->assign("title",$page->getTitle());
-            $view->assign("page",$pageData->getContent());
+            $view->assign("content",$pageData->getContent());
         }
 
     }
