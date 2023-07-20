@@ -13,6 +13,7 @@
 /logout:
   controller: Security
   action: logout
+  security: true
 
 /admin/register:
   controller: Security
@@ -25,26 +26,35 @@
 /admin/users:
   controller : User
   action : showUsers
+  security: true
 
 /admin/deleteuser:
   controller: User
   action: deleteUsers
+  security: true
 
 /admin/edituser:
   controller: User
   action: setting
+  security: true
 
 /admin/theme:
   controller: User
   action: theme
+  security: true
 
 /admin/pages:
     controller: Page
     action : listPages
+    security: true
 
 /updatepage:
   controller: Page
   action: updatePage
+  security: true
+  role:
+        - 0
+        - 1
 
 /showpage:
   controller: Page
@@ -53,6 +63,10 @@
 /admin/newpage:
   controller: Page
   action: createPage
+  security: true
+  role:
+    - 0
+    - 1
 
 /preview:
   controller: Page
@@ -61,18 +75,27 @@
 /deletepage:
   controller: Page
   action: deletePage
+  security: true
+  role:
+    - 0
 
 /admin/profil:
   controller: User
   action: home
+  security: true
 
 /admin/signout:
   controller: Security
   action: logout
+  security: true
+  role:
+    - 0
+    - 1
 
 /admin/sitemap:
   controller: SiteMapGenerator
   action: generate
+  security: true
 
 /error404:
   controller: Error
@@ -89,9 +112,15 @@
 /admin/front:
   controller: Settings
   action: update
-  security: admin
+  security: true
+  role:
+    - 0
+    - 1
 
 /admin/menu:
   controller: Settings
   action: updateMenu
-  security: admin
+  security: true
+  role:
+    - 0
+    - 1
