@@ -107,8 +107,17 @@
                             <!--begin::Modal body-->
                             <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
                                 <!--begin::Form-->
-                                <?php print_r($errors??null);?>
-                                <?php $this->modal("adminForm", $form );?>
+                                <?php if (!empty($errors)){
+                                    foreach ($errors as $error){
+                                        echo '<div class="alert alert-danger d-flex align-items-center p-5">
+                                                    <i class="ki-duotone ki-shield-tick fs-2hx text-danger me-4"><span class="path1"></span><span class="path2"></span></i>
+                                                    <div class="d-flex flex-column">
+                                                        <h4 class="mb-1 text-dark">Something went wrong ! </h4>
+                                                        <span>'.$error.'</span>
+                                                    </div>
+                                                </div>';
+                                    }
+                                }  $this->modal("adminForm", $form );?>
                                 <!--end::Form-->
                             </div>
                             <!--end::Modal body-->
@@ -124,6 +133,18 @@
         <!--end::Card header-->
         <!--begin::Card body-->
         <div class="card-body py-4">
+            <?php if (!empty($errors)){
+                                    foreach ($errors as $error){
+                                        echo '<div class="alert alert-danger d-flex align-items-center p-5">
+                                                    <i class="ki-duotone ki-shield-tick fs-2hx text-danger me-4"><span class="path1"></span><span class="path2"></span></i>
+                                                    <div class="d-flex flex-column">
+                                                        <h4 class="mb-1 text-dark">Something went wrong ! </h4>
+                                                        <span>'.$error.'</span>
+                                                    </div>
+                                                </div>';
+                                    }
+                                }?>
+
             <!--begin::Table-->
             <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
                 <thead>
@@ -223,6 +244,7 @@
                     <?php endforeach ?>
                 </tbody>
             </table>
+            <input id="idSession" hidden="hidden" value="<?= $_SESSION["user"]["id"] ?>">
             <!--end::Table-->
         <!--end::Card body-->
         </div>

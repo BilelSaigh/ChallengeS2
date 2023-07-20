@@ -10,7 +10,6 @@ class Page extends Sql
 
     protected  $content;
     protected  $updated_at;
-    protected Int $status = 0;
     protected Int $user_id;
 
     /**
@@ -73,14 +72,6 @@ class Page extends Sql
     public function setUpdatedAt(): void
     {
         $this->updated_at = date('d-m-Y-H-i-s');
-    }
-    public function setStatus($status):void
-    {
-        $this->status = $status;
-    }
-    public function getStatus():Int
-    {
-       return $this->status;
     }
     
     /**

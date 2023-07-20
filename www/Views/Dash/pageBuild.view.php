@@ -1,4 +1,4 @@
 
-                <?php if(!empty($page)) :echo $pageData->getContent() ;  endif ?>
+                <?php if(!empty($content)) :echo $content ;  endif ?>
 
 

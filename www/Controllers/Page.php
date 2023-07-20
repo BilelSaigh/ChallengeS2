@@ -8,6 +8,7 @@ use App\Models\Originator;
 use App\Models\Page as Build;
 use App\Models\PageMemento;
 use App\Models\User;
+use App\Models\Setting;
 
 use App\Models\Pages;
 use DateTime;
@@ -22,6 +23,8 @@ class Page extends Sql
             unset($_SESSION['page']);
         }
         $view = new View("Dash/pageBuilder","builder");
+        $view->assign("title","New page");
+
     }
 
     public function showPage():void
@@ -48,7 +51,6 @@ class Page extends Sql
             $pageBuild->setUserId($_SESSION['user']['id']);
             $pageBuild->setPageId( $_SESSION['page']);
             $pageBuild->setUpdatedAt();
-            $pageBuild->setStatus(0);
             $pageBuild->save();
         }else if(!empty($_POST["action"]) && $_POST["action"] === "undo"){
             $pageBuild = $pageBuild->search(["id"=>$_POST["id"], "page_id"=>$_SESSION["page"]]);
@@ -62,6 +64,7 @@ class Page extends Sql
                 if (isset($_SESSION["page"])){
                     $new->setId($_SESSION["page"]);
                     $new->setTitle($_POST["title"]);
+                    $new->setSlug();
                     $new->setUpdatedAt();
                     $new->save();
                 }else{
@@ -71,7 +74,6 @@ class Page extends Sql
                     $new->setSlug();
                     $new->setDescription("");
                     $new->save();
-
                 }
             }else{
                 $response = array('error' => 'Pages Already exist ! ');
@@ -84,6 +86,7 @@ class Page extends Sql
             $newTitle = new Pages();
             $newTitle->setId($_SESSION["page"]);
             $newTitle->setUpdatedAt();
+            $newTitle->setStatus(0);
             $newTitle->save();
         }
     }
@@ -91,14 +94,21 @@ class Page extends Sql
     {
         if (isset($_GET["id"])){
             $page = new Pages();
+            $pages = new Pages();
+            $pages = $pages->recupAll();
             $pageData = new Build();
+            $setting = new Setting();
+            $setting = $setting->search(['id'=>1]);
             $page = $page->search(["id"=>$_GET["id"]]);
             $pageData = $pageData->search(["page_id"=>$_GET["id"]]);
             $page->setStatus(1);
             $page->save();
             $view = new View("Dash/pageBuild", "cleanPage");
             $view->assign("pageData",$pageData);
-            $view->assign("page",$page);
+            $view->assign("front",$setting);
+            $view->assign("pages",$pages);
+            $view->assign("title",$page->getTitle());
+            $view->assign("content",$pageData->getContent());
         }
 
     }
@@ -114,6 +124,7 @@ class Page extends Sql
         $team = $this->countUsersWithRoleZero($users,2) + $this->countUsersWithRoleZero($users,1) + $this->countUsersWithRoleZero($users,0);
         $view = new View("Dash/pages", "back");
         $view->assign("page", $pages);
+        $view->assign("title", 'My Pages');
         $view->assign("subscribers", $subscribers);
         $view->assign("users", $users);
         $view->assign("team", $team);
@@ -139,11 +150,21 @@ class Page extends Sql
     {
         $page = new Pages();
         $page = $page->search(["slug" => $slug]);
+        $menu = new Pages();
+        $menu = $menu->recupAll();
         if (!empty($page)) {
             $pageData = new Build();
             $pageData = $pageData->lastInsert($page->getId());
+            $front = new Setting();
+            $front = $front->search(['id'=>1]);
             $view = new View("Dash/pageBuild", "cleanPage");
-            $view->assign("page", $pageData);
+            $view->assign("title",$page->getTitle());
+            $view->assign("front", $front);
+            $view->assign("pages", $menu);
+            if (!empty($pageData))
+            {
+                $view->assign("content", $pageData->getContent());
+            }
         } else {
             $error = new Error();
             $error->errorRedirection(404);

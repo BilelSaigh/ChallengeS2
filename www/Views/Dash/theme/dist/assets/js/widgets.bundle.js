@@ -3530,7 +3530,7 @@ var KTChartsWidget18 = function () {
                 colors: ['transparent']
             },
             xaxis: {
-                categories: ['QA Analysis', 'Marketing', 'Web Dev', 'Maths', 'Front-end Dev', 'Physics', 'Phylosophy'],
+                categories: ['QA Analysis', 'Marketing', 'Web Dev', 'Maths', 'Settings-end Dev', 'Physics', 'Phylosophy'],
                 axisBorder: {
                     show: false,
                 },

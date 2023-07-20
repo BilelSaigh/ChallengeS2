@@ -84,9 +84,9 @@
                                                                 <span class="path2"></span>
                                                                 <span class="path3"></span>
                                                             </i><?= match ($user['role']) {
-                                                                   "1"=>  "editor",
-                                                                   "2"=>  "moderator",
-                                                                   "3"=>  "user",
+                                                                   1 =>  "editor",
+                                                                   2 =>  "moderator",
+                                                                   3 =>  "user",
                                                                 default => "admin"
                                                             }
                                                             ?></a>
@@ -112,12 +112,13 @@
                                             <a class="nav-link text-active-primary ms-0 me-10 py-5 active" href="admin/profil">Overview</a>
                                         </li>
                                         <!--end::Nav item-->
-                                        <!--begin::Nav item-->
-                                        <!--end::Nav item-->
-                                        <!--begin::Nav item-->
-                                        <li class="nav-item mt-2">
-                                            <a class="nav-link text-active-primary ms-0 me-10 py-5" href="/theme">Theme</a>
-                                        </li>
+                                        <?php if($_SESSION['user']['role'] == 0) :?>
+                                            <!--begin::Nav item-->
+                                            <li class="nav-item mt-2">
+                                                <a class="nav-link text-active-primary ms-0 me-10 py-5" href="/admin/theme">Theme</a>
+                                            </li>
+                                        <?php endif;?>
+
                                         <!--end::Nav item-->
                                     </ul>
                                     <!--begin::Navs-->
@@ -159,7 +160,7 @@
                                         <!--end::Label-->
                                         <!--begin::Col-->
                                         <div class="col-lg-8 fv-row">
-                                            <span class="fw-semibold text-gray-800 fs-6"><?= $website->name?></span>
+                                            <span class="fw-semibold text-gray-800 fs-6"><?= $websiteTitle ?></span>
                                         </div>
                                         <!--end::Col-->
                                     </div>

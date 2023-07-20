@@ -1,72 +1,126 @@
-/:
-  controller: Main
-  action: index
-  #format: html
-  format: application/json
-
 /admin:
   controller: Main
-  action: dashboard
+  action: index
+  role: []
+  #format: html
+  format: application/json
 
 /admin/login:
   controller: Security
   action: login
+  security: false
+  role: []
 
 /logout:
   controller: Security
   action: logout
+  security: true
+  role: []
 
 /admin/register:
   controller: Security
   action: register
+  security: false
+  role: []
 
 /admin/confirmation:
   controller: Security
   action: confirmation
+  security: false
+  role: []
 
 /admin/users:
   controller : User
   action : showUsers
+  security: true
+  role:
+    - 0
 
 /admin/deleteuser:
   controller: User
   action: deleteUsers
+  security: true
+  role:
+    - 0
 
 /admin/edituser:
   controller: User
   action: setting
+  security: true
+  role: []
+
+/admin/theme:
+  controller: User
+  action: theme
+  security: true
+  role:
+    - 0
+    - 1
 
 /admin/pages:
     controller: Page
     action : listPages
+    security: true
+    role:
+      - 0
+      - 1
 
-/admin/updatepage:
+/updatepage:
   controller: Page
   action: updatePage
+  security: true
+  role:
+        - 0
+        - 1
 
 /showpage:
   controller: Page
   action: showPage
+  security: false
+  role: []
+
 
 /admin/newpage:
   controller: Page
   action: createPage
+  security: true
+  role:
+    - 0
+    - 1
 
 /preview:
   controller: Page
   action: publish
+  security: false
+  role: []
 
-/admin/deletepage:
+
+/deletepage:
   controller: Page
   action: deletePage
+  security: true
+  role:
+    - 0
 
 /admin/profil:
   controller: User
   action: home
+  security: true
+  role: []
+
 
 /admin/signout:
   controller: Security
   action: logout
+  security: true
+  role: []
+
+/admin/sitemap:
+  controller: SiteMapGenerator
+  action: generate
+  security: true
+  role:
+    - 0
 
 /error404:
   controller: Error
@@ -75,10 +129,30 @@
 /{slug}:
   controller : Page
   action : getSlug
+  security: false
 /admin/chart:
   controller: ChartController
   action: displayChart
 
+/installer:
+  controller: Installer
+  action: start
+
+/admin/front:
+  controller: Settings
+  action: update
+  security: true
+  role:
+    - 0
+    - 1
+
+/admin/menu:
+  controller: Settings
+  action: updateMenu
+  security: true
+  role:
+    - 0
+    - 1
 
 /article/create:
   controller: ArticleController

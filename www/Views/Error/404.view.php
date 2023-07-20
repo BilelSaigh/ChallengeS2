@@ -4,11 +4,9 @@
             <h3 class="card-header display-1 text-muted text-center">
                 404
             </h3>
-
             <span class="card-subtitle mb-2 text-muted text-center">
                 Page Could Not Be Found 
             </span>
-
             <div class="card-body mx-auto">
                 <a type="button" href="/admin/login"
                    class="btn btn-sm btn-info text-white"> Back To Home </a>
