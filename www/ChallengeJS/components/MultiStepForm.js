@@ -21,29 +21,56 @@ export default class MultiStepForm extends Component {
         this.setState({ currentStep: this.state.currentStep - 1 });
     };
 
+
+    sendData = (formData) => {
+        return fetch('/api/db', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                action: 'checkDb',
+                form : formData
+            })
+        }).then(data => {
+            console.log(data); // data est maintenant la réponse de l'API
+            return data;
+        }).catch(error => {
+            console.error('There has been a problem with your fetch operation: ', error);
+            throw error;
+        });
+
+    };
     handleFormInfo = (formData) => {
         console.log(Helpers(formData.dbName, { type: 'object', properties: {properties: {type: 'string'}}}))
-        // if(Helpers(formData, { type: 'object', properties: {properties: {type: 'string'}}})){
-        $.ajax({
-            type: 'post',
-            url: '/installer',
-            data: {
-                action: 'delete',
-                form : formData
-            },
-            success: function (data) {
-                console.log(data)
-            },
-            error: function (error) {
-                console.log(error)
-            }
-        })
-         // }else{
-         //     var errorMessage = 'Erreur : L\'objet ne correspond pas à la configuration attendue.\n\n';
-         // }
+        this.sendData(formData)
+            .then(data => {
+                if (data.status === 'success') {
+                    this.handleNextButtonClick();
+                } else {
+                    console.log(data)
+                }
+            })
+            .catch(err => console.log(err))
+        //this.handleNextButtonClick();
     };
 
+    click = (event) => {
+        event.preventDefault();
+        const form = document.getElementById("Step1")
+        const url = form.getAttribute('action');
+        const formData = new FormData(form)
+        const formDataObject = Object.fromEntries(formData);
+        this.handleFormInfo(formDataObject)
+    };
+
+
     render() {
+        new Button({
+            title:"Next",
+            type:"submit",
+            click : this.click,
+        })
         const { currentStep } = this.state;
         return {
             type: "div",

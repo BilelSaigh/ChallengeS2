@@ -41,3 +41,11 @@
 /installer:
   controller: Installer
   action: index
+
+/api/db:
+  controller: ApiDb
+  action: checkDb
+
+/api/user:
+    controller: ApiUser
+    action: checkUser
