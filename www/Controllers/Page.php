@@ -160,6 +160,7 @@ class Page extends Sql
         $comment = new Comment();
         $comments = $comment->multipleSearch(['page_id'=>$page->getId()]);
         $formComment = new addComment();
+        echo("oui");
         if (!empty($page)) {
             $pageData = new Build();
             $pageData = $pageData->lastInsert($page->getId());

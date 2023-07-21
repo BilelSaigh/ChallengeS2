@@ -18,7 +18,7 @@ class Comment
         $commentsModel = new ModelComment();
         $view = new View("Dash/comments", "back");
         $comments = $commentsModel->showAllComment();
-        $view->assign("comments", $comments); 
+        $view->assign("comments", $comments);
         $view->assign('form', $form->getConfig());
 
         if ($form->isSubmit()) {
@@ -50,17 +50,14 @@ class Comment
 
     public function addComment()
     {
-        var_dump($_SESSION["page"]);
-        if (isset($_POST["action"]) && $_POST["action"]=== "addCommentOption") {
+        if (isset($_SESSION["page"], $_POST["action"], $_POST["statut"]) && $_POST["action"] === "addCommentOption") {
             $addOption = new Pages();
             $addOption->setComment($_POST["statut"]);
             $addOption->setId($_SESSION["page"]);
             $addOption->setUpdatedAt();
             $addOption->save();
-         }
-
-
-}
+        }
+    }
 
 
 

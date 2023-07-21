@@ -5,6 +5,7 @@ namespace App;
 use App\Core\Router;
 use App\Core\Security;
 use App\Core\View;
+use App\Forms\AddComment;
 
 session_start();
 

@@ -109,6 +109,7 @@ class Router
 
     public function routeRequest()
     {
+
         $uriExploded = explode("?", $_SERVER["REQUEST_URI"]);
         $uri = rtrim(strtolower(trim($uriExploded[0])), "/");
         $uri = (empty($uri)) ? "/" : $uri;
