@@ -171,3 +171,20 @@
   action: reportComment
 
 
+
+
+/admin/comments:
+  controller: Comment
+  action: showComments
+
+/admin/comments/update:
+  controller: Comment
+  action: updateComments
+
+/admin/comments/add:
+  controller: Comment
+  action: addComment
+
+/admin/comments/delete:
+  controller: Comment
+  action: deleteComments

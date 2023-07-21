@@ -1,50 +1,86 @@
 <?php
 
-class CommentModel
+// namespace ChallengeS2\Models;
+namespace App\Models;
+use App\Core\Sql;
+
+class Comment extends Sql
 {
-    private $db;
+    protected Int $id = 0;
+    // protected Int $article_id;
+    protected Int $page_id;
+    protected Int $user_id;
+    protected String $content;
+    protected String $created_date;
 
-    public function __construct($db)
+    public function setPageId(int $page_id): void
     {
-        $this->db = $db;
+        $this->page_id = $page_id;
     }
 
-    public function getComments()
+    public function getPageId(): int
     {
-        $query = "SELECT * FROM comments";
-        $result = $this->db->query($query);
-        return $result->fetchAll(PDO::FETCH_ASSOC);
+        return $this->page_id;
     }
 
-    public function addComment($author, $content)
+    public function setId(int $id): void
     {
-        $query = "INSERT INTO comments (author, content, created_at) VALUES (?, ?, NOW())";
-        $stmt = $this->db->prepare($query);
-        $stmt->execute([$author, $content]);
-        return $stmt->rowCount() > 0;
+        $this->id = $id;
     }
 
-    public function getCommentById($id)
+    public function getId(): int
     {
-        $query = "SELECT * FROM comments WHERE id = ?";
-        $stmt = $this->db->prepare($query);
-        $stmt->execute([$id]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $this->id;
     }
 
-    public function updateComment($id, $content)
+    // public function setArticleId(int $article_id): void
+    // {
+    //     $this->article_id = $article_id;
+    // }
+
+    // public function getArticleId(): int
+    // {
+    //     return $this->article_id;
+    // }
+
+    public function setUserId(int $user_id): void
     {
-        $query = "UPDATE comments SET content = ? WHERE id = ?";
-        $stmt = $this->db->prepare($query);
-        $stmt->execute([$content, $id]);
-        return $stmt->rowCount() > 0;
+        $this->user_id = $user_id;
     }
 
-    public function deleteComment($id)
+    public function getUserId(): int
     {
-        $query = "DELETE FROM comments WHERE id = ?";
-        $stmt = $this->db->prepare($query);
-        $stmt->execute([$id]);
-        return $stmt->rowCount() > 0;
+        return $this->user_id;
+    }
+
+    public function setContent(string $content): void
+    {
+        $this->content = $content;
+    }
+
+    public function getContent(): string
+    {
+        return $this->content;
+    }
+
+    public function setCreatedDate(): void
+    {
+        date_default_timezone_set('Europe/Paris');
+        $this->created_date = date('d-m-y h:i:s');
+    }
+
+    public function getCreatedDate()
+    {
+        return $this->created_date;
+    }
+
+    public function showAllComment():array
+    {
+        return parent::recupAll();
+    }
+
+    public function deleteComment():void
+    {
+        parent::delete();
     }
 }

@@ -2,85 +2,83 @@
 
 namespace App\Controllers;
 
+use App\Forms\AddComment;
+use App\Models\Comment as ModelComment;
+use App\Core\Verificator;
+use App\Core\View;
+
+// use ChallengeS2\Models\Comment;
+
 class Comment
 {
-    private $commentModel;
-
-    public function __construct($commentModel)
+    public function showComments(): void
     {
-        $this->commentModel = $commentModel;
-    }
+        $form = new AddComment();
+        $commentsModel = new ModelComment();
+        $view = new View("Dash/comments", "back");
+        $comments = $commentsModel->showAllComment();
+        $view->assign("comments", $comments); 
+        $view->assign('form', $form->getConfig());
 
-    public function index()
-    {
-        $comments = $this->commentModel->getComments();
-        include 'views/comment.view.php';
-    }
+        if ($form->isSubmit()) {
+            $comment = new ModelComment;
+            $errors = Verificator::form($form->getConfig(), $_POST);
 
-    public function create()
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $author = $_POST['author'];
-            $content = $_POST['content'];
+            // Additional validation, e.g., if the comment content is valid, etc.
 
-            $success = $this->commentModel->addComment($author, $content);
-
-            if ($success) {
-                header('Location: index.php');
-                exit;
+            if (empty($errors)) {
+                if ($this->addComment($comment)) {
+                    // Handle successful comment addition
+                } else {
+                    // Handle failure to add the comment
+                }
             } else {
-                $error = "Erreur lors de l'ajout du commentaire.";
+                $errors[] = "OUPS! Something went wrong!";
+                $view->assign('errors', $errors);
             }
         }
-
-        include 'views/comment.create.view.php';
     }
 
-    public function edit($id)
+    public function updateComments(): void
     {
-        $comment = $this->commentModel->getCommentById($id);
-
-        if (!$comment) {
-            header('Location: index.php');
-            exit;
-        }
-
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $content = $_POST['content'];
-
-            $success = $this->commentModel->updateComment($id, $content);
-
-            if ($success) {
-                header('Location: index.php');
-                exit;
-            } else {
-                $error = "Erreur lors de la modification du commentaire.";
-            }
-        }
-
-        include 'views/comment.edit.view.php';
+        $commentsModel = new ModelComment();
+        $view = new View("Dash/comments", "back");
+        $comments = $commentsModel->updateComment();
+        $view->assign("comments", $comments);
     }
 
-    public function delete($id)
+    public function addComment(): bool
+{
+    // Vérifier si la clé "user" existe dans $_SESSION
+    if (isset($_SESSION["user"]) && is_array($_SESSION["user"])) {
+        $user_id = $_SESSION["user"]["id"];
+
+        // Vérifier que l'id utilisateur est un entier
+        if (is_int($user_id)) {
+            $comment = new ModelComment();
+            // Assuming ModelComment has appropriate setters and getters for comment properties.
+            $comment->setContent($_POST["content"]);
+            $comment->setUserId($user_id);
+            // $comment->setDateInserted();
+            // $comment->setDateUpdated();
+            $comment->save();
+            
+        }
+    }
+
+    return false; // Gérer l'absence de l'utilisateur ou l'id utilisateur non valide.
+}
+
+
+
+    public function deleteComments(): void
     {
-        $comment = $this->commentModel->getCommentById($id);
-
-        if (!$comment) {
-            header('Location: index.php');
-            exit;
-        }
-
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $success = $this->commentModel->deleteComment($id);
-
-            if ($success) {
-                header('Location: index.php');
-                exit;
-            } else {
-                $error = "Erreur lors de la suppression du commentaire.";
-            }
-        }
-
-        include 'views/comment.delete.view.php';
+        $comment = new ModelComment();
+        $comment->setId($_POST["comment_id"]); // Assuming you are passing the comment ID in $_POST.
+        $comment->deleteComment();
+        // Redirect to appropriate page after deleting the comment.
+        header('Location: /admin/comments');
     }
 }
+
+
