@@ -150,13 +150,12 @@ class User
         // Récupérer l'ID de l'utilisateur et le nouveau rôle depuis la requête POST
         $userId = $_POST['user_id'] ?? 0;
         $newRole = $_POST['user_role'] ?? '';
-        echo"1";
+        echo $newRole;
         // Vérifier que l'ID de l'utilisateur est valide et que le nouveau rôle est non vide
         if ($userId > 0 && $newRole !== '') {
             // Charger l'utilisateur depuis le modèle
             $user = new ModelUser();
             $user->setId($userId);
-            echo"2";
             // Mettre à jour le rôle de l'utilisateur
             $user->setRole($newRole);
             $user->save();

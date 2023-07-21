@@ -138,7 +138,8 @@
                     <th class="min-w-125px">Last login</th>
                     <th class="min-w-125px">Status</th>
                     <th class="min-w-125px">Joined Date</th>
-                    <th class="text-end min-w-100px">Actions</th>
+                    <th class="min-w-100px">Actions</th>
+                    <th class="text-end min-w-100px">Mettre à jour</th>
                 </tr>
                 </thead>
                 <tbody class="text-gray-600 fw-semibold">
@@ -207,7 +208,7 @@
                             </td>
                             <td class="text-end">
                                 <!-- Bouton de validation -->
-                                <button class="btn btn-primary btn-sm" onclick="updateUserRole(<?= $infos['id'] ?>)">Mettre à jour le rôle</button>
+                                <button class="btn btn-primary btn-sm exclude-datatable" onclick="updateUserRole(<?= $infos['id'] ?>)">Mettre à jour le rôle</button>
                             </td>
                         </tr>
                     <?php endforeach ?>
@@ -224,7 +225,7 @@
     // Récupérer le nouveau rôle sélectionné pour l'utilisateur
     var newRoleSelect = document.getElementById('user_role_' + userId);
     var newRole = newRoleSelect.value;
-// console.log(newRoleSelect);
+    console.log(newRole);
     // Envoyer une requête AJAX pour mettre à jour le rôle dans la BDD
     var xhr = new XMLHttpRequest();
     xhr.open('POST', '/admin/updateRole', true);
@@ -241,8 +242,9 @@
                 alert('Une erreur s\'est produite lors de la mise à jour du rôle.');
             }
         }
-    };
-    var data = 'user_id=' + userId + '&user_role=' + newRole;
+    };  
+    // Créer les données à envoyer dans la requête au format "param1=valeur1&param2=valeur2&..."
+    var data = 'user_id=' + userId + '&statut=' + newRole;
     xhr.send(data);
 }
 
