@@ -164,29 +164,15 @@
                                 </div>
                                 <!--begin::User details-->
                             </td>
-                                <td>
-                                    <?php switch ($infos["role"])
-                                    {
-                                        case 0:
-                                            echo 'User';
-                                            break;
-                                        case 1:
-                                            echo 'Administrator';
-                                            break;
-                                        case 2:
-                                            echo 'Editor';
-                                            break;
-                                        case 3:
-                                            echo 'Moderator';
-                                            break;
-                                        default:
-                                            echo $infos["role"];
-                                            break;
-                                    } ;
-
-
-                                    ?>
-                                </td>
+                                
+                            <td>
+                                <select class="form-select" name="user_role[<?= $infos["id"] ?>]" id="user_role_<?= $infos["id"] ?>">
+                                    <option value="0" <?= ($infos["role"] == 0) ? 'selected' : '' ?>>User</option>
+                                    <option value="1" <?= ($infos["role"] == 1) ? 'selected' : '' ?>>Administrator</option>
+                                    <option value="2" <?= ($infos["role"] == 2) ? 'selected' : '' ?>>Editor</option>
+                                    <option value="3" <?= ($infos["role"] == 3) ? 'selected' : '' ?>>Moderator</option>
+                                </select>
+                            </td>
                             <td>
                                 <div class="badge badge-light fw-bold"><?=$infos["date_updated"]?></div>
                             </td>
@@ -219,6 +205,10 @@
                                 </div>
                                 <!--end::Menu-->
                             </td>
+                            <td class="text-end">
+                                <!-- Bouton de validation -->
+                                <button class="btn btn-primary btn-sm" onclick="updateUserRole(<?= $infos['id'] ?>)">Mettre à jour le rôle</button>
+                            </td>
                         </tr>
                     <?php endforeach ?>
                 </tbody>
@@ -227,6 +217,37 @@
         <!--end::Card body-->
         </div>
     </div>
+    
+<!-- Script JavaScript pour la mise à jour du rôle -->
+<script>
+    function updateUserRole(userId) {
+    // Récupérer le nouveau rôle sélectionné pour l'utilisateur
+    var newRoleSelect = document.getElementById('user_role_' + userId);
+    var newRole = newRoleSelect.value;
+// console.log(newRoleSelect);
+    // Envoyer une requête AJAX pour mettre à jour le rôle dans la BDD
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/admin/updateRole', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                var response = JSON.parse(xhr.responseText);
+                // Afficher un message de succès ou traiter la réponse de votre contrôleur si nécessaire
+                alert(response.message);
+                // Vous pouvez également mettre à jour la vue dynamiquement si besoin
+            } else {
+                // Afficher un message d'erreur en cas d'échec de la requête AJAX
+                alert('Une erreur s\'est produite lors de la mise à jour du rôle.');
+            }
+        }
+    };
+    var data = 'user_id=' + userId + '&user_role=' + newRole;
+    xhr.send(data);
+}
+
+</script>
+
 
 
 

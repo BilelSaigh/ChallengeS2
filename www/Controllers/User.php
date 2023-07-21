@@ -145,6 +145,29 @@ class User
         $users = $users->updateUser();
         $view->assign("users",$users);
     }
+    public function updateRole(): void
+    {
+        // Récupérer l'ID de l'utilisateur et le nouveau rôle depuis la requête POST
+        $userId = $_POST['user_id'] ?? 0;
+        $newRole = $_POST['user_role'] ?? '';
+        echo"1";
+        // Vérifier que l'ID de l'utilisateur est valide et que le nouveau rôle est non vide
+        if ($userId > 0 && $newRole !== '') {
+            // Charger l'utilisateur depuis le modèle
+            $user = new ModelUser();
+            $user->setId($userId);
+            echo"2";
+            // Mettre à jour le rôle de l'utilisateur
+            $user->setRole($newRole);
+            $user->save();
+
+            // Répondre avec un message de succès (vous pouvez aussi retourner un JSON)
+            echo json_encode(['message' => 'Le rôle de l\'utilisateur a été mis à jour avec succès.']);
+        } else {
+            // Répondre avec un message d'erreur si les données ne sont pas valides
+            echo json_encode(['error' => 'Données invalides pour la mise à jour du rôle.']);
+        }
+    }
     public function addUser($user): bool
     {
         $user->setFirstname($_POST["firstname"]);
