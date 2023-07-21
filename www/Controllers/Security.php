@@ -75,11 +75,11 @@ class Security
                 $user->setPwd($_POST["pwd"]);
                 $user->save();
                 $confMail->setMessage('
-                                          <div class="card-body">
+                                            <div class="card-body">
                                             <h5 class="card-title"> Adebc vous souhaite la bienvenue ! </h5>
                                             <p class="card-text">Une fois votre compte validé vous pourrez commenter autant que vous le souhaitez !.</p>
                                             <p class="card-text">Oublie pas le respect est OBLIGATOIRE chez nous ;)  .</p>
-                                                <button><a class="btn btn-primary" href="http://localhost:81/confirmation?key='.$token.'"> Confirmer votre mail. </a></button>
+                                                <button><a class="btn btn-primary" href="http://localhost:81/admin/confirmation?key='.$token.'"> Confirmer votre mail. </a></button>
                                            </div>');
                 $mail = $confMail->mail($confMail->initMail());
                 header('Location: /admin/login');
