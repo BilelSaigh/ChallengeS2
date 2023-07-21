@@ -100,10 +100,7 @@ class Security
             if (!empty($newUser)){
                 $newUser->setStatus(1);
                 $newUser->save();
-                $_SESSION["user"] = $newUser;
-                $view = new View("Auth/login", "front");
-                $view->assign('form', $connect->getConfig());
-                $view->assign('user', $user);
+                $this->login();
             }else{
                 echo '<div class="alert-error" style="text-align: center; padding: 1em ;">
                         <span> Compte innexistant, veuillez verifier que la durée du mail n est pas expirée </span>
