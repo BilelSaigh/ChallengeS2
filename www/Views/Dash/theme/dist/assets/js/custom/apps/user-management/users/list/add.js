@@ -193,12 +193,14 @@ var KTUsersAddUser = function () {
     let element;
     let form;
 
-    document.addEventListener('DOMContentLoaded', (event) => {
-        var el = document.querySelector('.myClass');
-        if (el !== null) {
-            el.style.color = 'red';
-        }
-    });
+    element = document.getElementById('your-element-id');
+
+    if (element) {
+        var selected = element.querySelector('your-selector');
+        // le reste de votre code ici
+    } else {
+        console.error('Element with id "your-element-id" not found');
+    }
 
     // Init add schedule modal
     var initAddUser = () => {

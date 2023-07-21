@@ -31,6 +31,7 @@ class User
     }
     public function setting(): void
     {
+
         $errors = [];
         $newPwd = new newPwd();
         $newEmail = new newEmail();
@@ -43,7 +44,7 @@ class User
         $user->setStatus($_SESSION["user"]["status"]);
         $user->setPassword($_SESSION["user"]["pwd"]);
         $user->setRole($_SESSION["user"]["role"]);
-        if($connection->isConnected($_SESSION['user']["token"])) {
+        if (isset($_SESSION['user']) && $connection->isConnected($_SESSION['user']["token"])) {
             $title = "Profil";
             $view = new View("Dash/editUser");
             $website = new Setting();

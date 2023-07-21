@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
     <link href="../Views/Dash/theme/dist/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
     <link href="../Views/Dash/theme/dist/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
-    <title<?= $title ?></title>
+    <title><?= isset($title) ? $title : ''; ?></title>
     <meta name="description" content="Ceci est ma super page">
 </head>
 <body>
@@ -85,6 +85,7 @@
                     <!--begin::Link-->
                     <div class="text-gray-400 fw-semibold fs-4">
                         <?php
+                        $title = isset($title) ? $title : '';
                         if ($title == "login") :  ?>
                             New Here?
                             <a href="/admin/register" class="link-primary fw-bold">Create an Account</a>
