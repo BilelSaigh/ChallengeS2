@@ -9,25 +9,21 @@
   controller: Security
   action: login
   security: false
-  role: []
 
 /logout:
   controller: Security
   action: logout
   security: true
-  role: []
 
 /admin/register:
   controller: Security
   action: register
   security: false
-  role: []
 
 /admin/confirmation:
   controller: Security
   action: confirmation
   security: false
-  role: []
 
 /admin/users:
   controller : User
@@ -162,7 +158,7 @@
   controller: ArticleController
   action: list
 
-/article/add-comment:
+/addcomment:
   controller: CommentController
   action: addComment
 
