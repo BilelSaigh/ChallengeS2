@@ -19,6 +19,7 @@ class Security
         $user = new User();
         $view = new View("Auth/login", "front");
         $view->assign('form', $connect->getConfig());
+
         $view->assign('title', "login");
         if ($connect->isSubmit()) {
             $errors = Verificator::form($connect->getConfig(), $_POST);
@@ -40,7 +41,8 @@ class Security
                         'role'    => $verifiedUser->getRole(),
                     ];
                     $_SESSION["user"] = $userData;
-                    header('Location: /admin/profil');
+                    echo '<script>window.location.href="/admin/profil";</script>';
+                    exit;
                 } else {
                     $errors[] = "Email ou mot de passe invalide.";
                     $view->assign('errors', $errors);
@@ -79,10 +81,11 @@ class Security
                                             <h5 class="card-title"> Adebc vous souhaite la bienvenue ! </h5>
                                             <p class="card-text">Une fois votre compte validé vous pourrez commenter autant que vous le souhaitez !.</p>
                                             <p class="card-text">Oublie pas le respect est OBLIGATOIRE chez nous ;)  .</p>
-                                                <button><a class="btn btn-primary" href="http://localhost:81/admin/confirmation?key='.$token.'"> Confirmer votre mail. </a></button>
+                                                <button><a class="btn btn-primary" href="http://193.70.2.69/:81/admin/confirmation?key='.$token.'"> Confirmer votre mail. </a></button>
                                            </div>');
                 $mail = $confMail->mail($confMail->initMail());
-                header('Location: /admin/login');
+                echo '<script>window.location.href="/admin/login";</script>';
+                exit;
             }else{
                 ($alreadyRegistered) ? $view->assign('errors', "Inscription incorrect") :  $view->assign('errors', $errors);
             }
@@ -118,7 +121,8 @@ class Security
             $user->setToken();
             $user->save();
             session_destroy();
-            header('Location: /admin/login');
+            echo '<script>window.location.href="/admin/login";</script>';
+            exit;
         }else{
             $error = new Error();
             $error->errorRedirection(404);

@@ -13,5 +13,11 @@
     }
 
 };?>
-<?php $this->modal("form", $form );
+<?php
+
+if (isset($form)) {
+    $this->modal("form", $form);
+} else {
+    echo "Form not defined";
+}
 

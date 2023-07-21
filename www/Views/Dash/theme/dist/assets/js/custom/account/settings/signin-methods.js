@@ -99,7 +99,8 @@ var KTAccountSettingsSigninMethods = function () {
                     url: url,
                     data: formData,
                     success:function (response) {
-                        setTimeout(function () {
+                        console.log(response);
+                        //setTimeout(function () {
                         swal.fire({
                             text: "Sent password reset. Please check your email",
                             icon: "success",

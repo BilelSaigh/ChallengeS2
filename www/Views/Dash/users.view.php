@@ -160,6 +160,7 @@
                     <th class="min-w-125px">Status</th>
                     <th class="min-w-125px">Joined Date</th>
                     <th class="text-end min-w-100px">Actions</th>
+                    <th class="text-end min-w-100px">Update Role</th>
                 </tr>
                 </thead>
                 <tbody class="text-gray-600 fw-semibold">

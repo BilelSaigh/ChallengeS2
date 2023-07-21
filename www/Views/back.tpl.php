@@ -164,22 +164,7 @@
                                         <div class="menu-state-bg menu-extended overflow-hidden overflow-lg-visible py-6" data-kt-menu-dismiss="true">
                                             <!--begin:Row-->
                                             <div class="row px-5">
-                                                <!--begin:Col-->
-                                                <div class="col-lg-6 py-1">
-                                                    <!--begin:Menu item-->
-                                                    <div class="menu-item p-0 m-0">
-                                                        <!--begin:Menu link-->
-                                                        <a href="/admin" class="menu-link">
-                                                            <span class="d-flex flex-column">
-																	<span class="d-flex align-items-center fs-6 fw-semibold text-gray-800">Home</span>
-																	<span class="fs-7 fw-semibold text-muted">Reports & statistics</span>
-																</span>
-                                                        </a>
-                                                        <!--end:Menu link-->
-                                                    </div>
-                                                    <!--end:Menu item-->
-                                                </div>
-                                                <!--end:Col-->
+
                                                 <!--begin:Col-->
                                                 <div class="col-lg-6 py-1">
                                                     <!--begin:Menu item-->

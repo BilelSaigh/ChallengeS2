@@ -1,3 +1,10 @@
+
+/:
+  controller: Security
+  action: login
+  security: false
+
+
 /admin/login:
   controller: Security
   action: login

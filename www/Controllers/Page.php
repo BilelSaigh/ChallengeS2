@@ -151,6 +151,7 @@ class Page extends Sql
         $menu = new Pages();
         $menu = $menu->recupAll();
         $comment = new Comment();
+        var_dump($page->getId());
         $comments = $comment->multipleSearch(['page_id'=>$page->getId()]);
         $formComment = new addComment();
         if (!empty($page)) {

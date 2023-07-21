@@ -78,7 +78,8 @@ class User
                 if ($user->verifypassword($_POST["confirmemailpassword"])){
                     $user->setEmail($_POST["newEmail"]);
                     $verifiedUser = $user->verifMail(["email"=>$user->getEmail()]);
-                    if (!empty($verifiedUser)) {
+                    var_dump($verifiedUser);
+                    if (($verifiedUser)) {
                         $user->setEmail($_POST["newEmail"]);
                         $user->generateToken();
                         $user->save();
