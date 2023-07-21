@@ -241,4 +241,3 @@
                     <!--end::Content wrapper-->
                 </div>
             </div>
->

@@ -116,9 +116,15 @@ var KTAccountSettingsSigninMethods = function () {
 
                         });
                             form.submit(); // Submit form
+                    }, // The comma here was missing
                         }, 200);
-                    },
-                    error:function (error){
+                         }, // The comma here was missing
+
+
+            )
+
+                if (true){
+                    function test(error) {
                         swal.fire({
                             text: "Sorry, looks like there are some errors detected, please try again.",
                             icon: "error",
@@ -127,11 +133,13 @@ var KTAccountSettingsSigninMethods = function () {
                             customClass: {
                                 confirmButton: "btn font-weight-bold btn-light-primary"
                             }
+
                         });
-                    },
-                })
-            });
-        });
+                    }
+                }
+        }); // The comma here was missing
+    };
+
     }
 
     var handleChangePassword = function (e) {
@@ -215,24 +223,25 @@ var KTAccountSettingsSigninMethods = function () {
                     url: url,
                     data: formData,
                     success: function (response) {
+                        console.log(response);
                         setTimeout(function () {
                             swal.fire({
-                            text: "Sent password reset. Please check your email",
-                            icon: "success",
-                            buttonsStyling: false,
-                            confirmButtonText: "Ok, got it!",
-                            customClass: {
-                                confirmButton: "btn font-weight-bold btn-light-primary"
-                            }
-                        }).then(function () {
-                            passwordForm.reset();
-                            validation.resetForm(); // Reset formvalidation --- more info: https://formvalidation.io/guide/api/reset-form/
-                            toggleChangePassword();
-                        });
-                        form.submit(); // Submit form
-                    }, 200);
-                    },
-                    error: function (error) {
+                                text: "Sent password reset. Please check your email",
+                                icon: "success",
+                                buttonsStyling: false,
+                                confirmButtonText: "Ok, got it!",
+                                customClass: {
+                                    confirmButton: "btn font-weight-bold btn-light-primary"
+                                }
+                            }).then(function() {
+                                signInForm.reset();
+                                validation.resetForm(); // Reset formvalidation --- more info: https://formvalidation.io/guide/api/reset-form/
+                                toggleChangeEmail();
+                                form.submit(); // Submit form
+                            });
+                        }, 200);
+                    }, // The comma here was missing
+                    error: function (error){
                         swal.fire({
                             text: "Sorry, looks like there are some errors detected, please try again.",
                             icon: "error",
@@ -242,35 +251,55 @@ var KTAccountSettingsSigninMethods = function () {
                                 confirmButton: "btn font-weight-bold btn-light-primary"
                             }
                         });
-
-                    }
+                    },
                 })
-            })
-            })
+            });
+        });
     }
 
 
     // Public methods
     return {
-        init: function () {
-            signInForm = document.getElementById('kt_signin_change_email');
-            signInMainEl = document.getElementById('kt_signin_email');
-            signInEditEl = document.getElementById('kt_signin_email_edit');
-            passwordMainEl = document.getElementById('kt_signin_password');
-            passwordEditEl = document.getElementById('kt_signin_password_edit');
-            signInChangeEmail = document.getElementById('kt_signin_email_button');
-            signInCancelEmail = document.getElementById('kt_signin_cancel');
-            passwordChange = document.getElementById('kt_signin_password_button');
-            passwordCancel = document.getElementById('kt_password_cancel');
+    (function() {
+        var signInForm, signInMainEl, signInEditEl, passwordMainEl,
+            passwordEditEl, signInChangeEmail, signInCancelEmail, passwordChange,
+            passwordCancel;
 
-            initSettings();
-            handleChangeEmail();
-            handleChangePassword();
+        function initSettings() {
+            // Initialize settings here
         }
-    }
-}();
+
+        function handleChangeEmail() {
+            // Handle email change here
+        }
+
+        function handleChangePassword() {
+            // Handle password change here
+        }
+
+        return {
+            init: function () {
+                signInForm = document.getElementById('kt_signin_change_email');
+                signInMainEl = document.getElementById('kt_signin_email');
+                signInEditEl = document.getElementById('kt_signin_email_edit');
+                passwordMainEl = document.getElementById('kt_signin_password');
+                passwordEditEl = document.getElementById('kt_signin_password_edit');
+                signInChangeEmail = document.getElementById('kt_signin_email_button');
+                signInCancelEmail = document.getElementById('kt_signin_cancel');
+                passwordChange = document.getElementById('kt_signin_password_button');
+                passwordCancel = document.getElementById('kt_password_cancel');
+
+                initSettings();
+                handleChangeEmail();
+                handleChangePassword();
+            }
+        };
+
+
 
 // On document ready
 KTUtil.onDOMContentLoaded(function() {
     KTAccountSettingsSigninMethods.init();
-});
+});})
+
+
