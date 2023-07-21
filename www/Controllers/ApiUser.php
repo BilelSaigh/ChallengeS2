@@ -12,7 +12,7 @@ class ApiUser
         $result = $this->saveFormData($formData);
 
         if ($result == 1) {
-            http_response_code(201);
+            http_response_code(202);
             echo json_encode(['status' => 'verif', 'message' => 'Data saved successfully']);
         } else {
             http_response_code(500);
@@ -22,7 +22,7 @@ class ApiUser
 
     function saveFormData($formData) {
         // verification si présence user en bdd avec un fetchall() depuis App/core/sql
-        
+
 
         // Remplacez par votre propre logique
         return 1; // renvoie vrai si l'opération réussi, faux sinon
