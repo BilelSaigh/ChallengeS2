@@ -12,6 +12,23 @@ class Comment extends Sql
     protected Int $user_id;
     protected String $content;
     protected String $created_date;
+    protected Int $report ;
+
+    /**
+     * @return Int
+     */
+    public function getReport(): int
+    {
+        return $this->report;
+    }
+
+    /**
+     * @param Int $report
+     */
+    public function setReport(int $report): void
+    {
+        $this->report = $report +1 ;
+    }
 
     public function setPageId(int $page_id): void
     {
@@ -66,7 +83,7 @@ class Comment extends Sql
     public function setCreatedDate(): void
     {
         date_default_timezone_set('Europe/Paris');
-        $this->created_date = date('d-m-y h:i:s');
+        $this->created_date =  date("Y-m-d H:i:s");
     }
 
     public function getCreatedDate()

@@ -71,6 +71,32 @@
     <script type="text/javascript" src="Views/Dash/theme/dist/assets/plugins/custom/js-beautify-1.7.5/js/lib/beautify.js"></script>
     <script type="text/javascript" src="Views/Dash/theme/dist/assets/plugins/custom/js-beautify-1.7.5/js/lib/beautify-html.js"></script>
     <script type="text/javascript" src="Views/Dash/theme/dist/assets/js/examples.js"></script>
+    <script>
+            // Récupérer tous les boutons avec la classe "report-btn"
+            const reportButtons  = document.querySelectorAll('#report');
+                reportButtons.forEach((button) => {
+                    button.addEventListener('click', () => {
+                        const commentId = button.dataset.commentId;
+                        reportComment(commentId);
+                    });
+                });
+            function reportComment(commentId) {
+            // Effectuer la requête AJAX avec la méthode POST
+            $.ajax({
+                url: '/admin/reportcomment',
+                method: 'POST',
+                data: {
+                    commentId: commentId
+                },
+                success: function(response) {
+                    console.log(response);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error:', error);
+                }
+            });
+            }
+    </script>
 
 </body>
 </html>

@@ -172,6 +172,14 @@ class Page extends Sql
             $error = new Error();
             $error->errorRedirection(404);
         }
+        if ($formComment->isSubmit())
+        {
+            $comment->setContent($_POST["commentaire"]);
+            $comment->setCreatedDate();
+            $comment->setPageId($page->getId());
+            $comment->setUserId($_SESSION['user']['id']);
+            $comment->save();
+        }
     }
 
 }

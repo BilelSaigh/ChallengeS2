@@ -48,7 +48,7 @@ class Comment
         $view->assign("comments", $comments);
     }
 
-    public function addComment(): bool
+    public function addComment()
     {
         var_dump($_SESSION["page"]);
         if (isset($_POST["action"]) && $_POST["action"]=== "addCommentOption") {
@@ -58,16 +58,8 @@ class Comment
             $addOption->setUpdatedAt();
             $addOption->save();
          }
-//            $comment = new ModelComment();
-//            // Assuming ModelComment has appropriate setters and getters for comment properties.
-//            $comment->setContent($_POST["content"]);
-//            $comment->setUserId($_SESSION["user_id"]);
-//            // $comment->setDateInserted();
-//            // $comment->setDateUpdated();
-//            $comment->save();
 
 
-    return false; // Gérer l'absence de l'utilisateur ou l'id utilisateur non valide.
 }
 
 

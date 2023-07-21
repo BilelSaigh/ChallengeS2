@@ -156,7 +156,6 @@
 /admin/comments/delete:
   controller: Comment
   action: deleteComments
-
   security: true
   role:
     - 0
@@ -169,6 +168,8 @@
   role:
     - 0
     - 1
-/article/report-comment:
+
+/admin/reportcomment:
   controller: CommentController
   action: reportComment
+  security: true

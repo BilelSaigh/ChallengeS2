@@ -18,15 +18,6 @@ class AddComment extends AForm {
                 "cancel" => "Annuler"
             ],
             "inputs" => [
-                "email"=>[
-                    "type"=>"email",
-                    "placeholder"=>"Email Address",
-                    "class"=>"form-control",
-                    "id"=>"emailaddress",
-                    "value"=>$_SESSION["user"]["email"],
-                    "label"=>"Email",
-                    "error"=>"Identifiant incorrect"
-                ],
                 "commentaire" => [
                     "type" => "textarea", // Utilisez un champ de texte multiligne pour le contenu du commentaire
                     "placeholder" => "Votre commentaire",
