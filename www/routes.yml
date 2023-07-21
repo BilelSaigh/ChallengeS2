@@ -137,11 +137,28 @@
 /admin/front:
   controller: Settings
   action: update
-  security: true
-  role:
-    - 0
-    - 1
 
+/admin/comments:
+  controller: Comment
+  action: showComments
+
+/admin/comments/update:
+  controller: Comment
+  action: updateComments
+
+/admin/comments/add:
+  controller: Comment
+  action: addComment
+
+/admin/comments/delete:
+  controller: Comment
+  action: deleteComments
+
+  security: true
+    - 0
+  role:
+
+    - 1
 /admin/menu:
   controller: Settings
   action: updateMenu
@@ -149,21 +166,6 @@
   role:
     - 0
     - 1
-
-/article/create:
-  controller: ArticleController
-  action: create
-
-/article/view:
-  controller: ArticleController
-  action: list
-
-/addcomment:
-  controller: CommentController
-  action: addComment
-
 /article/report-comment:
   controller: CommentController
   action: reportComment
-
-
