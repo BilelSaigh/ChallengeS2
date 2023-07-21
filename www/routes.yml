@@ -188,3 +188,8 @@
 /admin/comments/delete:
   controller: Comment
   action: deleteComments
+
+/admin/updateRole:
+  controller: User
+  action: updateRole
+
