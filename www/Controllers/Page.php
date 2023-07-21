@@ -148,6 +148,13 @@ class Page extends Sql
     {
         $page = new Pages();
         $page = $page->search(["slug" => $slug]);
+        if($page instanceof Pages) {
+            $id = $page->getId();
+        }else{
+            $error = new Error();
+            $error->errorRedirection(404, "Page not found");
+            return;
+        }
         $menu = new Pages();
         $menu = $menu->recupAll();
         $comment = new Comment();

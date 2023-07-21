@@ -121,7 +121,6 @@ class Router
                 // Si la route contient "{slug}", il s'agit d'une route avec un slug
                 $pattern = str_replace('{slug}', '([^/]+)', $route);
                 $regex = '#^' . $pattern . '$#';
-
                 if (preg_match($regex, $uri, $matches)) {
                     $matchedRoute = $route;
                     $matchedParams = [];

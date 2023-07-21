@@ -14,7 +14,7 @@ class Pages extends Sql
     protected Int $status ;
     protected $updated_at;
     protected int $menu;
-    protected bool $comment;
+    protected bool $comment = false;
 
     /**
      * @return bool

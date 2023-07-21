@@ -3,5 +3,5 @@ import Page3 from "./views/Page3.js";
 
 export default {
   "/page1": Page1,
-  "/installer": Page3,
+  "/js/installer": Page3,
 };

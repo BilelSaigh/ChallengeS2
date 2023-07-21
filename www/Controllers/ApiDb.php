@@ -22,7 +22,7 @@ class ApiDb
 
     function saveFormData($formData) {
 
-        // Remplacez par votre propre logique
+        echo $formData;
         return 1; // renvoie vrai si l'opération réussi, faux sinon
     }
 }

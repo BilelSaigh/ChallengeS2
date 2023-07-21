@@ -136,17 +136,20 @@
   controller: ChartController
   action: displayChart
 
-/installer:
+/js/installer:
   controller: Installer
   action: index
+  security: false
 
 /api/db:
   controller: ApiDb
   action: checkDb
+  security: false
 
 /api/user:
     controller: ApiUser
     action: checkUser
+    security: false
 
 /admin/front:
   controller: Settings

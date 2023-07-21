@@ -41,35 +41,14 @@ export default class MultiStepForm extends Component {
         });
 
     };
-
-    sendDataBis = (formData) => {
-        return fetch('/api/user', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                action: 'checkDbUser',
-                form : formData
-            })
-        }).then(data => {
-            console.log(data); // data est maintenant la réponse de l'API
-            return data;
-        }).catch(error => {
-            console.error('There has been a problem with your fetch operation: ', error);
-            throw error;
-        });
-
-    };
     handleFormInfo = (formData) => {
         console.log(Helpers(formData.dbName, { type: 'object', properties: {properties: {type: 'string'}}}))
         this.sendData(formData)
             .then(data => {
+                console.log(data)
                 if (data.status === 201) {
-                    console.log(data)
                     this.handleNextButtonClick();
                 } else {
-                    console.log("Echoué;;             dddd ddd                                                                           ddd d")
                     console.log(data)
                 }
             })
@@ -116,8 +95,8 @@ export default class MultiStepForm extends Component {
                             type:"submit",
                             click : (event) => {
                                 event.preventDefault();
-                                if (document.getElementById("Step2") || document.getElementById("Step2")){
-                                    const form = document.getElementById("Step2")
+                                if (document.getElementById("Step1") || document.getElementById("Step1")){
+                                    const form = document.getElementById("Step1")
                                     const url = form.getAttribute('action');
                                     const formData = new FormData(form)
                                     const formDataObject = Object.fromEntries(formData);
