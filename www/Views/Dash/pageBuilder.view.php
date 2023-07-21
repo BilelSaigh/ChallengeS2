@@ -66,7 +66,7 @@
             <div class="row">
                 <div class="col">
                         <div class="form-group">
-                            <input type="checkbox" name="comment" id="comment" > Add comment section
+                            <input type="checkbox" name="comment" id="comment" <?= ($option)? "checked" : "" ?>> Add comment section
                         </div>
                 </div>
             </div>
@@ -96,12 +96,25 @@
                 $.ajax({
                     type: "POST",
                     url: "/addcomment",
-                    data: { action: "addComment" , statut: statut},
+                    data: { action: "addCommentOption" , statut: statut},
                     success: function(response) {
-                        console.log(response);
+                        console.log(response)
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Successful',
+                            text: 'A section comment is now available on this page',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
                     },
-                    error: function() {
-                        console.log("Erreur lors de la mise à jour du statut.");
+                    error:function (error) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'A problem has been encountered',
+                            text: 'Call the 0652144163',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
                     }
                 });
             });

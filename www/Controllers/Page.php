@@ -3,17 +3,13 @@ namespace App\Controllers;
 
 use App\Core\Sql;
 use App\Core\View;
-use App\Models\Caretaker;
-use App\Models\Originator;
+use App\Forms\AddComment;
 use App\Models\Page as Build;
-use App\Models\PageMemento;
 use App\Models\User;
 use App\Models\Setting;
 
 use App\Models\Pages;
-use DateTime;
-use PHPageBuilder\PHPageBuilder;
-use PHPageBuilder\Modules\GrapesJS\PageBuilder;
+use App\Models\Comment;
 class Page extends Sql
 {
 
@@ -30,15 +26,17 @@ class Page extends Sql
     public function showPage():void
     {
         $lastpage= new Build();
-        $title = new Pages();
+        $page = new Pages();
         $_SESSION['page'] = $_GET["id"];
         $lastpage = $lastpage->lastInsert($_SESSION['page']);
         $allVersion = $this->recupAllByOrder($_SESSION['page']);
-        $title = $title->search(["id"=>$_SESSION['page']]);
-        $status =$title->getStatus();
-        $title= trim($title->getTitle());
+        $page = $page->search(["id"=>$_SESSION['page']]);
+        $status = $page->getStatus();
+        $title= trim($page->getTitle());
+        $commentStatus = $page->isComment();
         $view = new View("Dash/pageBuilder", "builder");
         $view->assign("page",$lastpage);
+        $view->assign("option",$commentStatus);
         $view->assign("title",$title);
         $view->assign("status",$status);
         $view->assign("allVersion",$allVersion);
@@ -152,6 +150,9 @@ class Page extends Sql
         $page = $page->search(["slug" => $slug]);
         $menu = new Pages();
         $menu = $menu->recupAll();
+        $comment = new Comment();
+        $comments = $comment->multipleSearch(['page_id'=>$page->getId()]);
+        $formComment = new addComment();
         if (!empty($page)) {
             $pageData = new Build();
             $pageData = $pageData->lastInsert($page->getId());
@@ -164,6 +165,8 @@ class Page extends Sql
             if (!empty($pageData))
             {
                 $view->assign("content", $pageData->getContent());
+                $view->assign("comments",$comments);
+                $view->assign("form", $formComment->getConfig());
             }
         } else {
             $error = new Error();

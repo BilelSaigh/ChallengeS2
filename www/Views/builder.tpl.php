@@ -41,14 +41,14 @@
         $('#content-area').keditor();
         $('.fa-save').click(function (){
             if ($('#saveTitle').val() !=="Title"){
+                const content = $('#content-area').keditor('getContent', true)
                 $.ajax({
                     type: 'post',
-                    url:'/updatePage',
+                    url:' /updatePage',
                     data: { action: 'send-content',
-                        content: $('#content-area').keditor('getContent', true)
+                        content: content
                     },
                     success: function (data){
-                        console.log(data)
                         $('#content-area').html($('#content-area').keditor('getContent', true));
                         Swal.fire({
                             icon: 'success',
@@ -81,7 +81,6 @@
         })
         $('#restoreButton').click(function (){
             var selectedVersionId = $("#versionDropdown").val();
-            console.log(selectedVersionId)
             $.ajax({
                 type: 'post',
                 url:'/updatePage',
@@ -134,7 +133,6 @@
         })
         $('#btnSaveTitle').click(function () {
             const newTitle = $('#saveTitle').val();
-            console.log(newTitle)
             if (newTitle !== "Title"){
                 $.ajax({
                     type: 'post',
@@ -144,7 +142,6 @@
                         title : newTitle
                     },
                     success: function (data) {
-                        // console.log(data)
                         Swal.fire({
                             icon: 'success',
                             title: 'Your page is officialy created ',
@@ -154,7 +151,6 @@
                         });
                     },
                     error: function (error) {
-
                         const errorMessage = JSON.parse(error.responseText)
                         Swal.fire({
                             icon: 'error',

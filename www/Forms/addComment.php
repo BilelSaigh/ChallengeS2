@@ -21,15 +21,16 @@ class AddComment extends AForm {
                 "email"=>[
                     "type"=>"email",
                     "placeholder"=>"Email Address",
-                    "class"=>"form-control form-control-lg form-control-solid",
+                    "class"=>"form-control",
                     "id"=>"emailaddress",
-                    "value"=>'',
+                    "value"=>$_SESSION["user"]["email"],
                     "label"=>"Email",
                     "error"=>"Identifiant incorrect"
                 ],
                 "commentaire" => [
                     "type" => "textarea", // Utilisez un champ de texte multiligne pour le contenu du commentaire
                     "placeholder" => "Votre commentaire",
+                    "class"=>"form-control",
                     "min" => 2,
                     "max" => 1000, // Limitez la longueur du commentaire à 1000 caractères (à ajuster selon vos besoins)
                     "error" => "Votre commentaire doit faire entre 2 et 1000 caractères"

@@ -47,13 +47,12 @@
 
                     if (!empty($_SESSION["user"])){
                         echo '
-                <div class="col-sm text-end my-2" >
-
-                        <a class="btn btn-outline-light " href="admin/pages" role="button">Back to pages</a>
-                </div>
-             ';
+                                <div class="col-sm text-end my-2" >
+                
+                                        <a class="btn btn-outline-light " href="admin/pages" role="button">Back to pages</a>
+                                </div>
+                             ';
                     }
-
                     ?>
                 </div>
             </div>
@@ -65,10 +64,6 @@
             <?php include  $this->view?>
         </div>
     </main>
-        <footer class="row bg-dark my-4 border-top" data-bs-theme="dark">
-            <p class="col mb-0 text-center text-muted">&copy; 2023 ChallengeS2</p>
-
-        </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
     <script type="text/javascript" src="Views/Dash/theme/dist/assets/plugins/custom/jquery-1.11.3/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="Views/Dash/theme/dist/assets/plugins/custom/bootstrap-3.4.1/js/bootstrap.min.js"></script>

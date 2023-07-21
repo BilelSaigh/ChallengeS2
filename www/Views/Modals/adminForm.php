@@ -31,7 +31,6 @@
                         </div>
                         <div class='separator separator-dashed my-5'></div>
                  <?php endforeach;?>
-
         <?php else: ?>
             <div class="fv-row mb-7">
                 <!--begin::Label-->

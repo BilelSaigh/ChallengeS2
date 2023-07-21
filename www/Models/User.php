@@ -10,7 +10,7 @@ class User extends Sql
     protected String $lastname;
     protected String $email;
     protected String $pwd;
-    protected String $logo = "../Views/Dash/theme/dist/assets/media/avatars/blank.jpg";
+    protected String $logo = "../Views/Dash/theme/dist/assets/media/avatars/blank.png";
     protected  $token = null;
     protected Int $role ;
     protected Int $status =0;

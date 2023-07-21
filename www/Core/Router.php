@@ -113,61 +113,64 @@ class Router
         $uri = rtrim(strtolower(trim($uriExploded[0])), "/");
         $uri = (empty($uri)) ? "/" : $uri;
 
-        if (empty($this->routes[$uri])) {
-            throw new \Exception("Page non trouvée", 404);
-        }
+        $matchedRoute = null;
+        $matchedParams = [];
 
+        foreach ($this->routes as $route => $config) {
+            if (strpos($route, '{slug}') !== false) {
+                // Si la route contient "{slug}", il s'agit d'une route avec un slug
+                $pattern = str_replace('{slug}', '([^/]+)', $route);
+                $regex = '#^' . $pattern . '$#';
 
-        $route = $this->routes[$uri];
-        if (strpos($uri, '{slug}') !== false)  {
-            // Si la route contient "{slug}", il s'agit d'une route avec un slug
-            $pattern = str_replace('{slug}', '([^/]+)', $route);
-            $regex = '#^' . $pattern . '$#';
+                if (preg_match($regex, $uri, $matches)) {
+                    $matchedRoute = $route;
+                    $matchedParams = [];
 
-            if (preg_match($regex, $uri, $matches)) {
-                $matchedRoute = $route;
-                $matchedParams = [];
-
-                // Récupérer les valeurs des paramètres
-                for ($i = 1; $i < count($matches); $i++) {
-                    $matchedParams[] = $matches[$i];
+                    // Récupérer les valeurs des paramètres
+                    for ($i = 1; $i < count($matches); $i++) {
+                        $matchedParams[] = $matches[$i];
+                    }
+                    break;
                 }
-                //                break;
+            } else {
+                if ($uri === $route) {
+                    $matchedRoute = $route;
+                    break;
+                }
             }
         }
-        if (empty($route["controller"]) || empty($route["action"])) {
-            throw new \Exception("Absence de controller ou d'action dans le ficher de routing pour la route " . $uri);
+
+        if (empty($matchedRoute)) {
+            $error = new Error();
+            $error->errorRedirection(404);
         }
 
-        $controller = "\\App\\Controllers\\" . $route["controller"];
-        $action = $route["action"];
-        $security = $route["security"];
+        $route = $this->routes[$matchedRoute];
 
+            $controller = "\\App\\Controllers\\" . $route["controller"];
+            $action = $route["action"];
+
+        // Gérer les autres routes du routeur normalement
+        $security = $route["security"];
 
         if (!class_exists($controller)) {
             throw new \Exception("La class " . $controller . " n'existe pas", 500);
         }
 
-
         $controllerInstance = new $controller();
         $secu = new Security();
-        if (isset($security) && $security === true && !$secu->isLoggedIn()) {
-            $view = new View("Auth/login", "front" );
 
-        } elseif (isset($role) && !$secu->whoIAm($role)) {
-            echo $secu->whoIAm($role);
+        if (isset($security) && $security === true && !$secu->isLoggedIn()) {
+            $view = new View("Auth/login", "front");
+        } elseif (isset($role) && !$secu->whoIAm($route["role"])) {
             $error = new Error();
             $error->errorRedirection(404);
-            throw new \Exception("Page not found !", 404);
-
         }
 
         if (!method_exists($controllerInstance, $action)) {
             throw new \Exception("L'action " . $action . " n'existe pas", 500);
         }
-        $controllerInstance->$action();
-
-
+        $controllerInstance->$action(...$matchedParams);
     }
 }
 

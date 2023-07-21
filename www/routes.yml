@@ -126,6 +126,7 @@
   controller : Page
   action : getSlug
   security: false
+
 /admin/chart:
   controller: ChartController
   action: displayChart
@@ -146,19 +147,21 @@
   controller: Comment
   action: updateComments
 
-/admin/comments/add:
+/addcomment:
   controller: Comment
   action: addComment
+  security: true
+
 
 /admin/comments/delete:
   controller: Comment
   action: deleteComments
 
   security: true
-    - 0
   role:
-
+    - 0
     - 1
+    -
 /admin/menu:
   controller: Settings
   action: updateMenu
