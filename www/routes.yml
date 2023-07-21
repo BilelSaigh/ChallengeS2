@@ -126,7 +126,15 @@
 
 /installer:
   controller: Installer
-  action: start
+  action: index
+
+/api/db:
+  controller: ApiDb
+  action: checkDb
+
+/api/user:
+    controller: ApiUser
+    action: checkUser
 
 /admin/front:
   controller: Settings

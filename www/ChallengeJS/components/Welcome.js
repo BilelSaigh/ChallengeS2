@@ -16,12 +16,7 @@ export class Welcome extends Component{
                     type: "div",
                     class: "col",
                     children: [
-                        {
-                            type: "img",
-                            attributes:{src: "",alt: "Logo"},
-                            class: "text-center",
 
-                        },
                         {
                             type: "h1",
                             class: "text-center",
@@ -31,9 +26,9 @@ export class Welcome extends Component{
                             type: "p",
                             class: "text-center",
                             children: [
-                                "Welcome to the famous three-minutes Adeco installation process!"
+                                "Bienvenue chez Portfolio à Gogo!"
                                 +
-                                "Just fill in the information into the next page and you'll be on your way to using your personal publishing platform."],
+                                "Le site qu'il vous fait si vous souhaitez exposer votre art de la plus belle des manières"],
                         },
                     ]
                 }

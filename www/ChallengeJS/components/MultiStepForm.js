@@ -21,29 +21,78 @@ export default class MultiStepForm extends Component {
         this.setState({ currentStep: this.state.currentStep - 1 });
     };
 
-    handleFormInfo = (formData) => {
-        console.log(Helpers(formData.dbName, { type: 'object', properties: {properties: {type: 'string'}}}))
-        // if(Helpers(formData, { type: 'object', properties: {properties: {type: 'string'}}})){
-        $.ajax({
-            type: 'post',
-            url: '/installer',
-            data: {
-                action: 'delete',
+
+    sendData = (formData) => {
+        return fetch('/api/db', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                action: 'checkDb',
                 form : formData
-            },
-            success: function (data) {
-                console.log(data)
-            },
-            error: function (error) {
-                console.log(error)
-            }
-        })
-         // }else{
-         //     var errorMessage = 'Erreur : L\'objet ne correspond pas à la configuration attendue.\n\n';
-         // }
+            })
+        }).then(data => {
+            console.log(data); // data est maintenant la réponse de l'API
+            return data;
+        }).catch(error => {
+            console.error('There has been a problem with your fetch operation: ', error);
+            throw error;
+        });
+
     };
 
+    sendDataBis = (formData) => {
+        return fetch('/api/user', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                action: 'checkDbUser',
+                form : formData
+            })
+        }).then(data => {
+            console.log(data); // data est maintenant la réponse de l'API
+            return data;
+        }).catch(error => {
+            console.error('There has been a problem with your fetch operation: ', error);
+            throw error;
+        });
+
+    };
+    handleFormInfo = (formData) => {
+        console.log(Helpers(formData.dbName, { type: 'object', properties: {properties: {type: 'string'}}}))
+        this.sendData(formData)
+            .then(data => {
+                if (data.status === 201) {
+                    console.log(data)
+                    this.handleNextButtonClick();
+                } else {
+                    console.log("Echoué;;             dddd ddd                                                                           ddd d")
+                    console.log(data)
+                }
+            })
+            .catch(err => console.log(err))
+        //this.handleNextButtonClick();
+    };
+
+    click = (event) => {
+        event.preventDefault();
+        const form = document.getElementById("Step1")
+        const url = form.getAttribute('action');
+        const formData = new FormData(form)
+        const formDataObject = Object.fromEntries(formData);
+        this.handleFormInfo(formDataObject)
+    };
+
+
     render() {
+        new Button({
+            title:"Next",
+            type:"submit",
+            click : this.click,
+        })
         const { currentStep } = this.state;
         return {
             type: "div",
@@ -67,8 +116,8 @@ export default class MultiStepForm extends Component {
                             type:"submit",
                             click : (event) => {
                                 event.preventDefault();
-                                if (document.getElementById("Step1") || document.getElementById("Step1")){
-                                    const form = document.getElementById("Step1")
+                                if (document.getElementById("Step2") || document.getElementById("Step2")){
+                                    const form = document.getElementById("Step2")
                                     const url = form.getAttribute('action');
                                     const formData = new FormData(form)
                                     const formDataObject = Object.fromEntries(formData);
