@@ -5,3 +5,6 @@ RewriteRule ^(.*)$ /index.php [L,QSA]
 
 #Gestion des pages erreur
 ErrorDocument 404 /error404
+
+php_value upload_max_filesize 16M
+php_value post_max_size 16M

@@ -12,8 +12,9 @@ class Security
     public function whoIAm($role): bool
     {
         if(empty($role)){
-            $role = array("0","1","2","3");
+            $role = ["0","1","2","3"];
         }
+        var_dump($role);
         return isset($_SESSION['user']['role']) && in_array($_SESSION['user']['role'],$role);
     }
 }

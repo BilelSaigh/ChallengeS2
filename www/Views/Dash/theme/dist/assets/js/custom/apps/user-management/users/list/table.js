@@ -161,7 +161,6 @@ var KTUsersList = function () {
                             url: url,
                             data : { action: "deleteUser", id: userId },
                             success : function (response) {
-                                console.log(response)
                                 Swal.fire({
                                     text: "You have deleted " + userName + " !",
                                     icon: "success",

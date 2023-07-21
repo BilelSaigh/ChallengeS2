@@ -9,25 +9,21 @@
   controller: Security
   action: login
   security: false
-  role: []
 
 /logout:
   controller: Security
   action: logout
   security: true
-  role: []
 
 /admin/register:
   controller: Security
   action: register
   security: false
-  role: []
 
 /admin/confirmation:
   controller: Security
   action: confirmation
   security: false
-  role: []
 
 /admin/users:
   controller : User
@@ -130,6 +126,7 @@
   controller : Page
   action : getSlug
   security: false
+
 /admin/chart:
   controller: ChartController
   action: displayChart
@@ -141,10 +138,6 @@
 /admin/front:
   controller: Settings
   action: update
-  security: true
-  role:
-    - 0
-    - 1
 
 /admin/menu:
   controller: Settings
@@ -171,7 +164,9 @@
   action: reportComment
 
 
-
+=========
+  controller: Front
+  action: update
 
 /admin/comments:
   controller: Comment
@@ -181,14 +176,32 @@
   controller: Comment
   action: updateComments
 
-/admin/comments/add:
+/addcomment:
   controller: Comment
   action: addComment
+  security: true
+
 
 /admin/comments/delete:
   controller: Comment
   action: deleteComments
+  security: true
+  role:
+    - 0
+    - 1
+    -
+/admin/menu:
+  controller: Settings
+  action: updateMenu
+  security: true
+  role:
+    - 0
+    - 1
 
+/admin/reportcomment:
+  controller: CommentController
+  action: reportComment
+  security: true
 /admin/updateRole:
   controller: User
   action: updateRole

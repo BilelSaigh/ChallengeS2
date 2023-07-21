@@ -14,6 +14,25 @@ class Pages extends Sql
     protected Int $status ;
     protected $updated_at;
     protected int $menu;
+    protected bool $comment;
+
+    /**
+     * @return bool
+     */
+    public function isComment(): bool
+    {
+        return $this->comment;
+    }
+
+    /**
+     * @param bool $comment
+     */
+    public function setComment(bool $comment): void
+    {
+        $this->comment = $comment;
+    }
+
+
 
     /**
      * @return String

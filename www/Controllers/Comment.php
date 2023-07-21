@@ -6,6 +6,7 @@ use App\Forms\AddComment;
 use App\Models\Comment as ModelComment;
 use App\Core\Verificator;
 use App\Core\View;
+use App\Models\Pages;
 
 // use ChallengeS2\Models\Comment;
 
@@ -47,26 +48,18 @@ class Comment
         $view->assign("comments", $comments);
     }
 
-    public function addComment(): bool
-{
-    // Vérifier si la clé "user" existe dans $_SESSION
-    if (isset($_SESSION["user"]) && is_array($_SESSION["user"])) {
-        $user_id = $_SESSION["user"]["id"];
+    public function addComment()
+    {
+        var_dump($_SESSION["page"]);
+        if (isset($_POST["action"]) && $_POST["action"]=== "addCommentOption") {
+            $addOption = new Pages();
+            $addOption->setComment($_POST["statut"]);
+            $addOption->setId($_SESSION["page"]);
+            $addOption->setUpdatedAt();
+            $addOption->save();
+         }
 
-        // Vérifier que l'id utilisateur est un entier
-        if (is_int($user_id)) {
-            $comment = new ModelComment();
-            // Assuming ModelComment has appropriate setters and getters for comment properties.
-            $comment->setContent($_POST["content"]);
-            $comment->setUserId($user_id);
-            // $comment->setDateInserted();
-            // $comment->setDateUpdated();
-            $comment->save();
-            
-        }
-    }
 
-    return false; // Gérer l'absence de l'utilisateur ou l'id utilisateur non valide.
 }
 
 

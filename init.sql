@@ -135,7 +135,7 @@ CREATE TABLE "public"."esgi_user" (
                                       "id" integer DEFAULT nextval('esgi_user_id_seq') NOT NULL,
                                       "date_inserted" timestamp DEFAULT now(),
                                       "status" boolean DEFAULT false NOT NULL,
-                                      "logo" text DEFAULT '../Views/Dash/theme/dist/assets/media/avatars/blank.jpg',
+                                      "logo" text DEFAULT '../Views/Dash/theme/dist/assets/media/avatars/blank.png',
                                       CONSTRAINT "esgi_user_pkey" PRIMARY KEY ("id")
 ) WITH (oids = false);
 
@@ -143,7 +143,7 @@ COMMENT ON COLUMN "public"."esgi_user"."role" IS '[0=>admin,1=>editor,2=>modo,3=
 
 INSERT INTO "esgi_user" ("firstname", "lastname", "email", "pwd", "role", "date_updated", "token", "id", "date_inserted", "status", "logo") VALUES
                                                                                                                                                 ('Estelle                                                         ',	'NKUMBA                                                                                                                  ',	'estelle272001@gmail.com',	'Azertyu1',	3,	'2023-07-19 21:55:02',	'          ',	3,	'2023-07-19 21:55:02',	'f',	'../Views/Dash/theme/dist/assets/media/avatars/blank.png'),
-                                                                                                                                                ('Erica                                                           ',	'NKUMBA                                                                                                                  ',	'estelle272361@gmail.com',	'$2y$10$cAmShWJrSP8TM62wIJYwR.2EpFhtCuFuLGIKOT6luaPnQmPmpRHfO',	1,	NULL,	'          ',	5,	NULL,	'f',	'../Views/Dash/theme/dist/assets/media/avatars/blank.jpg');
+                                                                                                                                                ('Erica                                                           ',	'NKUMBA                                                                                                                  ',	'estelle272361@gmail.com',	'$2y$10$cAmShWJrSP8TM62wIJYwR.2EpFhtCuFuLGIKOT6luaPnQmPmpRHfO',	1,	NULL,	'          ',	5,	NULL,	'f',	'../Views/Dash/theme/dist/assets/media/avatars/blank.png');
 
 ALTER TABLE ONLY "public"."esgi_page" ADD CONSTRAINT "esgi_page_page_id_fkey" FOREIGN KEY (page_id) REFERENCES esgi_pages(id) ON DELETE CASCADE NOT DEFERRABLE;
 ALTER TABLE ONLY "public"."esgi_page" ADD CONSTRAINT "esgi_page_user_id_fkey" FOREIGN KEY (user_id) REFERENCES esgi_user(id) ON DELETE CASCADE NOT DEFERRABLE;

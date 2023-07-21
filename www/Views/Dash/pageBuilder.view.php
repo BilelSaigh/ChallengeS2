@@ -14,6 +14,7 @@
         <link rel="stylesheet" type="text/css" href="../Views/Dash/theme/dist/assets/css/examples.css" />
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     </head>
     <body>
     <header>
@@ -29,6 +30,7 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <div class=" navbar-form navbar-left form-group">
                                 <select id="versionDropdown" name="versionDropdown" class="form-select form-control">
+                                   <option selected>Select the version you want </option>
                                     <?php foreach ($allVersion as $version) : ?>
                                         <option value="<?= $version["id"]?>"> <?= "Version du ".$version["updated_at"] ?> </option>
                                     <?php endforeach; ?>
@@ -61,22 +63,26 @@
                             <button type="button" class="btn btn-primary mb-3" id="btnSaveTitle">Save Title</button>
                 </div>
             </div>
-        </div>
-
-            <?php if($_SESSION['user']['role']===0 ): ?>
-                <div class="row">
-                    <div class="col text-end">
-                        <button id="deletePage" class="btn btn-danger py-3 px-3 my-2 mx-2">Delete page</button>
-                    </div>
+            <div class="row">
+                <div class="col">
+                        <div class="form-group">
+                            <input type="checkbox" name="comment" id="comment" <?= ($option)? "checked" : "" ?>> Add comment section
+                        </div>
                 </div>
-            <?php endif; ?>
-
-        <div class="container-fluid">
+            </div>
+        </div>
+        <div class="container-fluid ">
             <div data-keditor="html">
                 <div id="content-area">
                     <?php if(!empty($page)) :echo $page->getContent() ;
                     endif ?>
                 </div>
+            </div>
+        </div>
+            <div class="container-fluid text-right  ">
+                    <?php if($_SESSION['user']['role']===0 ): ?>
+                        <button id="deletePage" class=" btn btn-danger mt-5 mb-2 py-3 px-3 my-2 mx-2">Delete page</button>
+                    <?php endif; ?>
             </div>
 
     </main>

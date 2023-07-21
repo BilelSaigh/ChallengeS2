@@ -18,18 +18,10 @@ class AddComment extends AForm {
                 "cancel" => "Annuler"
             ],
             "inputs" => [
-                "email"=>[
-                    "type"=>"email",
-                    "placeholder"=>"Email Address",
-                    "class"=>"form-control form-control-lg form-control-solid",
-                    "id"=>"emailaddress",
-                    "value"=>'',
-                    "label"=>"Email",
-                    "error"=>"Identifiant incorrect"
-                ],
                 "commentaire" => [
                     "type" => "textarea", // Utilisez un champ de texte multiligne pour le contenu du commentaire
                     "placeholder" => "Votre commentaire",
+                    "class"=>"form-control",
                     "min" => 2,
                     "max" => 1000, // Limitez la longueur du commentaire à 1000 caractères (à ajuster selon vos besoins)
                     "error" => "Votre commentaire doit faire entre 2 et 1000 caractères"

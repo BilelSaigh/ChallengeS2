@@ -1,9 +1,10 @@
 <?php
 namespace App\Controllers;
 
+use App\Core\Sql;
 use App\Models\CommentModel;
-
-class CommentController
+use App\Models\Comment;
+class CommentController extends Sql
 {
     private $commentModel;
 
@@ -43,21 +44,23 @@ class CommentController
     
         public function reportComment()
     {
-        if (isset($_POST['comment_id'])) {
-            $commentId = $_POST['comment_id'];
-            
-            // Augmenter le compteur de signalement dans la base de données
-            $this->commentModel->increaseReportCount($commentId);
-    
-            // Vérifier si le nombre de signalements atteint le seuil
-            $reportCount = $this->commentModel->getReportCount($commentId);
-            if ($reportCount >= 5) {
-                // Supprimer le commentaire
-                $this->commentModel->deleteComment($commentId);
+        var_dump($_POST);
+        $comment = new Comment();
+        if (isset($_POST['commentId'])) {
+            $commentId = $_POST['commentId'];
+            $comment = $comment->search(["id"=> $commentId]);
+            if ($comment->getReport() < 5) {
+                $report = $comment->getReport();
+                $comment->setReport($report) ;
+                var_dump($comment);
+                $comment->save();
+            } else{
+            $comment->delete($_POST['commentId']);
             }
+
         }
-        // Rediriger vers la page précédente ou afficher un message de confirmation
-        header("Location: /article/view");
-        exit();
+//        // Rediriger vers la page précédente ou afficher un message de confirmation
+//        header("Location: /article/view");
+//        exit();
     }
 }
