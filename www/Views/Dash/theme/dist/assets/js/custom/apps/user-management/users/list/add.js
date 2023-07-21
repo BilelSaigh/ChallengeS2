@@ -190,9 +190,15 @@ KTUtil.onDOMContentLoaded(function () {
 // Class definition
 var KTUsersAddUser = function () {
     // Shared variables
-    const element= document.getElementById('kt_modal_add_user');
-    const form = element.querySelector('#kt_modal_add_user_form');
-    const modal = new bootstrap.Modal(element);
+    let element;
+    let form;
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        var el = document.querySelector('.myClass');
+        if (el !== null) {
+            el.style.color = 'red';
+        }
+    });
 
     // Init add schedule modal
     var initAddUser = () => {
