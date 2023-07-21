@@ -8,7 +8,12 @@
 /admin/login:
   controller: Security
   action: login
-  security: false
+  security: true
+  role:
+    - 0
+    - 1
+    - 2
+
 
 /logout:
   controller: Security

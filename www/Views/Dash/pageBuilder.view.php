@@ -65,9 +65,10 @@
             </div>
             <div class="row">
                 <div class="col">
-                        <div class="form-group">
-                            <input type="checkbox" name="comment" id="comment" <?= ($option)? "checked" : "" ?>> Add comment section
-                        </div>
+                    <div class="form-group">
+                        <input type="checkbox" name="comment" id="comment" <?= (isset($option) && !empty($option))? "checked" : ""; ?>
+                        Add comment section
+                    </div>
                 </div>
             </div>
         </div>
