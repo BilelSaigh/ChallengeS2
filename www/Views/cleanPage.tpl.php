@@ -43,17 +43,6 @@
                         </li>
                        <?php endif;endforeach; ?>
                     </ul>
-                    <?php
-
-                    if (!empty($_SESSION["user"])){
-                        echo '
-                                <div class="col-sm text-end my-2" >
-                
-                                        <a class="btn btn-outline-light " href="admin/pages" role="button">Back to pages</a>
-                                </div>
-                             ';
-                    }
-                    ?>
                 </div>
             </div>
         </nav>

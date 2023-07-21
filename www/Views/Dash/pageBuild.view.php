@@ -3,6 +3,7 @@
         <?php if(!empty($content)) :echo $content ;  endif ?>
     </div>
 </div>
+<?php if (!empty($comments)) :?>
 
 <section style="background-color: #eee;">
     <div class="container mt-5 my-5 py-5">
@@ -20,9 +21,6 @@
                                                     </div>';
                 }
             }?>
-            <section style="background-color: #eee;">
-                <div class="container my-5 py-5">
-                    <div class="row d-flex justify-content-center">
                         <div class="col-md-12 col-lg-10 col-xl-8">
                             <div class="card">
                                 <?php foreach ($comments as $comment) : ?>
@@ -50,10 +48,12 @@
                                         <?php  if (isset($_SESSION["user"])){ $this->modal("form", $form );} ?>
                                     </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
             </section>
+            <?php endif;?>
         </div>
 
 
