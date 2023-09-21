@@ -15,11 +15,37 @@ export default class MultiStepForm extends Component {
     }
 
     handleNextButtonClick = () => {
-        this.setState({ currentStep: this.state.currentStep + 1 });
+        if (document.getElementById("Step1")){
+            this.handleStep1()
+        }
+            this.setState({ currentStep: this.state.currentStep + 1 });
+
     };
     handlePreviousButtonClick = () => {
+        console.log("ici")
+
         this.setState({ currentStep: this.state.currentStep - 1 });
     };
+
+    handleStep1 = () =>
+    {
+        const form1 = document.getElementById("Step1")
+        const url = form1.getAttribute('action');
+        const formData = new FormData(form1)
+        const formDataObject = Object.fromEntries(formData);
+        console.log(formDataObject)
+        this.handleFormInfo(formDataObject)
+    }
+    handleStep2
+        = () =>
+    {
+        const form2 = document.getElementById("Step2")
+        const url = form.getAttribute('action');
+        const formData = new FormData(form2)
+        const formDataObject = Object.fromEntries(formData);
+        console.log(formDataObject)
+        this.handleFormInfo(formDataObject)
+    }
 
 
     sendData = (formData) => {
@@ -62,6 +88,7 @@ export default class MultiStepForm extends Component {
 
     };
     handleFormInfo = (formData) => {
+        console.log("ok")
         console.log(Helpers(formData.dbName, { type: 'object', properties: {properties: {type: 'string'}}}))
         this.sendData(formData)
             .then(data => {
@@ -69,7 +96,7 @@ export default class MultiStepForm extends Component {
                     console.log(data)
                     this.handleNextButtonClick();
                 } else {
-                    console.log("Echoué;;             dddd ddd                                                                           ddd d")
+                    console.log("Echoué;;                                                                                    ddd d")
                     console.log(data)
                 }
             })
@@ -117,6 +144,7 @@ export default class MultiStepForm extends Component {
                             click : (event) => {
                                 event.preventDefault();
                                 if (document.getElementById("Step2") || document.getElementById("Step2")){
+                                    console.log("ok")
                                     const form = document.getElementById("Step2")
                                     const url = form.getAttribute('action');
                                     const formData = new FormData(form)

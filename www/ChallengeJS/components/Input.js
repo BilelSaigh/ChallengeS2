@@ -25,7 +25,7 @@ export default class Input extends Component{
 
             type: "div",
             class: "mb-3 ",
-            attributes: { style: { marginBottom: "10px" } },
+            attributes: { style: { marginBottom: "10px" },required:true},
             children: [
                 {
                     type: "label",

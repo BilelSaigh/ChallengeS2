@@ -24,11 +24,33 @@ export class Step1 extends Component{
         console.log(this.state)
     };
 
-    handleFormSubmit = (event) => {
-        console.log("ok")
-        event.preventDefault();
-        this.props.onFormChange(this.state); // Passer les valeurs des champs au composant
+    handleFormSubmit = () => {
+        // this.props.onFormChange(this.state); // Passer les valeurs des champs au composant
         console.log(this.state)
+        const form1 = document.getElementById("Step1")
+        const dbName = form1.elements["dbName"].value;
+        const username = form1.elements["username"].value;
+        const password = form1.elements["password"].value;
+        const dbHost = form1.elements["dbHost"].value;
+        const tbPrefix = form1.elements["tbPrefix"].value;
+        const formData = {
+            dbName: dbName,
+            username:username,
+            password:password,
+            dbHost:dbHost,
+            tbPrefix:tbPrefix,
+        };
+        this.sendData(formData)
+            .then(data => {
+                if (data.status === 201) {
+                    console.log(data)
+                    this.handleNextButtonClick();
+                } else {
+                    console.log("Echoué;;                                                                                    ddd d")
+                    console.log(data)
+                }
+            })
+            .catch(err => console.log(err))
     };
     render = () => {
         const { action = "", method ="POST", style } = this.props
@@ -41,6 +63,7 @@ export class Step1 extends Component{
                 id: "Step1",
             },
             children: [
+
                 new Input({
                     name:"dbName",
                     type:"text",
@@ -48,6 +71,7 @@ export class Step1 extends Component{
                     style: { width: "200px" },
                     value: this.state.dbName,
                     change: this.handleInputChange,
+
                 }),
                 new Input({
                     name:"username",
@@ -82,8 +106,24 @@ export class Step1 extends Component{
                     value: this.state.tbPrefix,
                     change: this.handleInputChange,
                 }),
+                {
+                    type: "div",
+                    class: "buttons-container text-center",
+                    children: [
+                        new Button({type:"cancel",title: "Previous",click: this.handlePreviousButtonClick}),
+                        new Button({
+                            name:"submit",
+                            type:"submit",
+                            title:"Next",
+                            click: (event) => {
+                                event.preventDefault();
+                                this.handleFormSubmit()
+                            }
+                        })
+                    ]
+                }
+            ],
 
-            ]
         }
     }
 
